@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block content %}
+    <h1>Create Account</h1>
   <form method="post" action="/">
   {%csrf_token%}
       Name:
@@ -13,9 +14,11 @@
       <input type="text" name="address"/><br>
       <input type="radio" name="title" value="TA" checked>TA<br>
       <input type="radio" name="title" value="Instructor">Instructor<br>
+      <input type="radio" name="title" value="Administrator">Administrator<br>
+      <input type="radio" name="title" value="Supervisor">Supervisor<br>
   <input type="submit"/><br>
   </form>
-  <h1>TEST:</h1>
+  <h1>All Accounts:</h1>
   <ul>
   {% for i in b %}
   <li>{{i.display}}</li>
