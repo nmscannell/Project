@@ -3,11 +3,13 @@
 {% block content %}
   <form method="post" action="/">
   {%csrf_token%}
+      Name:
   <input type="text" name="n"/><br>
-  <input type="text" name="d"/><br>
+     Email:
+  <input type="email" name="d"/><br>
   <input type="submit"/><br>
   </form>
-  <h1>TEST {{a}}</h1>
+  <h1>TEST:{{a}}</h1>
   <ul>
   {% for i in b %}
   <li>{{i.accountName}}/{{i.accountEmail}}</li>
