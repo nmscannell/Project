@@ -7,12 +7,14 @@
   <input type="text" name="n"/><br>
      Email:
   <input type="email" name="d"/><br>
+  <input type="radio" name="title" value="TA" checked>TA<br>
+      <input type="radio" name="title" value="Instructor">Instructor<br>
   <input type="submit"/><br>
   </form>
   <h1>TEST:{{a}}</h1>
   <ul>
   {% for i in b %}
-  <li>{{i.accountName}}/{{i.accountEmail}}</li>
+  <li>{{i.accountName}}/{{i.accountEmail}}{{ i.accountTitle }}</li>
   {% endfor %}
   </ul>
 {% endblock content %}
