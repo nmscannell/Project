@@ -6,7 +6,7 @@ class UI:
 
     """
     Here is where the string input from the command line is parsed. I currently have it set up so its
-    checking the string in lower so that the commands wont be case sensitive. If you wish to add an aditional
+    checking the string in lower so that the commands wont be case sensitive. If you wish to add an additional
     command just add another "elif command[0].lower() == <commandName>" at the bottom. Make sure command
     returns a string.
     """
