@@ -1,6 +1,5 @@
-from unittest import TestCase
 from main.models import UI
-from django.test import testcases
+from django.test import TestCase
 """
 TODO: 
 add permission denied tests 
@@ -11,10 +10,6 @@ class TestProject(TestCase):
 
     def setUp(self):
         self.UI = UI()
-        self.UI.command("createAccount accountName title")
-        self.UI.command("editAccount accountName password newPassword")
-        self.UI.command("login accountName newPassword")
-
 
 
     """
