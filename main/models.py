@@ -1,6 +1,6 @@
 from django.db import models
 
 # Create your models here.
-class YourClass:
+class UI:
     def command(self, inStr):
         return inStr
