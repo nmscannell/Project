@@ -14,14 +14,10 @@ class TestAccount(TestCase):
         self.Account1.accountInfo["Office hours"] = "All day everyday"
 
 
-    def test_viewPersonal:
-        self.assertEqual(Account1.viewName(),"Mr.Sparkle")
-        self.assertEqual(Account1.viewHomePhone(), "Not public info")
-        self.assertEqual(Account1.viewOfficePhone(), "555-5555")
-        self.assertEqual(Account1.viewAdress(), "Not public info")
-        self.assertEqual(Account1.viewEmail(), "chunkylover53@alo.com")
-        self.assertEqual(Account1.viewOfficeHours, "All day everyday")
-
-
-if __name__ == '__main__':
-    unittest.main()
+    def test_viewPersonal(self):
+        self.assertEqual(self.Account1.viewName(),"Mr.Sparkle")
+        self.assertEqual(self.Account1.viewHomePhone(), "Not public info")
+        self.assertEqual(self.Account1.viewOfficePhone(), "555-5555")
+        self.assertEqual(self.Account1.viewAdress(), "Not public info")
+        self.assertEqual(self.Account1.viewEmail(), "chunkylover53@alo.com")
+        self.assertEqual(self.Account1.viewOfficeHours, "All day everyday")
