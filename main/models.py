@@ -5,7 +5,6 @@ from django.db import models
 class UI:
     def command(self, inStr):
 
-
         return inStr
 
 
