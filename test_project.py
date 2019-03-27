@@ -1,5 +1,6 @@
 from main.models import UI
 from django.test import TestCase
+from Account.models import Account
 """
 TODO: 
 add permission denied tests 
@@ -10,6 +11,17 @@ class TestProject(TestCase):
 
     def setUp(self):
         self.UI = UI()
+
+        Account.objects.create(name="Tim Tim", phone="555-555-5555", email="tim@uwm.edu", address="123 Fake St",
+                               ophone="567-789-1010", ohours="1400 - 1500")
+        Course.objects.create(name="Data Structures", number="351", daysOfWeek="TR", start="09:00", end="09:50")
+        Lab.objects.create(courseNumber="351", labSection="001", days="W", begin="13:00", end="14:00")
+
+
+
+
+
+
 
 
 
@@ -58,7 +70,7 @@ class TestProject(TestCase):
                          "createAccount username title email")
 
     def test_command_createAccount_already_exists(self):
-        self.assertEqual(self.UI.command("createAccount accountName title email"), "Account already exists")
+        self.assertEqual(self.UI.command("createAccount tim123 TA tim@uwm.edu"), "Account already exists")
 
     """
         createCourse command 
@@ -111,7 +123,7 @@ class TestProject(TestCase):
                          "createCourse courseName courseNumber daysOfWeek start end")
 
     def test_command_createCourse_course_exists(self):
-        self.assertEqual(self.UI.command("createCourse courseName courseNumber daysOfWeek start end"),
+        self.assertEqual(self.UI.command("createCourse Data Structures 351 TR 09:00 09:50"),
                          "Course already exists, course not added.")
 
 
