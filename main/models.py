@@ -26,14 +26,21 @@ class UI:
             except Account.DoesNotExist:
                 return "Account Not Found"
 
+            CurrentUser.currentUser = True
+            CurrentUser.save()
             return "Logged in as " + str(CurrentUser)
 
         elif command[0].lower() == "logout":
-            """
-            The code for logout should go here. logout shouldn't need to take any additional arguments but if any
-            other arguments are passed in, they are ignored. This should just wipe the current user and current user 
-            privileges so that other commands cannot be accessed without logging in again. 
-            """
+            try:
+                CurrentUser = Account.objects.get(currentUser=True)
+                CurrentUser.currentUser = False
+                CurrentUser.save()
+                return "Successfully logged out"
+            except Account.DoesNotExist:
+                return "Please Log in First"
+            except Account.MultipleObjectsReturned:
+                return "Multiple accounts Logged in, Something went terribly wrong"
+
             return "Successfully logged out"
         elif command[0].lower() == "createaccount":
             """
