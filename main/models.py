@@ -13,6 +13,10 @@ class UI:
     def command(self, inStr):
         command = inStr.split(' ')
 
+        test = Account.objects.filter(currentUser=True)
+        if len(test) > 0:
+            return "A User is already logged in"
+
         if command[0].lower() == "login":
 
             if len(command) > 3 or len(command) < 3:
