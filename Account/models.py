@@ -4,9 +4,12 @@ from django.db import models
 
 
 class Account(models.Model):
-    Accountname = models.CharField(max_length=20)
+    Name = models.CharField(max_length=20)
+    password = models.CharField(max_length=20, default="password")
+    title = models.IntegerField(default=0)
 
-    Accountid = models.IntegerField(default=0)
+    def __str__(self):
+        return self.Name
 
 
 
