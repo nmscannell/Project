@@ -6,6 +6,7 @@ from django.db import models
 class Account(models.Model):
     Name = models.CharField(max_length=20)
     password = models.CharField(max_length=20, default="password")
+    email = models.EmailField(default="")
     title = models.IntegerField(default=0)
     currentUser = models.BooleanField(default=False)
 
