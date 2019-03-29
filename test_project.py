@@ -1,12 +1,17 @@
 from main.models import UI
 from django.test import TestCase
 from Account.models import Account
+from Lab.models import Lab
+from Course.models import Course
+
 """
 TODO: 
 add permission denied tests 
 add password field to edit and editInfo
 finish login command 
 """
+
+
 class TestProject(TestCase):
 
     def setUp(self):
@@ -16,12 +21,6 @@ class TestProject(TestCase):
                                ophone="567-789-1010", ohours="1400 - 1500")
         Course.objects.create(name="Data Structures", number="351", daysOfWeek="TR", start="09:00", end="09:50")
         Lab.objects.create(courseNumber="351", labSection="001", days="W", begin="13:00", end="14:00")
-
-
-
-
-
-
 
 
 
