@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CreateLab
+from .models import Lab
 # Register your models here.
 
-admin.site.register(CreateLab)
+admin.site.register(Lab)
