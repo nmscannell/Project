@@ -2,7 +2,8 @@ from Account.models import Account
 from CurrentUserHelper import CurrentUserHelper
 
 
-class CreateAccountHelper():
+
+class CreateAccount():
 
     def createAccount(self, command):
         CUH = CurrentUserHelper()
