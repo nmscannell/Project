@@ -1,6 +1,6 @@
 from Account.models import Account
 from LoginHelper import LoginHelper
-from Account.CreateAccountHelper import CreateAccountHelper
+from Account.CreateAccount import CreateAccount
 # Create your models here.
 class UI:
     """
@@ -25,7 +25,7 @@ class UI:
 
         elif command[0].lower() == "createaccount":
 
-            CA = CreateAccountHelper()
+            CA = CreateAccount()
             return CA.createAccount(command)
 
         elif command[0].lower() == "createlab":
