@@ -9,17 +9,16 @@ class CreateAccountHelper():
         if CUH.getCurrentUserTitle() < 4:
             return "Only Administrators can Create Accounts"
         if len(command) > 3 or len(command) < 3:
-            return "CreateAccount takes 2 arguments Title and AccountName"
+            return "CreateAccount takes 3 arguments: a userName, title and email"
 
         try:
-            test = Account.objects.get(Name=command[2])
+            test = Account.objects.get(userName=command[2])
             return "Account already exists"
         except Account.DoesNotExist:
-            A = Account()
-            A.Name = command[2]
-            if command[1].lower() == "ta":
+            A = Account(userName=command[2], email=command[4])
+            if command[3].lower() == "ta":
                 A.title = 1
-            elif command[1].lower() == "instructor":
+            elif command[3].lower() == "instructor":
                 A.title = 2
             else:
                 return "Invalid Title"
