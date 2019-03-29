@@ -2,6 +2,8 @@ from Account.models import Account
 from LoginHelper import LoginHelper
 from Account.CreateAccountHelper import CreateAccountHelper
 # Create your models here.
+
+
 class UI:
     """
     Here is where the string input from the command line is parsed. I currently have it set up so its
