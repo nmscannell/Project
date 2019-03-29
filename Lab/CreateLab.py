@@ -1,7 +1,8 @@
-from Lab.models import models
+from Lab.models import Lab
+
 
 class CreateLab():
 
-    def createLab(self, courseNum, sectionNum, meetingDays, start, end):
+    def createLab(self, command):
 
         pass
