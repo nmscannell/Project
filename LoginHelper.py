@@ -9,6 +9,7 @@ class LoginHelper():
     string is returned. Error strings are returned if the Account was not found or the password is incorrect.
     """
     def login(self, command):
+
         test = Account.objects.filter(currentUser=True)
         if len(test) > 0:
             return "A User is already logged in"
