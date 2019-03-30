@@ -1,27 +1,34 @@
 from main.models import UI
 from django.test import TestCase
 from Account.models import Account
+from Lab.models import Lab
+from Course.models import Course
+
 """
 TODO: 
-add permission denied tests 
-add password field to edit and editInfo
-finish login command 
+add permission denied tests - in progress
 """
+
+
 class TestProject(TestCase):
 
     def setUp(self):
         self.UI = UI()
 
-        Account.objects.create(name="Tim Tim", phone="555-555-5555", email="tim@uwm.edu", address="123 Fake St",
-                               ophone="567-789-1010", ohours="1400 - 1500")
-        Course.objects.create(name="Data Structures", number="351", daysOfWeek="TR", start="09:00", end="09:50")
-        Lab.objects.create(courseNumber="351", labSection="001", days="W", begin="13:00", end="14:00")
+        Account.objects.create(userName="janewayk123", name="Kathryn Janeway", password="123456",
+                               email="janewayk@starfleet.com", title=2,
+                               address="14 Voyager Drive", city="Delta", state="Quadrant", zipCode="00000",
+                               officeNumber="456", officePhone="555-555-5555", officeDays="TR",
+                               officeHoursStart="1300", officeHoursEnd="1400", currentUser=False)
 
+        Account.objects.create(userName="picard304", name="Jean Luc Picard", password="90456",
+                               email="picardj@startfleet.com", title=1, address="87 Enterprise Avenue",
+                               city="Alpha", state="Quadrant", zipCode="11111", officeNumber="54",
+                               officePhone="777-777-7777", officeDays="W", officeHoursStart="0900",
+                               officeHoursEnd="1000", currentUser=False)
 
-
-
-
-
+        Course.objects.create(name="Data Structures", number=351, daysOfWeek="TR", start=1200, end=1300)
+        Lab.objects.create(courseNumber=351, labSection=101, days="W", begin=1300, end=1400)
 
 
 
@@ -30,13 +37,24 @@ class TestProject(TestCase):
         When the login command is entered, it takes two arguments
         -user name
         -password
+        
+        If the account does not exist, an error message will be displayed.  If the password it incorrect, 
+        an error message will be displayed.  If the command is missing arguments, an error message will be 
+        displayed. 
     
     """
     def test_command_login_success(self):
         self.assertEqual(self.UI.command("login userName password"), "Login success")
 
-    def test_command_login_failure(self):
-        self.assertEqual(self.UI.command("login userName password"), "Login failed")
+    def test_command_login_incorrect_password(self):
+        self.assertEqual(self.UI.command("login userName password"), "Login failed, incorrect password")
+
+    def test_command_login_account_does_not_exist(self):
+        self.assertEqual(self.UI.command("login userName password"), "Error, account does not exist")
+
+    def test_command_login_missing_args(self):
+        self.assertEqual(self.UI.command("login userName"), "Your command is missing arguments.  Please enter "
+                                "your command in the following format: login userName password")
 
     """ 
         createAccount command
@@ -47,6 +65,10 @@ class TestProject(TestCase):
     
         If arguments are missing from the command, an error message is displayed and the command is not executed.  
     """
+
+    def test_command_createAccount_permission_denied(self):
+        self.assertEqual(self.UI.commands("createAccount username title email"),
+                         "You do not have the credentials to create an account. Permission denied")
 
     def test_command_createAccount_success(self):
         self.assertEqual(self.UI.command("createAccount username title email"), "Account successfully created")
@@ -62,7 +84,7 @@ class TestProject(TestCase):
                         "createAccount username title email")
 
     def test_command_createAccount_invalidTitle(self):
-        self.assertEqual(self.UI.command("createAccount accountName cashier"), "Please enter a valid title")
+        self.assertEqual(self.UI.command("createAccount accountName title"), "Please enter a valid title")
 
     def test_command_createAccount_no_args(self):
         self.assertEqual(self.UI.command("createAccount"),
@@ -70,7 +92,7 @@ class TestProject(TestCase):
                          "createAccount username title email")
 
     def test_command_createAccount_already_exists(self):
-        self.assertEqual(self.UI.command("createAccount tim123 TA tim@uwm.edu"), "Account already exists")
+        self.assertEqual(self.UI.command("createAccount userName title email"), "Account already exists")
 
     """
         createCourse command 
@@ -87,6 +109,10 @@ class TestProject(TestCase):
         If a command argument is missing, an error message is displayed. 
             
     """
+
+    def test_command_createCourse_permission_denied(self):
+        self.assertEqual(self.UI.commands("createCourse courseName courseNumber daysOfWeek starte end"),
+                         "You do not have the credentials to create a course. Permission denied")
 
     def test_command_createCourse_success(self):
         self.assertEqual(self.UI.command("createCourse courseName courseNumber daysOfWeek start end"),
@@ -137,6 +163,10 @@ class TestProject(TestCase):
         If the lab already exists, a new lab is not created. If arguments are missing, return error. If the 
         associated course is online, a lab cannot be created for it.
     """
+
+    def test_command_createLab_permission_denied(self):
+        self.assertEqual(self.UI.commands("createLab courseNumber labSection day begin end"),
+                         "You do not have the credentials to create a lab. Permission denied")
 
     def test_command_createLab_success(self):
         self.assertEqual(self.UI.command("createLab courseNumber labSection day begin end"),
@@ -199,6 +229,10 @@ class TestProject(TestCase):
     
        """
 
+    def test_command_edit_permission_denied(self):
+        self.assertEqual(self.UI.commands("edit username email timmy89@uwm.edu"),
+                         "You do not have the credentials to edit this information. Permission denied")
+
     def test_command_edit_homePhone_success(self):
         self.asserEqual(self.UI.command("edit username homephone 262-555-7134"),
                         "Home phone successfully updated")
@@ -260,35 +294,40 @@ class TestProject(TestCase):
         to send notification to one person
     """
 
+
+    def test_command_send_permission_denied(self):
+        self.assertEqual(self.UI.commands("send -a"),
+                         "You do not have the credentials to send notifications. Permission denied")
+
     def test_command_send_success(self):
-        self.assertEqual(self.UI.command("sendNotification accountName"), "Notification was sent successfully")
+        self.assertEqual(self.UI.command("send accountName"), "Notification was sent successfully")
 
     def test_command_send_all_success(self):
-        self.assertEqual(self.UI.command("sendNotification -a"),
+        self.assertEqual(self.UI.command("send -a"),
                          "Notification was sent to all users successfully")
 
     def test_command_send_specific_success(self):
-        self.assertEqual(self.UI.command("sendNotification accountName(s) -s"),
+        self.assertEqual(self.UI.command("send accountName(s) -s"),
                          "Notification was sent to specific people successfully")
 
     def test_command_send_error(self):
-        self.assertEqual(self.UI.command("sendNotification accountName"),
+        self.assertEqual(self.UI.command("send accountName"),
                          "We weren't able to send a notification")
 
     def test_command_send_all_error(self):
-        self.assertEqual(self.UI.command("sendNotification accountName -a"),
+        self.assertEqual(self.UI.command("send accountName -a"),
                          "We weren't able to send a notification to all")
 
     def test_command_send_specific_error(self):
-        self.assertEqual(self.UI.command("sendNotification accountNames -s"),
+        self.assertEqual(self.UI.command("send accountNames -s"),
                          "We weren't able to send a notification to specific people")
 
     def test_command_send_no_argument(self):
-        self.assertEqual(self.UI.command("sendNotification -s"),
-                         "Please type the user names that you want to sent")
+        self.assertEqual(self.UI.command("send -s"),
+                         "Please enter usernames")
 
     def test_command_send_no_argument_2(self):
-            self.assertEqual(self.UI.command("sendNotification -a"),
+            self.assertEqual(self.UI.command("send -a"),
                              "Please type the user names  that you want to sent")
 
     def test_command_send_no_argument_3(self):
@@ -302,8 +341,8 @@ class TestProject(TestCase):
     """
 
     def test_command_sendTA_success(self):
-        self.assertEqual(self.UI.command("sendTA courseNumber"), "Email sent successfully to all TAs associated"
-                                                                      "with the specified course")
+        self.assertEqual(self.UI.command("sendTA courseNumber"),
+                         "Email sent successfully to all TAs associated with the specified course")
 
     def test_command_sendTA_error_course_does_not_exist(self):
         self.assertEqual(self.UI.command("sendTA courseNumber"), "Error, course does not exist, email not sent")
