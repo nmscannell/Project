@@ -4,16 +4,24 @@ from django.db import models
 
 
 class Account(models.Model):
-    accountName = models.CharField(max_length=20)
-    accountEmail = models.EmailField()
-    accountTitle = models.CharField(max_length=10, default="")
-    accountHP = models.CharField(max_length=20, default="")
-    accountAddress = models.CharField(max_length=3, default="")
+    userName = models.CharField(max_length=20, default=" ")
+    name = models.CharField(max_length=20, default=" ")
+    password = models.CharField(max_length=20, default="password")
+    email = models.EmailField(default="")
+    title = models.IntegerField(default=0)
+    address = models.CharField(max_length=30, default=" ")
+    city = models.CharField(max_length=20, default=" ")
+    state = models.CharField(max_length=20, default=" ")
+    zipCode = models.IntegerField(default=00000)
+    officeNumber = models.IntegerField(default=000)
+    officePhone = models.CharField(max_length=10, default="000-000-0000")
+    officeDays = models.CharField(max_length=10, default=" ")
+    officeHoursStart = models.IntegerField(default=0000)
+    officeHoursEnd = models.IntegerField(default=0000)
+    currentUser = models.BooleanField(default=False)
 
     def __str__(self):
-        return str("Name:" + self.accountName + "Email:" + self.accountEmail)
+        return self.name
 
-    def display(self):
-        return str("Name:" + self.accountName + " Email:" + self.accountEmail + "\n"
-                   +" Title:" + self.accountTitle + " HomePhone:" + self.accountHP
-                   + "\n" + "Address:" + self.accountAddress)
+
+
