@@ -27,10 +27,9 @@ class TestProject(TestCase):
                                officePhone="777-777-7777", officeDays="W", officeHoursStart="0900",
                                officeHoursEnd="1000", currentUser=False)
 
-        Course.objects.create(name="Data Structures", number=351, daysOfWeek="TR", start=1200, end=1300)
-        Lab.objects.create(courseNumber=351, labSection=101, days="W", begin=1300, end=1400)
-
-
+       # until the Course class is created, leave these commented out, The tests will break otherwise
+       # Course.objects.create(name="Data Structures", number=351, daysOfWeek="TR", start=1200, end=1300)
+       # Lab.objects.create(courseNumber=351, labSection=101, days="W", begin=1300, end=1400)
 
     """
         login command
@@ -44,26 +43,23 @@ class TestProject(TestCase):
     
     """
     def test_command_login_success(self):
-        self.assertEqual(self.UI.command("login userName password"), "Login success")
+        self.assertEqual(self.UI.command("login janewayk123 123456"), "Logged in as Kathryn Janeway")
 
     def test_command_login_incorrect_password(self):
-        self.assertEqual(self.UI.command("login userName password"), "Login failed, incorrect password")
+        self.assertEqual(self.UI.command("login janewayk123 password"), "Incorrect password")
 
     def test_command_login_account_does_not_exist(self):
-        self.assertEqual(self.UI.command("login userName password"), "Error, account does not exist")
+        self.assertEqual(self.UI.command("login userName password"), "Account Not Found")
 
     def test_command_login_missing_args(self):
-        self.assertEqual(self.UI.command("login userName"), "Your command is missing arguments.  Please enter "
-                                "your command in the following format: login userName password")
-
+        self.assertEqual(self.UI.command("login userName"), "Your command is missing arguments.  Please enter your command in the following format: login userName password")
     """ 
-        createAccount command
-        When the createAccount command is entered, it takes 3 arguments:
-        -User name 
-        -Title
-        -Email 
-    
-        If arguments are missing from the command, an error message is displayed and the command is not executed.  
+    createAccount command
+    When the createAccount command is entered, it takes 3 arguments:
+    -User name 
+    -Title
+    -Email     
+    If arguments are missing from the command, an error message is displayed and the command is not executed.  
     """
 
     def test_command_createAccount_permission_denied(self):
