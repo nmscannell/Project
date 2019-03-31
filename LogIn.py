@@ -18,7 +18,7 @@ class LoginHelper():
             return "login takes 2 arguments Account name and Password"
 
         try:
-            CurrentUser = Account.objects.get(Name=command[1])
+            CurrentUser = Account.objects.get(userName=command[1])
             if CurrentUser.password != command[2]:
                 return "Incorrect password"
 
