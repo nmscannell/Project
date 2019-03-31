@@ -17,22 +17,37 @@ class TestLoginHelper(TestCase):
     def test_login_success(self):
         #test Successful login
         self.assertEqual(self.login.login(self.Command1), "Logged in as homer")
+        A = Account.objects.get(name='homer')
+        Account.objects.exists()
+        self.assertTrue(A.currentUser)
 
     def test_login_wrong_password(self):
         # test wrong password
         self.assertEqual(self.login.login(self.Command2), "Incorrect password")
 
+        with self.assertRaises(Account.DoesNotExist):
+            A = Account.objects.get(currentUser='True')
+
     def test_login_account_not_found(self):
         #test logging in with an Account not in the database
         self.assertEqual(self.login.login(self.Command3), "Account Not Found")
+
+        with self.assertRaises(Account.DoesNotExist):
+            A = Account.objects.get(currentUser='True')
 
     def test_login_2_arguments(self):
         #User doesn't enter enough arugments
         self.assertEqual(self.login.login(self.Command4), "Your command is missing arguments.  Please enter your command in the following format: login userName password")
 
+        with self.assertRaises(Account.DoesNotExist):
+            A = Account.objects.get(currentUser='True')
+
     def test_login_4_arguments(self):
         #User enters too many argumants
         self.assertEqual(self.login.login(self.Command5), "Your command is missing arguments.  Please enter your command in the following format: login userName password")
+
+        with self.assertRaises(Account.DoesNotExist):
+            A = Account.objects.get(currentUser='True')
 
     def test_login_2_accounts(self):
         Account.objects.create(userName='Bob', password='wrongPassword', name='Bob', currentUser='True')
@@ -43,8 +58,13 @@ class TestLoginHelper(TestCase):
         Account.objects.create(userName='Bob', password='wrongPassword', name='Bob', currentUser='True')
         self.assertEqual(self.login.logout(), "Successfully logged out")
 
+        with self.assertRaises(Account.DoesNotExist):
+            A = Account.objects.get(currentUser='True')
+
     def test_logout_not_logged_in(self):
         #loging out when no Account is the current user
 
         self.assertEqual(self.login.logout(), "Please Log in First")
 
+        with self.assertRaises(Account.DoesNotExist):
+            A = Account.objects.get(currentUser='True')

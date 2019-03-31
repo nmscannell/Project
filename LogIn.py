@@ -8,6 +8,7 @@ class LoginHelper():
     account as the Current User. If the argument list's length is greater or less than 3 an error
     string is returned. Error strings are returned if the Account was not found or the password is incorrect.
     """
+
     def login(self, command):
 
         test = Account.objects.filter(currentUser=True)

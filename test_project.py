@@ -27,11 +27,9 @@ class TestProject(TestCase):
                                officePhone="777-777-7777", officeDays="W", officeHoursStart="0900",
                                officeHoursEnd="1000", currentUser=False)
 
-        #until the Course class is created, leave these commented out
+       # until the Course class is created, leave these commented out, The tests will break otherwise
        # Course.objects.create(name="Data Structures", number=351, daysOfWeek="TR", start=1200, end=1300)
        # Lab.objects.create(courseNumber=351, labSection=101, days="W", begin=1300, end=1400)
-
-
 
     """
         login command
