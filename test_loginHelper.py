@@ -28,11 +28,11 @@ class TestLoginHelper(TestCase):
 
     def test_login_2_arguments(self):
         #User doesn't enter enough arugments
-        self.assertEqual(self.login.login(self.Command4), "login takes 2 arguments Account name and Password")
+        self.assertEqual(self.login.login(self.Command4), "Your command is missing arguments.  Please enter your command in the following format: login userName password")
 
     def test_login_4_arguments(self):
         #User enters too many argumants
-        self.assertEqual(self.login.login(self.Command5), "login takes 2 arguments Account name and Password")
+        self.assertEqual(self.login.login(self.Command5), "Your command is missing arguments.  Please enter your command in the following format: login userName password")
 
     def test_login_2_accounts(self):
         Account.objects.create(userName='Bob', password='wrongPassword', name='Bob', currentUser='True')

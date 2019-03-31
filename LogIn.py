@@ -15,7 +15,7 @@ class LoginHelper():
             return "A User is already logged in"
 
         if len(command) > 3 or len(command) < 3:
-            return "login takes 2 arguments Account name and Password"
+            return "Your command is missing arguments.  Please enter your command in the following format: login userName password"
 
         try:
             CurrentUser = Account.objects.get(userName=command[1])
