@@ -5,7 +5,8 @@ from django.db import models
 
 class Account(models.Model):
     userName = models.CharField(max_length=20, default=" ")
-    name = models.CharField(max_length=20, default=" ")
+    firstName = models.CharField(max_length=20, default=" ")
+    lastName = models.CharField(max_length=20, default = " ")
     password = models.CharField(max_length=20, default="password")
     email = models.EmailField(default="")
     title = models.IntegerField(default=0)
