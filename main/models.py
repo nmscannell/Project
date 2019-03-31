@@ -1,5 +1,5 @@
 from Account.models import Account
-from LoginHelper import LoginHelper
+from LogIn import LoginHelper
 from Account.CreateAccount import CreateAccount
 from Lab.CreateLab import CreateLab
 

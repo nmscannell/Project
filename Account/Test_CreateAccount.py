@@ -3,7 +3,7 @@ from Account.CreateAccount import CreateAccount
 from Account.models import Account
 from main import models
 from CurrentUserHelper import CurrentUserHelper
-from LoginHelper import LoginHelper
+from LogIn import LoginHelper
 
 class test_CreateAccount(TestCase):
 
