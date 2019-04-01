@@ -2,23 +2,24 @@ from Account.models import Account
 from CurrentUserHelper import CurrentUserHelper
 
 
-
 class CreateAccount():
 
     def createAccount(self, command):
         CUH = CurrentUserHelper()
         if CUH.getCurrentUserTitle() < 4:
-            return "Only Administrators can Create Accounts"
+            raise Exception ("Only Administrators can Create Accounts")
         if len(command) > 4 or len(command) < 4:
-            return "createAccount takes 3 arguments: a userName, title and email"
+            raise Exception("createAccount takes 3 arguments: a userName, title and email")
 
-        if Account.objects.get(userName=command[2]).exists():
+        if Account.objects.filter(userName=command[1]).exists():
             raise Exception("Account already exists")
         else:
-            A = Account(userName=command[2], email=command[4])
-            if command[3].lower() == "ta":
+            A = Account.objects.create()
+            A.userName = command[1]
+            A.email = command[3]
+            if command[2].lower() == "ta":
                 A.title = 1
-            elif command[3].lower() == "instructor":
+            elif command[2].lower() == "instructor":
                 A.title = 2
             else:
                 return "Invalid Title"
