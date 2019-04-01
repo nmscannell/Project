@@ -36,6 +36,7 @@ class test_CreateAccount(TestCase):
 
 
     def test_account_successfully_created(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.command_create_account = ["createAccount", "data33", "instructor", "data33@starfleet.com"]
         CreateAccount.createAccount(self.CA, self.command_create_account)
         A = Account.objects.get(userName="data33")
@@ -53,18 +54,19 @@ class test_CreateAccount(TestCase):
             CreateAccount.createAccount(self.CA, self.command2_already_exists)
 
     def test_missing_one_argument(self):
-        LoginHelper.login(self.LH, ["login", "kirkj22" "678543"])
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.command_missing_one_arg = ["createAccount", "parist64", "TA"]
-        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_missing_one_arg,
-                                                     "createAccount takes 3 arguments: a userName, title and email"))
+        with self.assertRaises(Exception):
+            CreateAccount.createAccount(self.CA, self.command_missing_one_arg)
 
     def test_missing_two_arguments(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.command_missing_two_args = ["createAccount", "paris64"]
-        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_missing_two_args,
-                                                     "createAccount takes 3 arguments: a userName, title and email"))
+        with self.assertRaises(Exception):
+            CreateAccount.createAccount(self.CA, self.command_missing_two_args)
 
     def test_createAccount_permission(self):
         LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
-        self.assertEqual(CreateAccount.createAccount(self.CA, ["paris64", "TA", "paris62@starfleet.com"]),
-                         "Only Administrators can Create Accounts")
+        self.command_invalid_perm = ["paris64", "TA", "paris62@starfleet.com"]
+        with self.assertRaises(Exception):
+            CreateAccount.createAccount(self.CA, self.command_invalid_perm)
