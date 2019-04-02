@@ -28,3 +28,14 @@ class Test_CreateLab(TestCase):
         self.assertEqual(c.starTime, "10:00")
         self.assertEqual(c.endTime, "12:00")
 
+    def test_lab_was_already_existed(self):
+            with self.assertRaises(SystemError):
+                self.models.command("createLab 52312 '001' 'w' '10:00' '12:00' ")
+
+
+    def test_lab_no_argument(self):
+        self.assertEqual(models.command, "createLab")
+        
+
+
+
