@@ -60,24 +60,38 @@ class test_CreateAccount(TestCase):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.command_already_exists = ["createAccount", "picard304", "TA", "picardj@starfleet.com"]
         self.command2_already_exists = ["createAccount", "janewayk123", "instructor", "janewayk@starfleet.com"]
-        with self.assertRaises(Exception):
-            CreateAccount.createAccount(self.CA, self.command_already_exists)
-            CreateAccount.createAccount(self.CA, self.command2_already_exists)
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_already_exists), "Account already exists")
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command2_already_exists), "Account already exists")
+        #with self.assertRaises(Exception):
+         #   CreateAccount.createAccount(self.CA, self.command_already_exists)
+          #  CreateAccount.createAccount(self.CA, self.command2_already_exists)
 
     def test_missing_one_argument(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.command_missing_one_arg = ["createAccount", "parist64", "TA"]
-        with self.assertRaises(Exception):
-            CreateAccount.createAccount(self.CA, self.command_missing_one_arg)
+
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_missing_one_arg),
+                         "Your command is missing arguments, please enter your command in the following format: "
+                         "createAccount username title email")
+
+        #with self.assertRaises(Exception):
+         #   CreateAccount.createAccount(self.CA, self.command_missing_one_arg)
 
     def test_missing_two_arguments(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.command_missing_two_args = ["createAccount", "paris64"]
-        with self.assertRaises(Exception):
-            CreateAccount.createAccount(self.CA, self.command_missing_two_args)
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_missing_two_args),
+                         "Your command is missing arguments, please enter your command in the following format: "
+                         "createAccount username title email")
+
+        #with self.assertRaises(Exception):
+         #   CreateAccount.createAccount(self.CA, self.command_missing_two_args)
 
     def test_createAccount_permission(self):
         LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
         self.command_invalid_perm = ["paris64", "TA", "paris62@starfleet.com"]
-        with self.assertRaises(Exception):
-            CreateAccount.createAccount(self.CA, self.command_invalid_perm)
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_invalid_perm),
+                         "You do not have the credentials to create an account. Permission denied")
+
+        #with self.assertRaises(Exception):
+         #   CreateAccount.createAccount(self.CA, self.command_invalid_perm)
