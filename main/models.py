@@ -25,16 +25,13 @@ class UI:
             except Exception as ex:
                 return str(ex)
 
-            #return login.login(command)
-
         elif command[0].lower() == "logout":
             logout = LoginHelper()
 
             try:
                 return logout.logout()
             except Exception as ex:
-                return ex
-           # return logout.logout()
+                return str(ex)
 
         elif command[0].lower() == "createaccount":
 
