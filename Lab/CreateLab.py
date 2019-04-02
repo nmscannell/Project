@@ -11,6 +11,6 @@ class CreateLab():
         if len(command) > 4 or len(command) < 4:
             return "createLabs takes 4 arguments: course number,section number, meeting days, start time, and end time"
 
-       
+
             c.save()
             return str(c) + " added to database"
