@@ -32,10 +32,15 @@ class Test_CreateLab(TestCase):
             with self.assertRaises(SystemError):
                 self.models.command("createLab 52312 '001' 'w' '10:00' '12:00' ")
 
-
     def test_lab_no_argument(self):
         self.assertEqual(models.command, "createLab")
-        
+
+    def test_lab_no_courseNumber(self):
+        self.assertEqual(models.command, "createLab '001' 'w' '10:00' '12:00' ")
+
+    def test_lab_no_sectionNumber(self):
+        self.assertEqual(models.command, "createLab 52312 'w' '10:00' '12:00' ")
+
 
 
 
