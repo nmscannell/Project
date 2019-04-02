@@ -38,12 +38,23 @@ class test_CreateAccount(TestCase):
     def test_account_successfully_created(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.command_create_account = ["createAccount", "data33", "instructor", "data33@starfleet.com"]
+        self.command1_create_account = ["createAccount", "spock29", "instructor", "spock29@starfleet.com"]
+        self.command2_create_account = ["createAccount", "tuckert90", "TA", "tuckert90@starfleet.com"]
         CreateAccount.createAccount(self.CA, self.command_create_account)
+        CreateAccount.createAccount(self.CA, self.command1_create_account)
+        CreateAccount.createAccount(self.CA, self.command2_create_account)
         A = Account.objects.get(userName="data33")
         self.assertEqual(A.userName, "data33")
         self.assertEqual(A.email, "data33@starfleet.com")
         self.assertEqual(A.title, 2)
-
+        B = Account.objects.get(userName="spock29")
+        self.assertEqual(B.userName, "spock29")
+        self.assertEqual(B.email, "spock29@starfleet.com")
+        self.assertEqual(B.title, 2)
+        C = Account.objects.get(userName="tuckert90")
+        self.assertEqual(C.userName, "tuckert90")
+        self.assertEqual(C.email, "tuckert90@starfleet.com")
+        self.assertEqual(C.title, 1)
 
     def test_account_already_exist(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])

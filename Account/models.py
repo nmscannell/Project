@@ -20,7 +20,7 @@ class Account(models.Model):
     officeHoursStart = models.IntegerField(default=0000)
     officeHoursEnd = models.IntegerField(default=0000)
     currentUser = models.BooleanField(default=False)
-
+    
     def __str__(self):
         return self.firstName
 
