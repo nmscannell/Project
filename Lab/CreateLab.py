@@ -12,7 +12,7 @@ class CreateLab():
             return "Please retype the command. " \
                    "CreateLabs command takes 5 arguments: course number,section number, meeting days, " \
                    "start time, and end time"
-            courseNumber = command[1]
+            courseNumber = command[0]
             sectionNumber = command[2]
             meetingDays = command[3]
             startTime = command[4]
