@@ -7,12 +7,13 @@ class CreateAccount():
     def createAccount(self, command):
         CUH = CurrentUserHelper()
         if CUH.getCurrentUserTitle() < 4:
-            raise Exception ("Only Administrators can Create Accounts")
+            return "You do not have the credentials to create an account. Permission denied"
         if len(command) > 4 or len(command) < 4:
-            raise Exception("createAccount takes 3 arguments: a userName, title and email")
+            return "Your command is missing arguments, please enter your command in the following format: " \
+                   "createAccount username title email"
 
         if Account.objects.filter(userName=command[1]).exists():
-            raise Exception("Account already exists")
+            return "Account already exists"
         else:
             A = Account.objects.create()
             A.userName = command[1]
@@ -24,7 +25,8 @@ class CreateAccount():
             else:
                 return "Invalid Title"
             A.save()
-            return str(A) + " added to database"
+            #return str(A) + " added to database"
+            return "Account successfully created"
 
 
 
