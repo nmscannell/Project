@@ -3,7 +3,7 @@ from django.test import TestCase
 from Account.models import Account
 from Lab.models import Lab
 from Course.models import Course
-
+from LogIn import LoginHelper
 """
 TODO: 
 add permission denied tests - in progress
@@ -14,6 +14,7 @@ class TestProject(TestCase):
 
     def setUp(self):
         self.UI = UI()
+        self.LH = LoginHelper()
 
         Account.objects.create(userName="janewayk123", firstName="Kathryn", lastName="Janeway", password="123456",
                                email="janewayk@starfleet.com", title=2,
@@ -70,32 +71,41 @@ class TestProject(TestCase):
     """
 
     def test_command_createAccount_permission_denied(self):
-        self.assertEqual(self.UI.command("createAccount username title email"),
+        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@starfleet.com"),
                          "You do not have the credentials to create an account. Permission denied")
+        LoginHelper.logout(self.LH)
 
     def test_command_createAccount_success(self):
-        self.assertEqual(self.UI.command("createAccount username title email"), "Account successfully created")
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@starfleet.com"), "Account successfully created")
 
     def test_command_createAccount_missingArguments(self):
-        self.asserEqual(self.UI.command("createAccount username"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createAccount laForge88"),
                         "Your command is missing arguments, please enter your command in the following format: "
                         "createAccount username title email")
 
     def test_command_createAccount_missingArguments2(self):
-        self.asserEqual(self.UI.command("createAccount username title"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createAccount laForge88 instructor"),
                         "Your command is missing arguments, please enter your command in the following format: "
                         "createAccount username title email")
 
     def test_command_createAccount_invalidTitle(self):
-        self.assertEqual(self.UI.command("createAccount accountName title"), "Please enter a valid title")
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createAccount laForge88 engineer laForge88@starfleet.com"), "Invalid Title")
 
     def test_command_createAccount_no_args(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createAccount"),
                          "Your command is missing arguments, please enter your command in the following format: "
                          "createAccount username title email")
 
     def test_command_createAccount_already_exists(self):
-        self.assertEqual(self.UI.command("createAccount userName title email"), "Account already exists")
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createAccount janewayk123 instructor janewayk@starfleet.com"),
+                         "Account already exists")
 
     """
         createCourse command 
