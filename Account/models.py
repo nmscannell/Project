@@ -5,7 +5,8 @@ from django.db import models
 
 class Account(models.Model):
     userName = models.CharField(max_length=20, default=" ")
-    name = models.CharField(max_length=20, default=" ")
+    firstName = models.CharField(max_length=20, default=" ")
+    lastName = models.CharField(max_length=20, default = " ")
     password = models.CharField(max_length=20, default="password")
     email = models.EmailField(default="")
     title = models.IntegerField(default=0)
@@ -19,9 +20,9 @@ class Account(models.Model):
     officeHoursStart = models.IntegerField(default=0000)
     officeHoursEnd = models.IntegerField(default=0000)
     currentUser = models.BooleanField(default=False)
-
-    def __str__(self):Tests
-        return self.name
+    
+    def __str__(self):
+        return self.firstName
 
 
 

@@ -1,5 +1,5 @@
 from Account.models import Account
-from LoginHelper import LoginHelper
+from LogIn import LoginHelper
 from Account.CreateAccount import CreateAccount
 from Lab.CreateLab import CreateLab
 
@@ -20,12 +20,21 @@ class UI:
         if command[0].lower() == "login":
             login = LoginHelper()
 
-            return login.login(command)
+            try:
+                return login.login(command)
+            except Exception as ex:
+                return ex
+
+            #return login.login(command)
 
         elif command[0].lower() == "logout":
-
             logout = LoginHelper()
-            return logout.logout()
+
+            try:
+                return logout.logout()
+            except Exception as ex:
+                return ex
+           # return logout.logout()
 
         elif command[0].lower() == "createaccount":
 
