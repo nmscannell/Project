@@ -23,7 +23,7 @@ class UI:
             try:
                 return login.login(command)
             except Exception as ex:
-                return ex
+                return str(ex)
 
             #return login.login(command)
 
