@@ -10,7 +10,17 @@ class CreateLab():
             return "Only administrators and supervisors can create labs"
         if len(command) > 4 or len(command) < 4:
             return "createLabs takes 4 arguments: course number,section number, meeting days, start time, and end time"
+            courseNumber = command[1]
+            sectionNumber = command[2]
+            meetingDays = command[3]
+            startTime = command[4]
+            endTime = command[5]
 
-
+            if Lab.objects.get(courseNumber).exists():
+                raise Exception("Course number already exists")
+            elif Lab.objects.get(sectionNumber).exists():
+                raise Exception("Secction number already exists")
+            else:
+             
             c.save()
             return str(c) + " added to database"
