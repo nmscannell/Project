@@ -49,8 +49,8 @@ class UI:
         else:
             return command[0] + " is an unsupported command"
 
-        return inStr
-    #changing things
+        return "No command was executed, something went terribly wrong"
+
 
 
 
