@@ -2,7 +2,7 @@ from Account.models import Account
 from LogIn import LoginHelper
 from Account.CreateAccount import CreateAccount
 from Lab.CreateLab import CreateLab
-
+from CurrentUserHelper import CurrentUserHelper
 # Create your models here.
 
 
@@ -19,7 +19,6 @@ class UI:
 
         if command[0].lower() == "login":
             login = LoginHelper()
-
             try:
                 return login.login(command)
             except Exception as ex:
@@ -34,6 +33,9 @@ class UI:
                 return str(ex)
 
         elif command[0].lower() == "createaccount":
+            CUH = CurrentUserHelper()
+            if CUH.getCurrentUserTitle() < 4:
+                return "You do not have the credentials to create an account. Permission denied"
 
             CA = CreateAccount()
             return CA.createAccount(command)

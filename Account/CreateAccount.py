@@ -5,9 +5,9 @@ from CurrentUserHelper import CurrentUserHelper
 class CreateAccount():
 
     def createAccount(self, command):
-        CUH = CurrentUserHelper()
-        if CUH.getCurrentUserTitle() < 4:
-            return "You do not have the credentials to create an account. Permission denied"
+        #CUH = CurrentUserHelper()
+        #if CUH.getCurrentUserTitle() < 4:
+        #    return "You do not have the credentials to create an account. Permission denied"
         if len(command) > 4 or len(command) < 4:
             return "Your command is missing arguments, please enter your command in the following format: " \
                    "createAccount username title email"

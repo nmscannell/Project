@@ -36,7 +36,7 @@ class test_CreateAccount(TestCase):
 
 
     def test_account_successfully_created(self):
-        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        #LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.command_create_account = ["createAccount", "data33", "instructor", "data33@starfleet.com"]
         self.command1_create_account = ["createAccount", "spock29", "instructor", "spock29@starfleet.com"]
         self.command2_create_account = ["createAccount", "tuckert90", "TA", "tuckert90@starfleet.com"]
@@ -88,7 +88,7 @@ class test_CreateAccount(TestCase):
          #   CreateAccount.createAccount(self.CA, self.command_missing_two_args)
 
     def test_createAccount_permission(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+        #LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
         self.command_invalid_perm = ["paris64", "TA", "paris62@starfleet.com"]
         self.assertEqual(CreateAccount.createAccount(self.CA, self.command_invalid_perm),
                          "You do not have the credentials to create an account. Permission denied")
