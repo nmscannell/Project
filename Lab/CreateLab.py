@@ -7,9 +7,9 @@ class CreateLab():
     def createLab(self, command):
         CUH = CurrentUserHelper()
         if CUH.getCurrentUserTitle() < 3:
-            return "Only administrators and supervisors can create labs"
+            return "Permission denied. Only administrators and supervisors can create labs"
         if len(command) > 4 or len(command) < 4:
-            return "createLabs takes 4 arguments: course number,section number, meeting days, start time, and end time"
+            return "Please retype the command. CreateLabs command takes 4 arguments: course number,section number, meeting days, start time, and end time"
             courseNumber = command[1]
             sectionNumber = command[2]
             meetingDays = command[3]
@@ -19,8 +19,8 @@ class CreateLab():
             if Lab.objects.get(courseNumber).exists():
                 raise Exception("Course number already exists")
             elif Lab.objects.get(sectionNumber).exists():
-                raise Exception("Secction number already exists")
+                raise Exception("Section number already exists")
             else:
-             
-            c.save()
+
+            lab.save()
             return str(c) + " added to database"
