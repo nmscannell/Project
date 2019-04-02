@@ -15,17 +15,23 @@ class TestProject(TestCase):
     def setUp(self):
         self.UI = UI()
 
-        Account.objects.create(userName="janewayk123", name="Kathryn Janeway", password="123456",
+        Account.objects.create(userName="janewayk123", firstName="Kathryn", lastName="Janeway", password="123456",
                                email="janewayk@starfleet.com", title=2,
                                address="14 Voyager Drive", city="Delta", state="Quadrant", zipCode="00000",
                                officeNumber="456", officePhone="555-555-5555", officeDays="TR",
                                officeHoursStart="1300", officeHoursEnd="1400", currentUser=False)
 
-        Account.objects.create(userName="picard304", name="Jean Luc Picard", password="90456",
+        Account.objects.create(userName="picard304", firstName="Jean Luc", lastName="Picard", password="90456",
                                email="picardj@startfleet.com", title=1, address="87 Enterprise Avenue",
                                city="Alpha", state="Quadrant", zipCode="11111", officeNumber="54",
                                officePhone="777-777-7777", officeDays="W", officeHoursStart="0900",
                                officeHoursEnd="1000", currentUser=False)
+
+        Account.objects.create(userName="kirkj22", firstName="James", lastName="Kirk", password="678543",
+                               email="kirkj22@starfleet.com", title=4, address="789 Enterprise Avenue",
+                               city="Alpha", state="Quadrant", zipCode="89765", officeNumber="987",
+                               officePhone="897-654-398", officeDays="MW", officeHoursStart="1500",
+                               officeHoursEnd="1600", currentUser=False)
 
        # until the Course class is created, leave these commented out, The tests will break otherwise
        # Course.objects.create(name="Data Structures", number=351, daysOfWeek="TR", start=1200, end=1300)
@@ -46,13 +52,14 @@ class TestProject(TestCase):
         self.assertEqual(self.UI.command("login janewayk123 123456"), "Logged in as Kathryn Janeway")
 
     def test_command_login_incorrect_password(self):
-        self.assertEqual(self.UI.command("login janewayk123 password"), "Incorrect password")
+        self.assertEqual(self.UI.command("login janewayk123 aaaaaaa"), "Incorrect password")
 
     def test_command_login_account_does_not_exist(self):
-        self.assertEqual(self.UI.command("login userName password"), "Account Not Found")
+        self.assertEqual(self.UI.command("login neelix45 123456"), "Account Not Found")
 
     def test_command_login_missing_args(self):
-        self.assertEqual(self.UI.command("login userName"), "Your command is missing arguments.  Please enter your command in the following format: login userName password")
+        self.assertEqual(self.UI.command("login janewayk123"), "Your command is missing arguments.  "
+                                        "Please enter your command in the following format: login userName password")
     """ 
     createAccount command
     When the createAccount command is entered, it takes 3 arguments:
@@ -63,7 +70,7 @@ class TestProject(TestCase):
     """
 
     def test_command_createAccount_permission_denied(self):
-        self.assertEqual(self.UI.commands("createAccount username title email"),
+        self.assertEqual(self.UI.command("createAccount username title email"),
                          "You do not have the credentials to create an account. Permission denied")
 
     def test_command_createAccount_success(self):
