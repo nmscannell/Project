@@ -13,7 +13,7 @@ class Test_CreateLab(TestCase):
         Lab.objects.create(courseNumber=52312, sectionNumber="002",
                                  meetingDays="F", startTime="1400", endTime="1700")
         Lab.objects.create(courseNumber=54911, sectionNumber="003",
-                                 meetingDays="M W", startTime="10:00", endTime="12:00")
+                                 meetingDays="MW", startTime="10:00", endTime="12:00")
 
     def test_lab_was_successfully_created(self):
         a =  CreateLab.createLab.get(courseNumber=52312, sectionNumber="001")
