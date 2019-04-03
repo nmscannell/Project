@@ -18,6 +18,6 @@ class assignInst():
             raise Exception("Class number already exists")
         else:
             a = InstructorCourse(CourseNumber)
-            l.userName = userName
-            l.save()
+            a.userName = userName
+            a.save()
             return str(c) + " added to database"
