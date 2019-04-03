@@ -1,4 +1,4 @@
-from Lab.models import Lab
+from InstructorCourse.models import InstructorCourse
 from CurrentUserHelper import CurrentUserHelper
 
 
@@ -14,5 +14,10 @@ class assignInst():
             classNumber = command[1]
             userName = command[2]
 
-            
+        if InstructorCourse.objects.get(classNumber).exists():
+            raise Exception("Class number already exists")
+        else:
+            a = InstructorCourse(CourseNumber)
+            a.userName = userName
+            a.save()
             return str(c) + " added to database"
