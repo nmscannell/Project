@@ -113,10 +113,11 @@ class TestProject(TestCase):
 
     """
         createCourse command 
-        When the createCourse command is entered, it takes five arguments:
+        When the createCourse command is entered, it takes six arguments:
         -Course Name 
         -Course Number 
-        -Meetings days or "online" for an online class
+        -Meetings days 
+        -onCampus (True if on campus, False if online)
         -Start time 
         -End time
            
