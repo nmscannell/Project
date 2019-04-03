@@ -14,5 +14,5 @@ class assignInst():
             classNumber = command[1]
             userName = command[2]
 
-            
+
             return str(c) + " added to database"
