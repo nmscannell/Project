@@ -6,7 +6,7 @@ from LogIn import LoginHelper
 class TestLoginHelper(TestCase):
 
     def setUp(self):
-        Account.objects.create(userName='hsimpson', password='password', name='homer')
+        Account.objects.create(userName='hsimpson', password='password', firstName='homer')
         self.login = LoginHelper()
         self.Command1 = ["login", "hsimpson", "password"]
         self.Command2 = ["login", "hsimpson", "wrongPassword"]
@@ -17,7 +17,7 @@ class TestLoginHelper(TestCase):
     def test_login_success(self):
         #test Successful login
         self.assertEqual(self.login.login(self.Command1), "Logged in as homer")
-        A = Account.objects.get(name='homer')
+        A = Account.objects.get(firstName='homer')
         Account.objects.exists()
         self.assertTrue(A.currentUser)
 
@@ -50,12 +50,12 @@ class TestLoginHelper(TestCase):
             A = Account.objects.get(currentUser='True')
 
     def test_login_2_accounts(self):
-        Account.objects.create(userName='Bob', password='wrongPassword', name='Bob', currentUser='True')
+        Account.objects.create(userName='Bob', password='wrongPassword', firstName='Bob', currentUser='True')
         #User tries to login when an Account is already logged in
-        self.assertEqual(self.login.login(self.Command1), "A User is already logged in")
+        self.assertEqual(self.login.login(self.Command1), "A user is already logged in")
 
     def test_logout_success(self):
-        Account.objects.create(userName='Bob', password='wrongPassword', name='Bob', currentUser='True')
+        Account.objects.create(userName='Bob', password='wrongPassword', firstName='Bob', currentUser='True')
         self.assertEqual(self.login.logout(), "Successfully logged out")
 
         with self.assertRaises(Account.DoesNotExist):
@@ -64,7 +64,7 @@ class TestLoginHelper(TestCase):
     def test_logout_not_logged_in(self):
         #loging out when no Account is the current user
 
-        self.assertEqual(self.login.logout(), "Please Log in First")
+        self.assertEqual(self.login.logout(), "Please log in First")
 
         with self.assertRaises(Account.DoesNotExist):
             A = Account.objects.get(currentUser='True')

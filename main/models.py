@@ -27,18 +27,49 @@ class UI:
 
         elif command[0].lower() == "createaccount":
             CUH = CurrentUserHelper()
-            if CUH.getCurrentUserTitle() < 4:
+            if CUH.getCurrentUserTitle() < 3:
                 return "You do not have the credentials to create an account. Permission denied"
 
             CA = CreateAccount()
             return CA.createAccount(command)
 
         elif command[0].lower() == "createlab":
+            CUH = CurrentUserHelper()
+            if CUH.getCurrentUserTitle() < 3:
+                return "You do not have the credentials to create a lab. Permission denied"
+
             create = CreateLab()
             return create.createLab(command)
+
         elif command[0].lower() == "createcourse":
-            """
-            """
+            CUH = CurrentUserHelper()
+            if CUH.getCurrentUserTitle() < 3:
+                return "You do not have the credentials to create a course. Permission denied"
+
+            return command[0]
+
+        elif command[0].lower() == "assigninstructorcourse":
+            CUH = CurrentUserHelper()
+            if CUH.getCurrentUserTitle() < 3:
+                return "You do not have the credentials to assign an instructor to a course. Permission denied"
+
+            return command[0]
+
+        elif command[0].lower() == "assigntalab":
+            CUH = CurrentUserHelper()
+            if CUH.getCurrentUserTitle() < 2:
+                return "You do not have the credentials to assign a ta to a lab. Permission denied"
+
+            return command[0]
+
+        elif command[0].lower == "assigntacourse":
+            CUH = CurrentUserHelper()
+            if CUH.getCurrentUserTitle() < 3:
+                return "You do not have the credentials to assign a ta to a course. Permission denied"
+
+            return command[0]
+
+        elif command[0].lower == "viewcourseassign":
             return command[0]
 
         else:
