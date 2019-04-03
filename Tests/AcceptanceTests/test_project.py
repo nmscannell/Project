@@ -197,7 +197,7 @@ class TestProject(TestCase):
 
     def test_command_createLab_success(self):
         self.assertEqual(self.UI.command("createLab courseNumber labSection day begin end"),
-                         "Course successfully created")
+                         "Lab successfully created")
 
     def test_command_createLab_no_args(self):
         self.assertEqual(self.UI.command("createLab"),
