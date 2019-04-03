@@ -8,8 +8,8 @@ class Course(models.Model):
     number = models.IntegerField(default=000)
     onCampus = models.BooleanField(default=True)
     classDays = models.CharField(max_length=10, default=" ")
-    classHoursStart = models.IntegerField(max_length=10, default="0000")
-    classHoursEnd = models.IntegerField(max_length=10, default="0000")
+    classHoursStart = models.IntegerField(default=0000)
+    classHoursEnd = models.IntegerField(default=0000)
 
     def __str__(self):
         return None
