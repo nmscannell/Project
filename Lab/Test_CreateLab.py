@@ -8,23 +8,23 @@ class Test_CreateLab(TestCase):
 
     def setUp(self):
         self.CL = CreateLab()
-        CreateLab.objects.create(courseNumber=52312, sectionNumber="001",
+        Lab.objects.create(courseNumber=52312, sectionNumber="001",
                                  meetingDays="W", startTime="1000", endTime="1200")
-        CreateLab.objects.create(courseNumber=52312, sectionNumber="002",
+        Lab.objects.create(courseNumber=52312, sectionNumber="002",
                                  meetingDays="F", startTime="1400", endTime="1700")
-        CreateLab.objects.create(courseNumber=54911, sectionNumber="003",
-                                 meetingDays="M,W", startTime="10:00", endTime="12:00")
+        Lab.objects.create(courseNumber=54911, sectionNumber="003",
+                                 meetingDays="M W", startTime="10:00", endTime="12:00")
 
     def test_lab_was_successfully_created(self):
-        a = CreateLab.createLab().get(courseNumber=52312, sectionNumber="001")
+        a =  CreateLab.createLab.get(courseNumber=52312, sectionNumber="001")
         self.assertEqual(a.meetingDays, "W")
         self.assertEqual(a.starTime, "1000")
         self.assertEqual(a.endTime, "1200")
-        b = CreateLab.createLab().get(courseNumber=52312, sectionNumber="002")
+        b = CreateLab.createLab.get(courseNumber=52312, sectionNumber="002")
         self.assertEqual(b.meetingDays, "F")
         self.assertEqual(b.starTime, "1400")
         self.assertEqual(b.endTime, "1700")
-        c = CreateLab.createLab().get(courseNumber=54911, sectionNumber="001")
+        c = CreateLab.createLab.get(courseNumber=54911, sectionNumber="001")
         self.assertEqual(c.meetingDays, "M W")
         self.assertEqual(c.starTime, "1000")
         self.assertEqual(c.endTime, "1200")
