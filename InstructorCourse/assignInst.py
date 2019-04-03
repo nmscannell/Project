@@ -1,4 +1,4 @@
-from Lab.models import Lab
+from InstructorCourse.models import InstructorCourse
 from CurrentUserHelper import CurrentUserHelper
 
 
@@ -15,4 +15,6 @@ class assignInst():
             userName = command[2]
 
 
-            return str(c) + " added to database"
+
+
+        return str(c) + " added to database"
