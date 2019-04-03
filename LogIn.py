@@ -13,18 +13,18 @@ class LoginHelper():
 
         test = Account.objects.filter(currentUser=True)
         if len(test) > 0:
-            raise Exception("A user is already logged in")
+            return "A user is already logged in"
 
         if len(command) > 3 or len(command) < 3:
-            raise Exception("Your command is missing arguments.  Please enter your command in the following format: login userName password")
+            return "Your command is missing arguments.  Please enter your command in the following format: login userName password"
 
         try:
             CurrentUser = Account.objects.get(userName=command[1])
             if CurrentUser.password != command[2]:
-                raise Exception("Incorrect password")
+                return "Incorrect password"
 
         except Account.DoesNotExist:
-            raise Exception("Account Not Found")
+            return "Account Not Found"
 
         CurrentUser.currentUser = True
         CurrentUser.save()
@@ -41,8 +41,8 @@ class LoginHelper():
             CurrentUser.save()
             return "Successfully logged out"
         except Account.DoesNotExist:
-            raise Exception("Please log in First")
+            return "Please log in First"
         except Account.MultipleObjectsReturned:
-            raise Exception("Multiple account Logged in, Something went terribly wrong")
+            return "Multiple account Logged in, Something went terribly wrong"
 
         return "Successfully logged out"
