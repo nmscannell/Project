@@ -8,7 +8,7 @@ class CreateLab():
         cuh = CurrentUserHelper()
         if cuh.getCurrentUserTitle() < 3:
             return "Permission denied. Only administrators and supervisors can create labs"
-        if len(command) > 4 or len(command) < 4:
+        if len(command) > 5 or len(command) < 5:
             return "Please retype the command. " \
                    "CreateLabs command takes 5 arguments: course number,section number, meeting days, " \
                    "start time, and end time"
