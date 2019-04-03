@@ -22,5 +22,12 @@ class TestLoginLogout(TestCase):
         self.assertTrue(self.CUH.isCurrent())
 
     def test01(self):
+        self.assertFalse(self.CUH.isCurrent())
+
         self.assertEqual(self.login.login(["login", "hsimpson", '123456']), "Logged in as Homer")
 
+        self.assertTrue(self.CUH.isCurrent())
+
+        self.assertEqual(self.login.logout(), "Successfully logged out")
+
+        self.assertFalse(self.CUH.isCurrent())
