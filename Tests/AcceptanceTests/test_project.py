@@ -34,10 +34,10 @@ class TestProject(TestCase):
                                officePhone="897-654-398", officeDays="MW", officeHoursStart="1500",
                                officeHoursEnd="1600", currentUser=False)
 
-        Course.objects.create(name="Data Structures", number=351, onCampus=True, classDays="TR",
+        Course.objects.create(name="DataStructures", number=351, onCampus=True, classDays="TR",
                               classHoursStart=1200, classHoursEnd=1300)
 
-        Course.objects.create(name="Computer Architecture", number=458, onCampus=True, classDays="MW",
+        Course.objects.create(name="ComputerArchitecture", number=458, onCampus=True, classDays="MW",
                               classHoursStart=1230, classHoursEnd=1345
                               )
        # Lab.objects.create(courseNumber=351, labSection=101, days="W", begin=1300, end=1400)
