@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'main',
     'Course',
     'Lab'
+    'InstructorCourse'
 ]
 
 MIDDLEWARE = [
