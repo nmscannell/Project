@@ -34,8 +34,12 @@ class TestProject(TestCase):
                                officePhone="897-654-398", officeDays="MW", officeHoursStart="1500",
                                officeHoursEnd="1600", currentUser=False)
 
-       # until the Course class is created, leave these commented out, The tests will break otherwise
-       # Course.objects.create(name="Data Structures", number=351, daysOfWeek="TR", start=1200, end=1300)
+        Course.objects.create(name="Data Structures", number=351, onCampus=True, classDays="TR",
+                              classHoursStart=1200, classHoursEnd=1300)
+
+        Course.objects.create(name="Computer Architecture", number=458, onCampus=True, classDays="MW",
+                              classHoursStart=1230, classHoursEnd=1345
+                              )
        # Lab.objects.create(courseNumber=351, labSection=101, days="W", begin=1300, end=1400)
 
     """
@@ -124,46 +128,55 @@ class TestProject(TestCase):
     """
 
     def test_command_createCourse_permission_denied(self):
-        self.assertEqual(self.UI.command("createCourse courseName courseNumber daysOfWeek starte end"),
+        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+        self.assertEqual(self.UI.command("createCourse SoftwareEngineering 361 TR 1000 1050"),
                          "You do not have the credentials to create a course. Permission denied")
 
     def test_command_createCourse_success(self):
-        self.assertEqual(self.UI.command("createCourse courseName courseNumber daysOfWeek start end"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse SoftwareEngineering 361 True TR 1000 1050"),
                          "Course successfully created")
 
     def test_command_createCourse_missingArguments(self):
-        self.assertEqual(self.UI.command("createCourse courseNumber daysOfWeek start end"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse 431 T 1400 1500"),
                          "Your command is missing arguments, please enter your command in the following form: "
-                         "createCourse courseName courseNumber daysOfWeek start end")
+                         "createCourse courseName courseNumber onCampus daysOfWeek start end")
 
     def test_command_createCourse_missingArguments2(self):
-        self.assertEqual(self.UI.command("createCourse courseName daysOfWeek start end"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse Dance T 1400 1500"),
                          "Your command is missing arguments, please enter your command in the following form: "
-                         "createCourse courseName courseNumber daysOfWeek start end")
+                         "createCourse courseName courseNumber onCampus daysOfWeek start end")
 
     def test_command_createCourse_missingArguments3(self):
-        self.assertEqual(self.UI.command("createCourse courseName courseNumber start end"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse Dance 431 1400 1500"),
                          "Your command is missing arguments, please enter your command in the following form: "
-                         "createCourse courseName courseNumber daysOfWeek start end")
+                         "createCourse courseName courseNumber onCampus daysOfWeek start end")
 
     def test_command_createCourse_missingArguments4(self):
-        self.assertEqual(self.UI.command("createCourse courseName courseNumber daysOfWeek end"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse Dance 431 T 1500"),
                          "Your command is missing arguments, please enter your command in the following form: "
-                         "createCourse courseName courseNumber daysOfWeek start end")
+                         "createCourse courseName courseNumber onCampus daysOfWeek start end")
 
     def test_command_createCourse_missingArguments5(self):
-        self.assertEqual(self.UI.command("createCourse courseName courseNumber daysOfWeek start"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse Dance 431 True T 1400"),
                          "Your command is missing arguments, please enter your command in the following form: "
-                         "createCourse courseName courseNumber daysOfWeek start end")
+                         "createCourse courseName courseNumber onCampus daysOfWeek start end")
 
     def test_command_createCourse_no_args(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createCourse"),
                          "Your command is missing arguments, please enter your command in the following form: "
-                         "createCourse courseName courseNumber daysOfWeek start end")
+                         "createCourse courseName courseNumber onCampus daysOfWeek start end")
 
     def test_command_createCourse_course_exists(self):
-        self.assertEqual(self.UI.command("createCourse Data Structures 351 TR 09:00 09:50"),
-                         "Course already exists, course not added.")
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse DataStructures 351 True TR 0900 0950"),
+                         "Course already exists")
 
 
     """

@@ -2,6 +2,7 @@ from Account.models import Account
 from LogIn import LoginHelper
 from Account.CreateAccount import CreateAccount
 from Lab.CreateLab import CreateLab
+from Course.CreateCourse import CreateCourse
 from CurrentUserHelper import CurrentUserHelper
 # Create your models here.
 
@@ -46,7 +47,8 @@ class UI:
             if CUH.getCurrentUserTitle() < 3:
                 return "You do not have the credentials to create a course. Permission denied"
 
-            return command[0]
+            create = CreateCourse()
+            return create.createCourse(command)
 
         elif command[0].lower() == "assigninstructorcourse":
             CUH = CurrentUserHelper()
