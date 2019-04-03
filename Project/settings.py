@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'Account',
     'main',
     'Course',
-    'Lab'
+    'Lab',
+    'InstructorCourse'
 ]
 
 MIDDLEWARE = [
