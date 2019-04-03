@@ -23,7 +23,7 @@ class CreateLab():
         if Lab.objects.filter(courseNumber, sectionNumber).exists():
             return "Lab already exists, lab not added"
         else:
-            l = Lab(courseNumber, sectionNumber)
+            l = Lab.objects.create(courseNumber=courseNumber, sectionNumber=sectionNumber)
             l.meetingDays = meetingDays
             l.classHoursStart = startTime
             l.classHoursEnd = endTime
