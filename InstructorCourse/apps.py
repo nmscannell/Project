@@ -1,5 +1,5 @@
 from django.apps import AppConfig
 
 
-class AitcConfig(AppConfig):
+class InstructorcourseConfig(AppConfig):
     name = 'InstructorCourse'
