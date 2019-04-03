@@ -124,7 +124,7 @@ class TestProject(TestCase):
     """
 
     def test_command_createCourse_permission_denied(self):
-        self.assertEqual(self.UI.commands("createCourse courseName courseNumber daysOfWeek starte end"),
+        self.assertEqual(self.UI.command("createCourse courseName courseNumber daysOfWeek starte end"),
                          "You do not have the credentials to create a course. Permission denied")
 
     def test_command_createCourse_success(self):
@@ -178,7 +178,7 @@ class TestProject(TestCase):
     """
 
     def test_command_createLab_permission_denied(self):
-        self.assertEqual(self.UI.commands("createLab courseNumber labSection day begin end"),
+        self.assertEqual(self.UI.command("createLab courseNumber labSection day begin end"),
                          "You do not have the credentials to create a lab. Permission denied")
 
     def test_command_createLab_success(self):
@@ -243,11 +243,11 @@ class TestProject(TestCase):
        """
 
     def test_command_edit_permission_denied(self):
-        self.assertEqual(self.UI.commands("edit username email timmy89@uwm.edu"),
+        self.assertEqual(self.UI.command("edit username email timmy89@uwm.edu"),
                          "You do not have the credentials to edit this information. Permission denied")
 
     def test_command_edit_homePhone_success(self):
-        self.asserEqual(self.UI.command("edit username homephone 262-555-7134"),
+        self.assertEqual(self.UI.command("edit username homephone 262-555-7134"),
                         "Home phone successfully updated")
 
     def test_command_edit_email_success(self):
@@ -295,32 +295,31 @@ class TestProject(TestCase):
     """
         send command 
         Only supervisors and administrators can utilize this command 
-        When the sendOutNotification command is entered it takes 2-3 arguments: 
+        When the sendOutNotification command is entered it takes 2-many arguments: 
 
         -send -a
         To send notification to all users.
 
-        -send accountNames -s
+        -send accountName(s) -s
         To send notification to specific users.
 
-        -send  accountName
+        -send accountName
         to send notification to one person
     """
 
-
     def test_command_send_permission_denied(self):
-        self.assertEqual(self.UI.commands("send -a"),
+        self.assertEqual(self.UI.command("send -a"),
                          "You do not have the credentials to send notifications. Permission denied")
 
-    def test_command_send_success(self):
+    def test_command_send_specific_success(self):
         self.assertEqual(self.UI.command("send accountName"), "Notification was sent successfully")
 
     def test_command_send_all_success(self):
         self.assertEqual(self.UI.command("send -a"),
                          "Notification was sent to all users successfully")
 
-    def test_command_send_specific_success(self):
-        self.assertEqual(self.UI.command("send accountName(s) -s"),
+    def test_command_send_specific_multiple_success(self):
+        self.assertEqual(self.UI.command("send accountName accountName accountName -s"),
                          "Notification was sent to specific people successfully")
 
     def test_command_send_error(self):
@@ -329,22 +328,22 @@ class TestProject(TestCase):
 
     def test_command_send_all_error(self):
         self.assertEqual(self.UI.command("send accountName -a"),
-                         "We weren't able to send a notification to all")
+                         "There was an error, notification not sent")
 
     def test_command_send_specific_error(self):
         self.assertEqual(self.UI.command("send accountNames -s"),
-                         "We weren't able to send a notification to specific people")
+                         "There was an error, notification not sent")
 
-    def test_command_send_no_argument(self):
-        self.assertEqual(self.UI.command("send -s"),
-                         "Please enter usernames")
+    #def test_command_send_no_argument(self):
+    #    self.assertEqual(self.UI.command("send -s"),
+    #                     "")
 
-    def test_command_send_no_argument_2(self):
-            self.assertEqual(self.UI.command("send -a"),
-                             "Please type the user names  that you want to sent")
+    #def test_command_send_no_argument_2(self):
+    #        self.assertEqual(self.UI.command("send -a"),
+    #                         "Please type the user names  that you want to sent")
 
-    def test_command_send_no_argument_3(self):
-        self.assertEqual(self.UI.command("sendNotification"), "Please type the username that you want to sent")
+    #def test_command_send_no_argument_3(self):
+    #    self.assertEqual(self.UI.command("sendNotification"), "Please type the username that you want to sent")
 
 
     """
@@ -478,7 +477,7 @@ class TestProject(TestCase):
                          "Your argument is missing commands, please enter your command in the following format: "
                          "assignTALab username classNumber labSectionNumber")
 
-    def test_command_assignTALab_argumentsMissing(self):
+    def test_command_assignTALab_argumentsMissing1(self):
         self.assertEqual(self.UI.command("assignTALab userName"),
                          "Your argument is missing commands, please enter your command in the following format: "
                          "assignTALab username classNumber labSectionNumber")
@@ -500,10 +499,10 @@ class TestProject(TestCase):
     """
 
     def test_command_viewInfo_success(self):
-        self.asserEqual(self.UI.command("viewInfo userName"), "")
+        self.assertEqual(self.UI.command("viewInfo userName"), "")
 
     def test_command_viewInfo_user_does_not_exist(self):
-        self.asserEqual(self.UI.command("viewInfo userName"), "Account does not exist")
+        self.assertEqual(self.UI.command("viewInfo userName"), "Account does not exist")
 
     def test_command_viewInfo_no_accountName(self):
         self.assertEqual(self.UI.command("viewInfo"),
@@ -578,3 +577,4 @@ class TestProject(TestCase):
 
     def test_command_viewTAAssignments_classDoesNotExist(self):
         self.assertEqual(self.UI.command("viewTAAssignments classNumber"), "Class does not exist")
+
