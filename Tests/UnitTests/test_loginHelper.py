@@ -38,7 +38,7 @@ class TestLoginHelper(TestCase):
     def test_login_2_arguments(self):
         #User doesn't enter enough arugments
         self.assertEqual(self.login.login(self.Command4),
-                         "Your command is missing arguments. Please enter your command in the following format: "
+                         "Your command is missing arguments.  Please enter your command in the following format: "
                          "login userName password")
 
         with self.assertRaises(Account.DoesNotExist):
