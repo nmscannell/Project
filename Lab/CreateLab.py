@@ -13,25 +13,25 @@ class CreateLab():
             return "Your command is missing arguments, please enter your command in the following format: " \
                    "createLab courseNumber labSectionNumber daysOfWeek beginTime endTime"
 
-        courseNumber = command[1]
-        sectionNumber = command[2]
-        meetingDays = command[3]
-        startTime = command[4]
-        endTime = command[5]
+        course = command[1]
+        section = command[2]
+        meeting = command[3]
+        start = command[4]
+        end = command[5]
 
         try:
-            c = Course.objects.filter(courseNumber)
+            c = Course.objects.filter(course)
         except Course.DoesNotExist:
             return "The Course you are trying to create a lab for does not exist"
 
-        if Lab.objects.filter(courseNumber, sectionNumber).exists():
+        if Lab.objects.filter(course, section).exists():
             return "Lab already exists, lab not added"
         else:
             l = Lab.objects.create()
             l.course = c
-            l.sectionNumber=sectionNumber
-            l.meetingDays = meetingDays
-            l.startTime = startTime
-            l.endTi = endTime
+            l.sectionNumber=section
+            l.meetingDays = meeting
+            l.startTime = start
+            l.endTi = end
             l.save()
             return "Lab successfully created"
