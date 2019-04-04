@@ -116,10 +116,10 @@ class TestProject(TestCase):
         When the createCourse command is entered, it takes six arguments:
         -Course Name 
         -Course Number 
-        -Meetings days 
-        -Campus or online 
-        -Start time 
-        -End time
+        -Campus or online
+        -Meetings days (if online, enter NN)  
+        -Start time (if online, enter 0000)
+        -End time (if online, enter 0000)
            
         If the course name matches a database entry a then the course is not created 
         and an error message is displayed and some other stuff

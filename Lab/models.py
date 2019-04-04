@@ -6,7 +6,7 @@ from Course.models import Course
 class Lab(models.Model):
 
     models.ForeignKey(Course, on_delete=models.CASCADE)
-    sectionNumber = models.IntegerField(max_length=10, default=000)
+    sectionNumber = models.IntegerField(default=000)
     meetingDays = models.CharField(max_length=10, default=" ")
     startTime = models.IntegerField(default=0000)
     endTime = models.IntegerField(default=0000)
