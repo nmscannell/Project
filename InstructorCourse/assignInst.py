@@ -14,10 +14,10 @@ class assignInst():
             classNumber = command[1]
             userName = command[2]
 
-        if InstructorCourse.objects.get(classNumber).exists():
+        if InstructorCourse.objects.filter(classNumber).exists():
             raise Exception("Class number already exists")
         else:
             a = InstructorCourse(CourseNumber)
             a.userName = userName
             a.save()
-            return str(c) + " added to database"
+            return "Assignment course to instructor successfully created"
