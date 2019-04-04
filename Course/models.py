@@ -12,4 +12,4 @@ class Course(models.Model):
     classHoursEnd = models.IntegerField(default=0000)
 
     def __str__(self):
-        return None
+        return self.name
