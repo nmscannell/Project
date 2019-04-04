@@ -17,7 +17,7 @@ class assignInst():
         if InstructorCourse.objects.filter(classNumber).exists():
             raise Exception("Class number already exists")
         else:
-            a = InstructorCourse(CourseNumber)
+            a = InstructorCourse(classNumber)
             a.userName = userName
             a.save()
             return "Assignment course to instructor successfully created"

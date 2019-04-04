@@ -5,9 +5,7 @@ from Course.models import Course
 
 
 class InstructorCourse(models.Model):
-    models.ManyToManyField(Course, on_delete=models.CASCADE)
-
-
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     def __str__(self):
         return None
