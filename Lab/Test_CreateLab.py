@@ -5,15 +5,11 @@ from main import models
 
 
 class Test_CreateLab(TestCase):
-
     def setUp(self):
         self.CL = CreateLab()
-        Lab.objects.create(courseNumber=52312, sectionNumber="001",
-                                 meetingDays="W", startTime="1000", endTime="1200")
-        Lab.objects.create(courseNumber=52312, sectionNumber="002",
-                                 meetingDays="F", startTime="1400", endTime="1700")
-        Lab.objects.create(courseNumber=54911, sectionNumber="003",
-                                 meetingDays="MW", startTime="10:00", endTime="12:00")
+        Lab.objects.create(courseNumber=52312, sectionNumber="001", meetingDays="W", startTime="1000", endTime="1200")
+        Lab.objects.create(courseNumber=52312, sectionNumber="002", meetingDays="F", startTime="1400", endTime="1700")
+        Lab.objects.create(courseNumber=54911, sectionNumber="003", meetingDays="MW", startTime="10:00", endTime="12:00")
 
     def test_lab_was_successfully_created(self):
         a =  CreateLab.createLab.get(courseNumber=52312, sectionNumber="001")
