@@ -13,12 +13,14 @@ class Test_assignInst(TestCase):
         InstructorCourse.objects.create(courseNumber=54911, userName="potato24")
         self.command_assign_course = ["assignInst", "42133", "jack2131"]
         self.command_section_was_already_existed = ["assignInst", "12451", "super999"]
-        self.command_create_lab_no_args = ["assignInst"]
-        self.command_create_lab_no_courseNumber = ["assignInst", "pycharm591"]
-        self.command_create_lab_no_userName = ["assignInst, "58123""]
+        self.command_assignment_no_args = ["assignInst"]
+        self.command_assignment_no_courseNumber = ["assignInst", "pycharm591"]
+        self.command_assignment_no_userName = ["assignInst", "58123"]
 
     def test_assignment_was_successfully_created(self):
-        pass
+        assignInst.assignInst(self.AI, self.command_assign_course)
+        a = InstructorCourse.objects.get(username="system928down")
+
 
 
     def test_lab_was_successfully_created(self):
