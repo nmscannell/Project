@@ -8,8 +8,8 @@ class Test_assignInst(TestCase):
 
     def setUp(self):
         self.AI = assignInst()
-        InstructorCourse.objects.create(classNumber=52312, userName="django123")
-        InstructorCourse.objects.create(classNumber=52312, username="stack_over_flow")
+        InstructorCourse.objects.create(coursesNumber=52312, userName="django123")
+        InstructorCourse.objects.create(courseNumber=52312, username="stack_over_flow")
         InstructorCourse.objects.create(courseNumber=54911, userName="potato24")
         self.command_assign_course = ["assignInst", "42133", "jack2131"]
         self.command_section_was_already_existed = ["assignInst", "12451", "super999"]
@@ -19,13 +19,13 @@ class Test_assignInst(TestCase):
 
     def test_assignment_was_successfully_created(self):
         assignInst.assignInst(self.AI, self.command_assign_course)
-        a = InstructorCourse.objects.get(username="system928down")
+        a = InstructorCourse.objects.get(userName="system928down")
         self.assertEqual(a.classNumber, 12425)
         self.assertEqual(a.userName, "system928down")
-        b = InstructorCourse.objects.get(username="default122")
+        b = InstructorCourse.objects.get(userName="default122")
         self.assertEqual(b.classNumber, 51221)
         self.assertEqual(b.userName, "default122")
-        c = InstructorCourse.objects.get(username="bucks213")
+        c = InstructorCourse.objects.get(userName="bucks213")
         self.assertEqual(b.classNumber, 12425)
         self.assertEqual(b.userName, "bucks213")
 
