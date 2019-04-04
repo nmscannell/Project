@@ -29,7 +29,7 @@ class CreateLab():
         else:
             l = Lab.objects.create()
             l.course = c
-            l.sectionNumber=sectionNumber
+            l.sectionNumber = sectionNumber
             l.meetingDays = meetingDays
             l.startTime = startTime
             l.endTi = endTime
