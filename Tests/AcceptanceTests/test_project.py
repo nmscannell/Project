@@ -190,6 +190,8 @@ class TestProject(TestCase):
         If the lab already exists, a new lab is not created. If arguments are missing, return error. If the 
         associated course is online, a lab cannot be created for it.
     """
+    # Need a test for trying to create a lab for a course that doesn't exist
+    # msg: "The Course you are trying to create a lab for does not exist"
 
     def test_command_createLab_permission_denied(self):
         self.assertEqual(self.UI.command("createLab courseNumber labSection day begin end"),

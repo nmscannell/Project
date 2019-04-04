@@ -1,4 +1,5 @@
 from Lab.models import Lab
+from Course.models import Course
 from CurrentUserHelper import CurrentUserHelper
 
 
@@ -18,14 +19,19 @@ class CreateLab():
         startTime = command[4]
         endTime = command[5]
 
-        #if Lab.objects.get(courseNumber).exists():
-        #    return "Course number already exists"
+        try:
+            c = Course.objects.filter(courseNumber)
+        except Course.DoesNotExist:
+            return "The Course you are trying to create a lab for does not exist"
+
         if Lab.objects.filter(courseNumber, sectionNumber).exists():
             return "Lab already exists, lab not added"
         else:
-            l = Lab.objects.create(courseNumber=courseNumber, sectionNumber=sectionNumber)
+            l = Lab.objects.create()
+            l.course = c
+            l.sectionNumber=sectionNumber
             l.meetingDays = meetingDays
-            l.classHoursStart = startTime
-            l.classHoursEnd = endTime
+            l.startTime = startTime
+            l.endTi = endTime
             l.save()
             return "Lab successfully created"
