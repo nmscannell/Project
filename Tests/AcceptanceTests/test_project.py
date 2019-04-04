@@ -54,7 +54,7 @@ class TestProject(TestCase):
     
     """
     def test_command_login_success(self):
-        self.assertEqual(self.UI.command("login janewayk123 123456"), "Logged in as Kathryn")
+        self.assertEqual(self.UI.command("login janewayk123 123456"), "Logged in as janewayk123")
 
     def test_command_login_incorrect_password(self):
         self.assertEqual(self.UI.command("login janewayk123 aaaaaaa"), "Incorrect password")
