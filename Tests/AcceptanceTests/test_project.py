@@ -117,7 +117,7 @@ class TestProject(TestCase):
         -Course Name 
         -Course Number 
         -Meetings days 
-        -onCampus (True if on campus, False if online)
+        -Campus or online 
         -Start time 
         -End time
            
@@ -130,12 +130,12 @@ class TestProject(TestCase):
 
     def test_command_createCourse_permission_denied(self):
         LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
-        self.assertEqual(self.UI.command("createCourse SoftwareEngineering 361 TR 1000 1050"),
+        self.assertEqual(self.UI.command("createCourse SoftwareEngineering 361 Campus TR 1000 1050"),
                          "You do not have the credentials to create a course. Permission denied")
 
     def test_command_createCourse_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createCourse SoftwareEngineering 361 True TR 1000 1050"),
+        self.assertEqual(self.UI.command("createCourse SoftwareEngineering 361 Campus TR 1000 1050"),
                          "Course successfully created")
 
     def test_command_createCourse_missingArguments(self):
@@ -164,7 +164,7 @@ class TestProject(TestCase):
 
     def test_command_createCourse_missingArguments5(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createCourse Dance 431 True T 1400"),
+        self.assertEqual(self.UI.command("createCourse Dance 431 Campus T 1400"),
                          "Your command is missing arguments, please enter your command in the following form: "
                          "createCourse courseName courseNumber onCampus daysOfWeek start end")
 
@@ -176,7 +176,7 @@ class TestProject(TestCase):
 
     def test_command_createCourse_course_exists(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createCourse DataStructures 351 True TR 0900 0950"),
+        self.assertEqual(self.UI.command("createCourse DataStructures 351 Campus TR 0900 0950"),
                          "Course already exists")
 
 
