@@ -17,16 +17,16 @@ class Test_CreateLab(TestCase):
         Course.objects.create(name="QuantumMechanics", number=709, onCampus=True, classDays="MWF",
                               classHoursStart=1030, classHoursEnd=1145)
 
-        self.c1 = Course.objects.filter(name="TemporalMechanics")
-        self.c2 = Course.objects.filter(name="WarpTheory")
-        self.c3 = Course.objects.filter(name="QuantumMechanics")
+        self.c1 = Course.objects.get(name="TemporalMechanics")
+        self.c2 = Course.objects.get(name="WarpTheory")
+        self.c3 = Course.objects.get(name="QuantumMechanics")
 
         Lab.objects.create(course=self.c1, sectionNumber=201, meetingDays="W", startTime=1000, endTime=1200)
         Lab.objects.create(course=self.c1, sectionNumber=202, meetingDays="F", startTime=1400, endTime=1700)
         Lab.objects.create(course=self.c1, sectionNumber=203, meetingDays="T", startTime=1000,endTime=1200)
 
         self.command_create_lab = ["createLab", 633, 201, "T", 1000, 1100]
-        self.command_create_lab_multiple_section = ["createLab", 633, 202, "w", 1300, 1400]
+        self.command_create_lab_multiple_section = ["createLab", 633, 202, "W", 1300, 1400]
         self.command_create_lab2 = ["createLab", 709, 201, "R", 1200, 1345]
 
         self.command_section_exists = ["createLab", 358, "002", "MW", "1000", "1100"]
