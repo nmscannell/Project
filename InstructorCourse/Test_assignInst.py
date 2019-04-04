@@ -21,45 +21,26 @@ class Test_assignInst(TestCase):
         assignInst.assignInst(self.AI, self.command_assign_course)
         a = InstructorCourse.objects.get(username="system928down")
         self.assertEqual(a.classNumber, 12425)
-        self.assertEqual(a.userName, "bucky213")
-        
+        self.assertEqual(a.userName, "system928down")
+        b = InstructorCourse.objects.get(username="default122")
+        self.assertEqual(b.classNumber, 51221)
+        self.assertEqual(b.userName, "default122")
+        c = InstructorCourse.objects.get(username="bucks213")
+        self.assertEqual(b.classNumber, 12425)
+        self.assertEqual(b.userName, "bucks213")
 
-
-
-
-    def test_lab_was_successfully_created(self):
-        CreateLab.createLab(self.CL, self.command_create_lab)
-        a = Lab.objects.get(courseNumber=91231, sectionNumber="001")
-        self.assertEqual(a.courseNumber, 91231)
-        self.assertEqual(a.sectionNumber, "001")
-        self.assertEqual(a.meetingDays, "TR")
-        self.assertEqual(a.starTime, "1300")
-        self.assertEqual(a.endTime, "1500")
-        b = Lab.objects.get(courseNumber=19201, sectionNumber="001")
-        self.assertEqual(b.courseNumber, 19201)
-        self.assertEqual(b.sectionNumber, "001")
-        self.assertEqual(b.meetingDays, "M")
-        self.assertEqual(b.starTime, "1500")
-        self.assertEqual(b.endTime, "1600")
-        c = Lab.objects.get(courseNumber=51999, sectionNumber="004")
-        self.assertEqual(c.courseNumber, 51999)
-        self.assertEqual(c.sectionNumber, "004")
-        self.assertEqual(c.meetingDays, "T")
-        self.assertEqual(c.starTime, "1000")
-        self.assertEqual(c.endTime, "1200")
-
-    def test_section_was_already_existed(self):
-        self.assertEqual((CreateLab.createLab(self.CL, self.command_section_was_already_existed)),
+    def test_assignment_was_already_existed(self):
+        self.assertEqual((assignInst.assignInst(self.AI, self.command_section_was_already_existed)),
                          "Course already exists")
 
     def test_lab_no_argument(self):
-        self.assertEqual(CreateLab.createLab(self.CL, self.command_create_lab_no_args))
+        self.assertEqual(assignInst.assignInst(self.AI, self.command_assignment_no_args))
 
     def test_lab_no_courseNumber(self):
-        self.assertEqual(CreateLab.createLab(self.CL, self.command_create_lab_no_courseNumber))
+        self.assertEqual(assignInst.assignInst(self.AI, self.command_assignment_no_courseNumber))
 
     def test_lab_no_sectionNumber(self):
-        self.assertEqual(CreateLab.createLab(self.CL, self.command_create_lab_no_sectionNumber))
+        self.assertEqual(assignInst.assignInst(self.AI, self.command_assignment_no_userName))
 
 
 
