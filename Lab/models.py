@@ -11,6 +11,5 @@ class Lab(models.Model):
     startTime = models.IntegerField(default=0000)
     endTime = models.IntegerField(default=0000)
 
-
     def __str__(self):
         return None

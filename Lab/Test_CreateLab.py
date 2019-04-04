@@ -9,10 +9,17 @@ class Test_CreateLab(TestCase):
         self.CL = CreateLab()
         Lab.objects.create(courseNumber=52312, sectionNumber="001", meetingDays="W", startTime="1000", endTime="1200")
         Lab.objects.create(courseNumber=52312, sectionNumber="002", meetingDays="F", startTime="1400", endTime="1700")
-        Lab.objects.create(courseNumber=54911, sectionNumber="003", meetingDays="MW", startTime="10:00", endTime="12:00")
+        Lab.objects.create(courseNumber=54911, sectionNumber="003", meetingDays="MW", startTime="1000",
+                           endTime="1200")
+        self.command_create_lab = ["createLab", 42125, "001", "T", "1000", "1100"]
+        self.command_section_was_already_existed = ["createLab", 23462, "002", "MW",
+                                                    "1000", "1100"]
+        self.command_create_lab_no_args = ["createLab"]
+        self.command_create_lab_no_courseNumber = ["createLab", "001", "W", "1000", "1200"]
+        self.command_create_lab_no_sectionNumber = ["createLab", 52312, "W", "1000", "1200"]
 
     def test_lab_was_successfully_created(self):
-        a =  CreateLab.createLab.get(courseNumber=52312, sectionNumber="001")
+        a = CreateLab.createLab.get(courseNumber=52312, sectionNumber="001")
         self.assertEqual(a.meetingDays, "W")
         self.assertEqual(a.starTime, "1000")
         self.assertEqual(a.endTime, "1200")
