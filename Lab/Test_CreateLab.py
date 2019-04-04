@@ -19,7 +19,8 @@ class Test_CreateLab(TestCase):
         self.command_create_lab_no_sectionNumber = ["createLab", 52312, "W", "1000", "1200"]
 
     def test_lab_was_successfully_created(self):
-        a = CreateLab.createLab.get(courseNumber=52312, sectionNumber="001")
+        CreateLab.createLab(self.CL, self.command_create_lab)
+        a = Lab.objects.get(courseNumber=52312, sectionNumber="002")
         self.assertEqual(a.meetingDays, "W")
         self.assertEqual(a.starTime, "1000")
         self.assertEqual(a.endTime, "1200")
