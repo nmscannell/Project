@@ -20,6 +20,10 @@ class Test_assignInst(TestCase):
     def test_assignment_was_successfully_created(self):
         assignInst.assignInst(self.AI, self.command_assign_course)
         a = InstructorCourse.objects.get(username="system928down")
+        self.assertEqual(a.classNumber, 12425)
+        self.assertEqual(a.userName, "bucky213")
+        
+
 
 
 
