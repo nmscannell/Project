@@ -25,13 +25,15 @@ class test_CreateAccount(TestCase):
                                officePhone="897-654-398", officeDays="MW", officeHoursStart="1500",
                                officeHoursEnd="1600", currentUser=False)
 
-        self.command_create_account = ["createAccount", "data33", "instructor", "data33@starfleet.com"]
-        self.command1_create_account = ["createAccount", "spock29", "instructor", "spock29@starfleet.com"]
-        self.command2_create_account = ["createAccount", "tuckert90", "TA", "tuckert90@starfleet.com"]
-        self.command_already_exists = ["createAccount", "picard304", "TA", "picardj@starfleet.com"]
-        self.command2_already_exists = ["createAccount", "janewayk123", "instructor", "janewayk@starfleet.com"]
+        self.command_create_account = ["createAccount", "data33", "instructor", "data33@uwm.edu"]
+        self.command1_create_account = ["createAccount", "spock29", "instructor", "spock29@uwm.edu"]
+        self.command2_create_account = ["createAccount", "tuckert90", "TA", "tuckert90@uwm.edu"]
+        self.command_already_exists = ["createAccount", "picard304", "TA", "picardj@uwm.edu"]
+        self.command2_already_exists = ["createAccount", "janewayk123", "instructor", "janewayk@uwm.edu"]
         self.command_missing_one_arg = ["createAccount", "parist64", "TA"]
         self.command_missing_two_args = ["createAccount", "paris64"]
+        self.command_invalid_email = ["createAccount", "crusherw31", "TA", "crusher@hotmail.com"]
+        self.command_invalid_email2 = ["createAccount", "crusher31", "TA", "crusher"]
 
     def test_account_successfully_created(self):
         CreateAccount.createAccount(self.CA, self.command_create_account)
@@ -40,17 +42,17 @@ class test_CreateAccount(TestCase):
 
         A = Account.objects.get(userName="data33")
         self.assertEqual(A.userName, "data33")
-        self.assertEqual(A.email, "data33@starfleet.com")
+        self.assertEqual(A.email, "data33@uwm.edu")
         self.assertEqual(A.title, 2)
 
         B = Account.objects.get(userName="spock29")
         self.assertEqual(B.userName, "spock29")
-        self.assertEqual(B.email, "spock29@starfleet.com")
+        self.assertEqual(B.email, "spock29@uwm.edu")
         self.assertEqual(B.title, 2)
 
         C = Account.objects.get(userName="tuckert90")
         self.assertEqual(C.userName, "tuckert90")
-        self.assertEqual(C.email, "tuckert90@starfleet.com")
+        self.assertEqual(C.email, "tuckert90@uwm.edu")
         self.assertEqual(C.title, 1)
 
     def test_account_already_exist(self):
@@ -67,3 +69,10 @@ class test_CreateAccount(TestCase):
                          "Your command is missing arguments, please enter your command in the following format: "
                          "createAccount username title email")
 
+    def test_invalid_email(self):
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_invalid_email),
+                         "The email address you have entered in not valid.  Please make sure you are using a uwm "
+                         "email address in the correct format.")
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_invalid_email2),
+                         "The email address you have entered in not valid.  Please make sure you are using a uwm "
+                         "email address in the correct format.")

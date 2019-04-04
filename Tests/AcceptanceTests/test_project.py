@@ -17,19 +17,19 @@ class TestProject(TestCase):
         self.LH = LoginHelper()
 
         Account.objects.create(userName="janewayk123", firstName="Kathryn", lastName="Janeway", password="123456",
-                               email="janewayk@starfleet.com", title=2,
+                               email="janewayk@uwm.edu", title=2,
                                address="14 Voyager Drive", city="Delta", state="Quadrant", zipCode="00000",
                                officeNumber="456", officePhone="555-555-5555", officeDays="TR",
                                officeHoursStart="1300", officeHoursEnd="1400", currentUser=False)
 
         Account.objects.create(userName="picard304", firstName="Jean Luc", lastName="Picard", password="90456",
-                               email="picardj@startfleet.com", title=1, address="87 Enterprise Avenue",
+                               email="picardj@uwm.edu", title=1, address="87 Enterprise Avenue",
                                city="Alpha", state="Quadrant", zipCode="11111", officeNumber="54",
                                officePhone="777-777-7777", officeDays="W", officeHoursStart="0900",
                                officeHoursEnd="1000", currentUser=False)
 
         Account.objects.create(userName="kirkj22", firstName="James", lastName="Kirk", password="678543",
-                               email="kirkj22@starfleet.com", title=4, address="789 Enterprise Avenue",
+                               email="kirkj22@uwm.edu", title=4, address="789 Enterprise Avenue",
                                city="Alpha", state="Quadrant", zipCode="89765", officeNumber="987",
                                officePhone="897-654-398", officeDays="MW", officeHoursStart="1500",
                                officeHoursEnd="1600", currentUser=False)
@@ -76,13 +76,13 @@ class TestProject(TestCase):
 
     def test_command_createAccount_permission_denied(self):
         LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
-        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@starfleet.com"),
+        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@uwm.edu"),
                          "You do not have the credentials to create an account. Permission denied")
         LoginHelper.logout(self.LH)
 
     def test_command_createAccount_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@starfleet.com"), "Account successfully created")
+        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@uwm.edu"), "Account successfully created")
 
     def test_command_createAccount_missingArguments(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
@@ -98,7 +98,7 @@ class TestProject(TestCase):
 
     def test_command_createAccount_invalidTitle(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createAccount laForge88 engineer laForge88@starfleet.com"), "Invalid Title")
+        self.assertEqual(self.UI.command("createAccount laForge88 engineer laForge88@uwm.edu"), "Invalid Title")
 
     def test_command_createAccount_no_args(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
@@ -108,8 +108,17 @@ class TestProject(TestCase):
 
     def test_command_createAccount_already_exists(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createAccount janewayk123 instructor janewayk@starfleet.com"),
+        self.assertEqual(self.UI.command("createAccount janewayk123 instructor janewayk@uwm.edu"),
                          "Account already exists")
+
+    def test_command_createAccount_invalid_email(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createAccount crusherw31 TA crusherw31@hotmail.com"),
+                         "The email address you have entered in not valid.  Please make sure you are using a uwm email "
+                         "address in the correct format.")
+        self.assertEqual(self.UI.command("createAccount crusherw31 TA crusherw31"),
+                         "The email address you have entered in not valid.  Please make sure you are using a uwm email "
+                         "address in the correct format.")
 
     """
         createCourse command 
