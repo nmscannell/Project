@@ -16,10 +16,13 @@ class assignInst():
                    "assigninstructorcourse, courseNumber, userName "
         else:
             course = Course.objects.get(number=command[1])
-            instructor = Account.objects.get(number=command[2])
-
+            instructor = Account.objects.get(userName=command[2])
             a = InstructorCourse()
             a.instructor = instructor
             a.course = course
+
+            if InstructorCourse.objects.get(course).exists():
+                return "Course is already assigned"
+
             a.save()
             return "Assignment successfully completed"
