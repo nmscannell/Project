@@ -24,7 +24,7 @@ class CreateAccount():
             return "The email address you have entered in not valid.  " \
                     "Please make sure you are using a uwm email address in the correct format."
         else:
-            A = Account.objects.create()
+            A = Account()
             A.userName = command[1]
             A.email = command[3]
             if command[2].lower() == "ta":
