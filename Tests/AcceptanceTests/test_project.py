@@ -16,6 +16,8 @@ class TestProject(TestCase):
         self.UI = UI()
         self.LH = LoginHelper()
 
+
+        # Set up for accounts testing
         Account.objects.create(userName="janewayk123", firstName="Kathryn", lastName="Janeway", password="123456",
                                email="janewayk@uwm.edu", title=2,
                                address="14 Voyager Drive", city="Delta", state="Quadrant", zipCode="00000",
@@ -36,6 +38,7 @@ class TestProject(TestCase):
 
         Account.objects.create(userName="taman", title=1)
 
+        #Set up for Course testing
         Course.objects.create(name="DataStructures", number=351, onCampus=True, classDays="TR",
                               classHoursStart=1200, classHoursEnd=1300)
 
@@ -45,6 +48,25 @@ class TestProject(TestCase):
         Lab.objects.create(course=Course.objects.get(number="351"), sectionNumber=804)
 
         Lab.objects.create(course=Course.objects.get(number="458"), sectionNumber=804)
+
+
+        #Set up for Labs testing
+        Course.objects.create(name="TemporalMechanics", number=784, onCampus=True, classDays="MW",
+                              classHoursStart=1000, classHoursEnd=1100)
+
+        Course.objects.create(name="WarpTheory", number=633, onCampus=False, classDays="TR", classHoursStart=1200,
+                              classHoursEnd=1250)
+
+        Course.objects.create(name="QuantumMechanics", number=709, onCampus=True, classDays="MWF",
+                              classHoursStart=1030, classHoursEnd=1145)
+
+        self.c1 = Course.objects.get(name="TemporalMechanics")
+        self.c2 = Course.objects.get(name="WarpTheory")
+        self.c3 = Course.objects.get(name="QuantumMechanics")
+
+        Lab.objects.create(course=self.c1, sectionNumber=201, meetingDays="W", startTime=1000, endTime=1200)
+        Lab.objects.create(course=self.c1, sectionNumber=202, meetingDays="F", startTime=1400, endTime=1700)
+        Lab.objects.create(course=self.c1, sectionNumber=203, meetingDays="T", startTime=1000, endTime=1200)
 
 
 
@@ -213,46 +235,55 @@ class TestProject(TestCase):
                          "You do not have the credentials to create a lab. Permission denied")
 
     def test_command_createLab_success(self):
-        self.assertEqual(self.UI.command("createLab courseNumber labSection day begin end"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 784 101 T 1300 1445"),
                          "Lab successfully created")
 
     def test_command_createLab_no_args(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab"),
                          "Your command is missing arguments, please enter your command in the following format: "
                          "createLab courseNumber labSectionNumber daysOfWeek beginTime endTime")
 
     def test_command_createLab_lab_exists(self):
-        self.assertEqual(self.UI.command("createLab courseNumber labSection day begin end"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 784 201 W 1000 1200"),
                          "Lab already exists, lab not added")
 
     def test_command_createLab_missing_course(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab labSection day begin end"),
                          "Your command is missing arguments, please enter your command in the following format: "
                          "createLab courseNumber labSectionNumber daysOfWeek beginTime endTime")
 
     def test_command_createLab_missing_section(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab courseNumber day begin end"),
                          "Your command is missing arguments, please enter your command in the following format: "
                          "createLab courseNumber labSectionNumber daysOfWeek beginTime endTime")
 
     def test_command_createLab_missing_day(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab courseNumber labSection begin end"),
                          "Your command is missing arguments, please enter your command in the following format: "
                          "createLab courseNumber labSectionNumber daysOfWeek beginTime endTime")
 
     def test_command_createLab_missing_begin(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab courseNumber labSection day end"),
                          "Your command is missing arguments, please enter your command in the following format: "
                          "createLab courseNumber labSectionNumber daysOfWeek beginTime endTime")
 
     def test_command_createLab_missing_end(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab courseNumber labSection day begin"),
                          "Your command is missing arguments, please enter your command in the following format: "
                          "createLab courseNumber labSectionNumber daysOfWeek beginTime endTime")
 
-    def test_command_createLab_invalid_lab(self):
-        self.assertEqual(self.UI.command("createLab courseNumber labSection day begin end"),
-                         "Lab cannot be created for an online course.")
+    def test_command_createLab_course_does_not_exist(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 999 201 M 1400 1500"),
+                         "The Course you are trying to create a lab for does not exist")
 
     """
         When the edit command is entered, it takes 4 arguments.
