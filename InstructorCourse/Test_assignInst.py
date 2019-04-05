@@ -2,9 +2,11 @@ from django.test import TestCase
 from InstructorCourse.assignInst import assignInst
 from InstructorCourse.models import InstructorCourse
 from main import models
+from Course.models import Course
+from Account.models import Account
 
 
-class Test_assignInst(TestCase):
+class TestAssignInst(TestCase):
 
     def setUp(self):
         self.AI = assignInst()
