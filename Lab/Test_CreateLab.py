@@ -25,14 +25,14 @@ class Test_CreateLab(TestCase):
         Lab.objects.create(course=self.c1, sectionNumber=202, meetingDays="F", startTime=1400, endTime=1700)
         Lab.objects.create(course=self.c1, sectionNumber=203, meetingDays="T", startTime=1000,endTime=1200)
 
-        self.command_create_lab = ["createLab", 633, 201, "T", 1000, 1100]
-        self.command_create_lab_multiple_section = ["createLab", 633, 202, "W", 1300, 1400]
-        self.command_create_lab2 = ["createLab", 709, 201, "R", 1200, 1345]
+        self.command_create_lab = ["createLab", "633", "201", "T", "1000", "1100"]
+        self.command_create_lab_multiple_section = ["createLab", "633", "202", "W", "1300", "1400"]
+        self.command_create_lab2 = ["createLab", "709", "201", "R", "1200", "1345"]
 
-        self.command_section_exists = ["createLab", 358, "002", "MW", "1000", "1100"]
+        self.command_section_exists = ["createLab", "358", "002", "MW", "1000", "1100"]
         self.command_create_lab_no_args = ["createLab"]
         self.command_create_lab_no_courseNumber = ["createLab", "001", "W", "1000", "1200"]
-        self.command_create_lab_no_sectionNumber = ["createLab", 540, "W", "1000", "1200"]
+        self.command_create_lab_no_sectionNumber = ["createLab", "540", "W", "1000", "1200"]
 
     def test_lab_was_successfully_created(self):
         CreateLab.createLab(self.CL, self.command_create_lab)
