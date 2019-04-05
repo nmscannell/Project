@@ -1,5 +1,6 @@
 from InstructorCourse.models import InstructorCourse
 from CurrentUserHelper import CurrentUserHelper
+from Account.models import Account
 from Course.models import Course
 from InstructorCourse.models import InstructorCourse
 
