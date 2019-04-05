@@ -524,16 +524,16 @@ class TestProject(TestCase):
     def test_command_assignTALav_invalidLab(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTALab taman 351 801"), "Invalid lab section")
-    #def test_command_assignTALab_TAMax(self):
-     #   LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-      #  self.assertEqual(self.UI.command("assignTALab userName classNumber labSectionNumber"),
-       #                  "TA has been reached maximum assignment limit, TA not assigned")
 
-    #def test_command_assignTALab_grader(self):
-     #   LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-      #  self.assertEqual(self.UI.command("assignTALAb userName classNumber labSectionNumber"),
-       #                  "The specified TA is a grader, TA not assigned")
+    # def test_command_assignTALab_TAMax(self):
+    # LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+    # self.assertEqual(self.UI.command("assignTALab userName classNumber labSectionNumber"),
+    # "TA has been reached maximum assignment limit, TA not assigned")
 
+    # def test_command_assignTALab_grader(self):
+    # LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+    # self.assertEqual(self.UI.command("assignTALAb userName classNumber labSectionNumber"),
+    # "The specified TA is a grader, TA not assigned")
 
     """
         When the viewInfo command is entered it takes one argument: 
