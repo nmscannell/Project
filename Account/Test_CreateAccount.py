@@ -36,9 +36,12 @@ class test_CreateAccount(TestCase):
         self.command_invalid_email2 = ["createAccount", "crusher31", "TA", "crusher"]
 
     def test_account_successfully_created(self):
-        CreateAccount.createAccount(self.CA, self.command_create_account)
-        CreateAccount.createAccount(self.CA, self.command1_create_account)
-        CreateAccount.createAccount(self.CA, self.command2_create_account)
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_create_account),
+                         "Account successfully created.  Temporary password is: data33456")
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command1_create_account),
+                         "Account successfully created.  Temporary password is: spock29456")
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command2_create_account),
+                         "Account successfully created.  Temporary password is: tuckert90456")
 
         A = Account.objects.get(userName="data33")
         self.assertEqual(A.userName, "data33")

@@ -9,17 +9,17 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('Course', '0001_initial'),
+        ('Lab', '0001_initial'),
         ('Account', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='InstructorCourse',
+            name='TaLab',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Course.Course')),
-                ('instructor', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Account.Account')),
+                ('Lab', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Lab.Lab')),
+                ('TA', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Account.Account')),
             ],
         ),
     ]

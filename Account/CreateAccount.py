@@ -1,5 +1,5 @@
 from Account.models import Account
-from CurrentUserHelper import CurrentUserHelper
+from random import randint
 
 
 class CreateAccount():
@@ -33,6 +33,9 @@ class CreateAccount():
                 A.title = 2
             else:
                 return "Invalid Title"
+
+            A.password=A.userName + "456"
             A.save()
-            return "Account successfully created"
+
+            return "Account successfully created.  Temporary password is: " + A.userName + "456"
 
