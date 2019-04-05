@@ -4,6 +4,7 @@ from Account.CreateAccount import CreateAccount
 from Lab.CreateLab import CreateLab
 from Course.CreateCourse import CreateCourse
 from CurrentUserHelper import CurrentUserHelper
+from TaLab.AssignTaLab import AssignTaLab
 # Create your models here.
 
 
@@ -62,7 +63,9 @@ class UI:
             if CUH.getCurrentUserTitle() < 2:
                 return "You do not have the credentials to assign a ta to a lab. Permission denied"
 
-            return command[0]
+            atl = AssignTaLab()
+
+            return atl.assignTaLab(command)
 
         elif command[0].lower == "assigntacourse":
             CUH = CurrentUserHelper()

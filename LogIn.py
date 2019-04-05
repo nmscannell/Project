@@ -28,7 +28,7 @@ class LoginHelper():
 
         CurrentUser.currentUser = True
         CurrentUser.save()
-        return "Logged in as " + str(CurrentUser)
+        return "Logged in as " + command[1]
 
     """
     Logout takes 0 arguments. If there is a Current User, that Accounts Current User flag is set to False.

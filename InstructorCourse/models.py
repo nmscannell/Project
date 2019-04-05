@@ -1,11 +1,11 @@
 from django.db import models
+from Course.models import Course
 
 # Create your models here.
 
 
 class InstructorCourse(models.Model):
-    classNumber = models.IntegerField(default=0)
-    userName = models.CharField(max_length=20, default=" ")
+    course = models.ForeignKey(Course, default=None, on_delete=models.CASCADE)
 
     def __str__(self):
-        return None
+        return str(self.course)
