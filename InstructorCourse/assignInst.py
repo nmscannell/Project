@@ -8,7 +8,7 @@ class assignInst():
 
     def assignInst(self, command):
         #cuh = CurrentUserHelper()
-        #if cuh.getCurrentUserTitle() != 3:
+        #if cuh.getCurrentUserTitle() != 4:
         #   return "Permission denied. Only supervisors can assign instructor to courses"
         if len(command) > 2 or len(command) < 2:
             return "Please retype the command. " \
