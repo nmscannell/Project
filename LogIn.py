@@ -13,26 +13,22 @@ class LoginHelper():
 
         test = Account.objects.filter(currentUser=True)
         if len(test) > 0:
-            raise Exception("A user is already logged in")
-            #return "A User is already logged in"
+            return "A user is already logged in"
 
         if len(command) > 3 or len(command) < 3:
-            raise Exception("Your command is missing arguments.  Please enter your command in the following format: login userName password")
-            #return "Your command is missing arguments.  Please enter your command in the following format: login userName password"
+            return "Your command is missing arguments.  Please enter your command in the following format: login userName password"
 
         try:
             CurrentUser = Account.objects.get(userName=command[1])
             if CurrentUser.password != command[2]:
-                raise Exception("Incorrect password")
-                #return "Incorrect password"
+                return "Incorrect password"
 
         except Account.DoesNotExist:
-            raise Exception("Account Not Found")
-            #return "Account Not Found"
+            return "Account Not Found"
 
         CurrentUser.currentUser = True
         CurrentUser.save()
-        return "Logged in as " + str(CurrentUser)
+        return "Logged in as " + command[1]
 
     """
     Logout takes 0 arguments. If there is a Current User, that Accounts Current User flag is set to False.
@@ -45,10 +41,8 @@ class LoginHelper():
             CurrentUser.save()
             return "Successfully logged out"
         except Account.DoesNotExist:
-            raise Exception("Please log in First")
-            #return "Please Log in First"
+            return "Please log in First"
         except Account.MultipleObjectsReturned:
-            raise Exception("Multiple account Logged in, Something went terribly wrong")
-            #return "Multiple accounts Logged in, Something went terribly wrong"
+            return "Multiple account Logged in, Something went terribly wrong"
 
         return "Successfully logged out"

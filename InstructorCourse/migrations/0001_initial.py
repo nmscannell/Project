@@ -14,13 +14,9 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Lab',
+            name='InstructorCourse',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('sectionNumber', models.IntegerField(default=0)),
-                ('meetingDays', models.CharField(default=' ', max_length=10)),
-                ('startTime', models.IntegerField(default=0)),
-                ('endTime', models.IntegerField(default=0)),
                 ('course', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='Course.Course')),
             ],
         ),

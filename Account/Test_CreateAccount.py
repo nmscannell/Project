@@ -1,21 +1,12 @@
 from django.test import TestCase
 from Account.CreateAccount import CreateAccount
 from Account.models import Account
-from main import models
-from CurrentUserHelper import CurrentUserHelper
-from LogIn import LoginHelper
 
-
-
-
-# How to test login permissions????
 
 class test_CreateAccount(TestCase):
 
     def setUp(self):
-        #Don't really get why we need these....
         self.CA = CreateAccount()
-        self.LH = LoginHelper()
         Account.objects.create(userName="janewayk123", firstName="Kathryn", lastName = "Janeway", password="123456",
                                      email="janewayk@starfleet.com", title=2,
                                      address="14 Voyager Drive", city="Delta", state="Quadrant", zipCode="00000",
@@ -34,39 +25,54 @@ class test_CreateAccount(TestCase):
                                officePhone="897-654-398", officeDays="MW", officeHoursStart="1500",
                                officeHoursEnd="1600", currentUser=False)
 
+        self.command_create_account = ["createAccount", "data33", "instructor", "data33@uwm.edu"]
+        self.command1_create_account = ["createAccount", "spock29", "instructor", "spock29@uwm.edu"]
+        self.command2_create_account = ["createAccount", "tuckert90", "TA", "tuckert90@uwm.edu"]
+        self.command_already_exists = ["createAccount", "picard304", "TA", "picardj@uwm.edu"]
+        self.command2_already_exists = ["createAccount", "janewayk123", "instructor", "janewayk@uwm.edu"]
+        self.command_missing_one_arg = ["createAccount", "parist64", "TA"]
+        self.command_missing_two_args = ["createAccount", "paris64"]
+        self.command_invalid_email = ["createAccount", "crusherw31", "TA", "crusher@hotmail.com"]
+        self.command_invalid_email2 = ["createAccount", "crusher31", "TA", "crusher"]
 
     def test_account_successfully_created(self):
-        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.command_create_account = ["createAccount", "data33", "instructor", "data33@starfleet.com"]
         CreateAccount.createAccount(self.CA, self.command_create_account)
+        CreateAccount.createAccount(self.CA, self.command1_create_account)
+        CreateAccount.createAccount(self.CA, self.command2_create_account)
+
         A = Account.objects.get(userName="data33")
         self.assertEqual(A.userName, "data33")
-        self.assertEqual(A.email, "data33@starfleet.com")
+        self.assertEqual(A.email, "data33@uwm.edu")
         self.assertEqual(A.title, 2)
 
+        B = Account.objects.get(userName="spock29")
+        self.assertEqual(B.userName, "spock29")
+        self.assertEqual(B.email, "spock29@uwm.edu")
+        self.assertEqual(B.title, 2)
+
+        C = Account.objects.get(userName="tuckert90")
+        self.assertEqual(C.userName, "tuckert90")
+        self.assertEqual(C.email, "tuckert90@uwm.edu")
+        self.assertEqual(C.title, 1)
 
     def test_account_already_exist(self):
-        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.command_already_exists = ["createAccount", "picard304", "TA", "picardj@starfleet.com"]
-        self.command2_already_exists = ["createAccount", "janewayk123", "instructor", "janewayk@starfleet.com"]
-        with self.assertRaises(Exception):
-            CreateAccount.createAccount(self.CA, self.command_already_exists)
-            CreateAccount.createAccount(self.CA, self.command2_already_exists)
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_already_exists), "Account already exists")
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command2_already_exists), "Account already exists")
 
     def test_missing_one_argument(self):
-        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.command_missing_one_arg = ["createAccount", "parist64", "TA"]
-        with self.assertRaises(Exception):
-            CreateAccount.createAccount(self.CA, self.command_missing_one_arg)
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_missing_one_arg),
+                         "Your command is missing arguments, please enter your command in the following format: "
+                         "createAccount username title email")
 
     def test_missing_two_arguments(self):
-        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.command_missing_two_args = ["createAccount", "paris64"]
-        with self.assertRaises(Exception):
-            CreateAccount.createAccount(self.CA, self.command_missing_two_args)
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_missing_two_args),
+                         "Your command is missing arguments, please enter your command in the following format: "
+                         "createAccount username title email")
 
-    def test_createAccount_permission(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
-        self.command_invalid_perm = ["paris64", "TA", "paris62@starfleet.com"]
-        with self.assertRaises(Exception):
-            CreateAccount.createAccount(self.CA, self.command_invalid_perm)
+    def test_invalid_email(self):
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_invalid_email),
+                         "The email address you have entered in not valid.  Please make sure you are using a uwm "
+                         "email address in the correct format.")
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_invalid_email2),
+                         "The email address you have entered in not valid.  Please make sure you are using a uwm "
+                         "email address in the correct format.")
