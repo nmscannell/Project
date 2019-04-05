@@ -498,11 +498,12 @@ class TestProject(TestCase):
         -classNumber
         -Lab section number 
     """
+    def test_command_assignTALab_noLogin(self):
+        self.assertEqual(self.UI.command("assignTALab taman 351 804"), "You do not have the credentials to assign a ta to a lab. Permission denied")
 
     def test_command_assignTALab_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assignTALab taman 351 804"),
-                         "TA successfully assigned")
+        self.assertEqual(self.UI.command("assignTALab taman 351 804"), "TA successfully assigned")
 
     def test_command_assignTALab_argumentsMissing(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
@@ -516,15 +517,22 @@ class TestProject(TestCase):
                          "Your argument is missing commands, please enter your command in the following format: "
                          "assignTALab username classNumber labSectionNumber")
 
-    def test_command_assignTALab_TAMax(self):
+    def test_command_assignTALab_invalidCourse(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assignTALab userName classNumber labSectionNumber"),
-                         "TA has been reached maximum assignment limit, TA not assigned")
+        self.assertEqual(self.UI.command("assigntalab taman 111 804"), "Invalid course number")
 
-    def test_command_assignTALab_grader(self):
+    def test_command_assignTALav_invalidLab(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assignTALAb userName classNumber labSectionNumber"),
-                         "The specified TA is a grader, TA not assigned")
+        self.assertEqual(self.UI.command("assignTALab taman 351 801"), "Invalid lab section")
+    #def test_command_assignTALab_TAMax(self):
+     #   LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+      #  self.assertEqual(self.UI.command("assignTALab userName classNumber labSectionNumber"),
+       #                  "TA has been reached maximum assignment limit, TA not assigned")
+
+    #def test_command_assignTALab_grader(self):
+     #   LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+      #  self.assertEqual(self.UI.command("assignTALAb userName classNumber labSectionNumber"),
+       #                  "The specified TA is a grader, TA not assigned")
 
 
     """
