@@ -1,6 +1,7 @@
 from django.db import models
 from Course.models import Course
 # Create your models here.
+# secret message
 
 
 class Lab(models.Model):
