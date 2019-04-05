@@ -110,7 +110,8 @@ class TestProject(TestCase):
 
     def test_command_createAccount_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@uwm.edu"), "Account successfully created")
+        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@uwm.edu"),
+                         "Account successfully created.  Temporary password is: neelix45456")
 
     def test_command_createAccount_missingArguments(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
