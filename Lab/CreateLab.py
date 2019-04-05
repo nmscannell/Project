@@ -6,7 +6,7 @@ from CurrentUserHelper import CurrentUserHelper
 class CreateLab():
 
     def createLab(self, command):
-        if len(command) > 5 or len(command) < 5:
+        if len(command) > 6 or len(command) < 6:
             return "Your command is missing arguments, please enter your command in the following format: " \
                    "createLab courseNumber labSectionNumber daysOfWeek beginTime endTime"
 
@@ -24,8 +24,8 @@ class CreateLab():
         if Lab.objects.filter(course=c, sectionNumber=sectionNumber).exists():
             return "Lab already exists, lab not added"
         else:
-            l = Lab.objects.create()
-            l.course = c
+            l = Lab.objects.create(course=c)
+
             l.sectionNumber = sectionNumber
             l.meetingDays = meetingDays
             l.startTime = startTime
