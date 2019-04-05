@@ -11,20 +11,20 @@ class assignInst():
         #cuh = CurrentUserHelper()
         #if cuh.getCurrentUserTitle() != 4:
         #   return "Permission denied. Only supervisors can assign instructor to courses"
-        if len(command) > 2 or len(command) < 2:
+        if len(command) > 3 or len(command) < 3:
             return "Please retype the command. " \
-                   "assignInst command takes 2 arguments: courseNumber, userName "
+                   "assigninstructorcourse, courseNumber, userName "
         courseNumber = command[1]
         userName = command[2]
 
         try:
-            c = Course.objects.filter(command[1])
+            c = Course.objects.get(number=courseNumber)
         except Course.DoesNotExist:
             return "The Course you are trying to assign a course for does not exist"
 
             a = InstructorCourse.objects.create()
             a.course = c
-            a.classNumber = classNumber
+            a.courseNumber = courseNumber
             a.userName = userName
-            l.save()
-            return "Lab successfully created"
+            a.save()
+            return "Assignment successfully completed"
