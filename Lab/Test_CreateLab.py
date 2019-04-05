@@ -23,7 +23,7 @@ class Test_CreateLab(TestCase):
 
         Lab.objects.create(course=self.c1, sectionNumber=201, meetingDays="W", startTime=1000, endTime=1200)
         Lab.objects.create(course=self.c1, sectionNumber=202, meetingDays="F", startTime=1400, endTime=1700)
-        Lab.objects.create(course=self.c1, sectionNumber=203, meetingDays="T", startTime=1000,endTime=1200)
+        Lab.objects.create(course=self.c1, sectionNumber=203, meetingDays="T", startTime=1000, endTime=1200)
 
         self.command_create_lab = ["createLab", "633", "201", "T", "1000", "1100"]
         self.command_create_lab_multiple_section = ["createLab", "633", "202", "W", "1300", "1400"]
