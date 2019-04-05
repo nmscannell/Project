@@ -35,29 +35,30 @@ class Test_CreateLab(TestCase):
         self.command_create_lab_no_sectionNumber = ["createLab", "540", "W", "1000", "1200"]
 
     def test_lab_was_successfully_created(self):
-        CreateLab.createLab(self.CL, self.command_create_lab)
-        CreateLab.createLab(self.CL, self.command_create_lab_multiple_section)
-        CreateLab.createLab(self.CL, self.command_create_lab2)
+        self.assertEqual(CreateLab.createLab(self.CL, self.command_create_lab), "Lab successfully created")
+        self.assertEqual(CreateLab.createLab(self.CL, self.command_create_lab_multiple_section),
+                         "Lab successfully created")
+        self.assertEqual(CreateLab.createLab(self.CL, self.command_create_lab2), "Lab successfully created")
 
         a = Lab.objects.get(course=self.c2, sectionNumber=201)
         self.assertEqual(a.course, self.c2)
         self.assertEqual(a.sectionNumber, 201)
         self.assertEqual(a.meetingDays, "T")
-        self.assertEqual(a.starTime, 1000)
+        self.assertEqual(a.startTime, 1000)
         self.assertEqual(a.endTime, 1100)
 
         b = Lab.objects.get(course=self.c2, sectionNumber=202)
         self.assertEqual(b.course, self.c2)
         self.assertEqual(b.sectionNumber, 202)
-        self.assertEqual(b.meetingDays, "M")
-        self.assertEqual(b.starTime, 1300)
+        self.assertEqual(b.meetingDays, "W")
+        self.assertEqual(b.startTime, 1300)
         self.assertEqual(b.endTime, 1400)
 
         c = Lab.objects.get(course=self.c3, sectionNumber=201)
         self.assertEqual(c.course, self.c3)
         self.assertEqual(c.sectionNumber, 201)
-        self.assertEqual(c.meetingDays, "T")
-        self.assertEqual(c.starTime, 1200)
+        self.assertEqual(c.meetingDays, "R")
+        self.assertEqual(c.startTime, 1200)
         self.assertEqual(c.endTime, 1345)
 
 
