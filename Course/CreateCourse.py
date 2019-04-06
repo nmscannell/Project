@@ -27,7 +27,7 @@ class CreateCourse():
         # Check times
         startTime = command[5]
         endTime = command[6]
-        if len(startTime) < 4 or len(endTime) < 4:
+        if (len(startTime) < 4 or len(endTime) < 4) or (len(startTime) > 4 or len(endTime) > 4):
             return "Invalid start or end time, please use a 4 digit military time representation"
         if not re.match('^[0-2]*$', startTime[0]) or not re.match('^[0-1]*$', endTime[0]):
             return "Invalid start or end time, please use a 4 digit military time representation"
