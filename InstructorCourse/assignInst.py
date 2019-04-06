@@ -12,8 +12,7 @@ class assignInst():
         #if cuh.getCurrentUserTitle() != 4:
         #   return "Permission denied. Only supervisors can assign instructor to courses"
         if len(command) > 3 or len(command) < 3:
-            return "Please retype the command. " \
-                   "assigninstructorcourse, courseNumber, userName "
+            return "Please, type the course number and your username"
         else:
             course = Course.objects.get(number=command[1])
             instructor = Account.objects.get(userName=command[2])
