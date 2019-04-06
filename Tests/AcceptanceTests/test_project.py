@@ -318,15 +318,27 @@ class TestProject(TestCase):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab 7aa 204 M 1600 1700"),
                          "Course number must be numeric and three digits long")
+        self.assertEqual(self.UI.command("createLab 90872 204 M 1600 1700"),
+                         "Course number must be numeric and three digits long")
+        self.assertEqual(self.UI.command("createLab tro 204 M 1600 1700"),
+                         "Course number must be numeric and three digits long")
 
     def test_command_createLab_invalid_sectNum(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab 784 909089 M 1600 1700"),
                          "Section number must be numeric and three digits long")
+        self.assertEqual(self.UI.command("createLab 784 rug M 1600 1700"),
+                         "Section number must be numeric and three digits long")
+        self.assertEqual(self.UI.command("createLab 784 kku23k M 1600 1700"),
+                         "Section number must be numeric and three digits long")
 
     def test_command_createLab_invalid_days(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab 784 204 qrs 1600 1700"),
+                         "Invalid days of the week, please enter days in the format: MWTRF")
+        self.assertEqual(self.UI.command("createLab 784 204 89TR 1600 1700"),
+                         "Invalid days of the week, please enter days in the format: MWTRF")
+        self.assertEqual(self.UI.command("createLab 784 204 JHG 1600 1700"),
                          "Invalid days of the week, please enter days in the format: MWTRF")
 
     def test_command_createLab_invalid_times(self):
