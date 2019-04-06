@@ -54,11 +54,14 @@ class TestProject(TestCase):
         Course.objects.create(name="TemporalMechanics", number=784, onCampus=True, classDays="MW",
                               classHoursStart=1000, classHoursEnd=1100)
 
-        Course.objects.create(name="WarpTheory", number=633, onCampus=False, classDays="TR", classHoursStart=1200,
+        Course.objects.create(name="WarpTheory", number=633, onCampus=True, classDays="TR", classHoursStart=1200,
                               classHoursEnd=1250)
 
         Course.objects.create(name="QuantumMechanics", number=709, onCampus=True, classDays="MWF",
                               classHoursStart=1030, classHoursEnd=1145)
+
+        Course.objects.create(name="Linguistics", number=564, onCampus=False, classDays="TR",
+                              classHoursStart=1800, classHoursEnd=1930)
 
         self.c1 = Course.objects.get(name="TemporalMechanics")
         self.c2 = Course.objects.get(name="WarpTheory")
@@ -310,6 +313,35 @@ class TestProject(TestCase):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab 999 201 M 1400 1500"),
                          "The Course you are trying to create a lab for does not exist")
+
+    def test_command_createLab_invalid_courseNum(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 7aa 204 M 1600 1700"),
+                         "Course number must be numeric and three digits long")
+
+    def test_command_createLab_invalid_sectNum(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 784 909089 M 1600 1700"),
+                         "Section number must be numeric and three digits long")
+
+    def test_command_createLab_invalid_days(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 784 204 qrs 1600 1700"),
+                         "Invalid days of the week, please enter days in the format: MWTRF")
+
+    def test_command_createLab_invalid_times(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 784 204 M kalj 1700"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
+        self.assertEqual(self.UI.command("createLab 784 204 M 8909 1700"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
+        self.assertEqual(self.UI.command("createLab 784 204 M 1400 17"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
+
+    def test_command_createLab_online(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 564 203 W 1300 1400"),
+                         "You cannot create a lab for an online course")
 
     """
         When the edit command is entered, it takes 4 arguments.
