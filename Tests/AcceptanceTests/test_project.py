@@ -127,7 +127,8 @@ class TestProject(TestCase):
 
     def test_command_createAccount_invalidTitle(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createAccount laForge88 engineer laForge88@uwm.edu"), "Invalid Title")
+        self.assertEqual(self.UI.command("createAccount laForge88 engineer laForge88@uwm.edu"),
+                         "Invalid title, account not created")
 
     def test_command_createAccount_no_args(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
@@ -216,6 +217,28 @@ class TestProject(TestCase):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createCourse DataStructures 351 Campus TR 0900 0950"),
                          "Course already exists")
+
+    def test_command_createCourse_invalid_courseNum(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse StellarCartography t67 Campus TR 1650 1830"),
+                         "Course number must be numeric and three digits long")
+
+    def test_command_createCourse_invalid_location(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse StellarCartography 456 Enterprise TR 1650 1830"),
+                         "Location is invalid, please enter campus or online.")
+
+    def test_command_createCourse_invalid_days(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse StellarCartography 456 Campus Wg7 1650 1830"),
+                         "Invalid days of the week, please enter days in the format: MWTRF or NN for online")
+
+    def test_command_createCourse_invalid_times(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse StellarCartography 456 Campus MW 9800 1830"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
+        self.assertEqual(self.UI.command("createCourse StellarCartography 456 Campus MW 1830 4444"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
 
 
     """

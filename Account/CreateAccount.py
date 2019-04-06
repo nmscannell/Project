@@ -32,7 +32,7 @@ class CreateAccount():
             elif command[2].lower() == "instructor":
                 A.title = 2
             else:
-                return "Invalid Title"
+                return "Invalid title, account not created"
 
             A.password=A.userName + "456"
             A.save()
