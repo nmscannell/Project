@@ -20,6 +20,11 @@ class TestAssignInst(TestCase):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "cheng41", "535"]),
                          "Instructor was successfully assigned to class")
         self.assertTrue(InstructorCourse.objects.exists())
+        A = Account.objects.get(userName="cheng41")
+        B = Course.objects.get(number="535")
+
+        self.assertEqual(A.userName, "cheng41")
+        self.assertEqual(B.number, 535)
 
     def test_assignInst_no_argument(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
