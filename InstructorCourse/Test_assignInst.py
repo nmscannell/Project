@@ -26,17 +26,21 @@ class TestAssignInst(TestCase):
         self.assertEqual(a.course, Course.objects.get(number="317"))
         self.assertEqual(a.instructor, Account.objects.get(userName="cheng41"))
 
-    def test_assignInst_course_already_existed(self):
-        self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "boyland52", "351"])),
-                         "Course already exists")
-
     def test_assignInst_no_argument(self):
         self.assertEqual((self.AI.assignInst(["assigninstructorcourse"])),
                          "Please, type the command in the following format assigninstructorcourse classNumber username")
 
-    def test_assignInst_no_courseNumber_found(self):
+    def test_assignInst_no_courseNumber(self):
         self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "bob824"])),
-                         "Invalid course numbe")
+                         "Please, type the command in the following format assigninstructorcourse classNumber username")
+
+    def test_assignInst_no_username(self):
+        self.assertEqual((self.AI.assignInst(["assigninstructorcourse","250"])),
+                         "Please, type the command in the following format assigninstructorcourse classNumber username")
+
+    def test_assignInst_no_courseNumber_found(self):
+        self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "bob824" "250"])),
+                         "Invalid course number")
 
     def test_assignInst_no_username_found(self):
         self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "magul" "595"])),
