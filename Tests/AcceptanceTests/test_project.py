@@ -554,12 +554,12 @@ class TestProject(TestCase):
 
     def test_command_assignInstructorCourse_conflict(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assigninstructorcourse userName number"),
+        self.assertEqual(self.UI.command("assigninstructorcourse userName 101"),
                          "This class was already assigned")
 
     def test_command_assignInstructorCourse_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assigninstructorcourse userName number"),
+        self.assertEqual(self.UI.command("assigninstructorcourse userName 101"),
                          "Instructor was successfully assigned to class")
 
     """

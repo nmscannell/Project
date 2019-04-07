@@ -17,9 +17,6 @@ class assignInst():
         instructor = Account.objects.get(userName=command[1])
         course = Course.objects.get(number=command[2])
 
-        if InstructorCourse.objects.filter(Instructor=instructor, Course=course).exists():
-            return str(instructor) + " is already assigned to " + str(course)
-
         if instructor.title != 2:
             return "Account is not an instructor"
 
