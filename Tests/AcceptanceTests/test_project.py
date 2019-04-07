@@ -72,7 +72,12 @@ class TestProject(TestCase):
         Lab.objects.create(course=self.c1, sectionNumber=202, meetingDays="F", startTime=1400, endTime=1700)
         Lab.objects.create(course=self.c1, sectionNumber=203, meetingDays="T", startTime=1000, endTime=1200)
 
-
+        #set up for InstructorCourses testing
+        Account.objects.create(userName="cheng41", title="2")
+        Course.objects.create(number="535")
+        Course.objects.create(number="317")
+        self.course1 = Course.objects.get(number="535")
+        self.course2 = Course.objects.get(number="317")
 
     """
         login command
@@ -527,8 +532,8 @@ class TestProject(TestCase):
 
     def test_command_assignInstructorCourse_permission_denied(self):
         LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
-        self.assertEqual(self.UI.command("assigninstructorcourse userName courseNumber"),
-                         "You do not have the credentials to assign instructor to course. Permission denied")
+        self.assertEqual(self.UI.command("assigninstructorcourse userName number"),
+                         "You do not have the credentials to assign an instructor to a course. Permission denied")
         LoginHelper.logout(self.LH)
 
     def test_command_assignInstructorCourse_missingArguments(self):
@@ -539,7 +544,7 @@ class TestProject(TestCase):
 
     def test_command_assignInstructorCourse_missingArguments2(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assignInstructorCourse courseNumber"),
+        self.assertEqual(self.UI.command("assignInstructorCourse number"),
                          "There are arguments missing, Please enter your command in the following format: "
                          "assignInstructorCourse userName courseNumber")
 
@@ -551,12 +556,12 @@ class TestProject(TestCase):
 
     def test_command_assignInstructorCourse_conflict(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assignInstructorCourse userName courseNumber"),
+        self.assertEqual(self.UI.command("assignInstructorCourse userName number"),
                          "This class was already assigned")
 
     def test_command_assignInstructorCourse_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assignInstructorCourse userName courseNumber"),
+        self.assertEqual(self.UI.command("assignInstructorCourse userName number"),
                          "Instructor was successfully assigned to class")
 
     """
