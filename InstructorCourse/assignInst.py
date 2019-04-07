@@ -22,4 +22,4 @@ class assignInst():
         a = InstructorCourse()
         a.Course = course
         a.save()
-        return "Assignment successfully completed"
+        return "Instructor was successfully assigned to class"
