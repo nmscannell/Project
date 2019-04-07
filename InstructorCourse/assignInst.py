@@ -12,6 +12,7 @@ class assignInst():
             return "Invalid course number"
         if not Account.objects.filter(userName=command[1]).exists():
             return "Invalid account name"
+
         instructor = Account.objects.get(userName=command[1])
 
         if instructor.title != 2:
