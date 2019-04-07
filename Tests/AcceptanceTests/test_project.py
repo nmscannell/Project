@@ -572,6 +572,7 @@ class TestProject(TestCase):
     """
 
     def test_command_assignTACourse_success(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse userName courseNumber"), "Assignment successful")
 
     def test_command_assignTACourse_missingTA(self):
