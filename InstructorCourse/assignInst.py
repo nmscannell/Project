@@ -13,6 +13,8 @@ class assignInst():
         #   return "Permission denied. Only supervisors can assign instructor to courses"
         if len(command) < 3:
             return "Please, type the command in the following format assigninstructorcourse classNumber username"
+        if Course.objects.filter(number=command[2]).exists():
+            return "Course already exists"
         if not Course.objects.filter(userName=command[2]).exists():
             return "Please, type the course number"
         if not Account.objects.filter(number=command[1]).exists():
