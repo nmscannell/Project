@@ -537,9 +537,8 @@ class TestProject(TestCase):
 
     def test_command_assignInstructorCourse_missingArguments(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assigninstructorcourse userName"),
-                         "There are arguments missing, Please enter your command in the following format: "
-                         "assigninstructorcourse userName courseNumber")
+        self.assertEqual(self.UI.command("assigninstructorcourse userName"),  "Your argument is missing commands, " \
+                   "please enter your command in the following format: assigninstructorcourse userName courseNumber")
 
     def test_command_assignInstructorCourse_missingArguments2(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
@@ -555,12 +554,12 @@ class TestProject(TestCase):
 
     def test_command_assignInstructorCourse_conflict(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assigninstructorcourse userName number"),
+        self.assertEqual(self.UI.command("assigninstructorcourse userName 101"),
                          "This class was already assigned")
 
     def test_command_assignInstructorCourse_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assigninstructorcourse userName number"),
+        self.assertEqual(self.UI.command("assigninstructorcourse userName 101"),
                          "Instructor was successfully assigned to class")
 
     """

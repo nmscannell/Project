@@ -27,8 +27,7 @@ class TestAssignInst(TestCase):
     def test_assignInt_already_exists(self):
         InstructorCourse.objects.create(Instructor=self.account1, Course=self.course1)
 
-        self.assertEqual(self.AI.assignInst(["", "cheng41", "535"]), "cheng41 is already"
-                                                                     " assigned to AlgorithmDesignAndAnalysis")
+        self.assertEqual(self.AI.assignInst(["", "cheng41", "535"]), "This class was already assigned")
 
     def test_assignInst_no_argument(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
