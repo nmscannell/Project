@@ -1,6 +1,5 @@
 from CurrentUserHelper import CurrentUserHelper
 from Account.models import Account
-from InstructorCourse.models import InstructorCourse
 from Course.models import Course
 from InstructorCourse.models import InstructorCourse
 
@@ -11,7 +10,7 @@ class assignInst():
         #cuh = CurrentUserHelper()
         #if cuh.getCurrentUserTitle() != 4:
         #   return "Permission denied. Only supervisors can assign instructor to courses"
-        if len(command) < 3:
+        if len(command) != 3:
             return "Please, type the command in the following format assigninstructorcourse classNumber username"
         if Course.objects.filter(number=command[2]).exists():
             return "Course already exists"
@@ -29,8 +28,5 @@ class assignInst():
         a = InstructorCourse()
         a.course = course
         a.instructor = instructor
-
-        if InstructorCourse.objects.get(number=course).exists():
-            return "Course is already assigned"
-            a.save()
-            return "Assignment successfully completed"
+        a.save()
+        return "Assignment successfully completed"
