@@ -18,9 +18,8 @@ class assignInst():
         if instructor.title != 2:
             return "Account is not an instructor"
         course = Course.objects.get(number=command[2])
-        if InstructorCourse.objects.get(Course=course).exists():
-            return "A course was already assigned"
         a = InstructorCourse()
+        a.Instructor = instructor
         a.Course = course
         a.save()
         return "Instructor was successfully assigned to class"

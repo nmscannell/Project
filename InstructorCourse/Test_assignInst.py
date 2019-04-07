@@ -1,8 +1,6 @@
 from django.test import TestCase
 from InstructorCourse.assignInst import assignInst
 from InstructorCourse.models import InstructorCourse
-from main import models
-
 from Course.models import Course
 from Account.models import Account
 
@@ -13,7 +11,6 @@ class TestAssignInst(TestCase):
         Account.objects.create(userName="cheng41", title="2")
         Course.objects.create(number="535")
         Course.objects.create(number="317")
-        self.Instructor = Account.objects.get(userName="cheng41")
         self.course1 = Course.objects.get(number="535")
         self.course2 = Course.objects.get(number="317")
         self.AI = assignInst()
