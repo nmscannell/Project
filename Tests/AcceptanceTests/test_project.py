@@ -4,7 +4,6 @@ from Account.models import Account
 from Lab.models import Lab
 from Course.models import Course
 from LogIn import LoginHelper
-from InstructorCourse.models import InstructorCourse
 """
 TODO: 
 add permission denied tests - in progress
