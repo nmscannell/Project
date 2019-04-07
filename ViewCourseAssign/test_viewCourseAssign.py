@@ -17,6 +17,7 @@ class TestViewCourseAssign(TestCase):
         self.account4 = Account.objects.create(userName='admin', title='3')
         self.course1 = Course.objects.create(number='361', name='IntroSoftwareEngineering')
         self.course2 = Course.objects.create(number='101', name='English')
+        self.course3 = Course.objects.create(name='History', number='101')
         self.lab1 = Lab.objects.create(sectionNumber='801', course=self.course1)
         InstructorCourse.objects.create(Instructor=self.account1, Course=self.course1)
         InstructorCourse.objects.create(Instructor=self.account1, Course=self.course2)
@@ -46,16 +47,31 @@ class TestViewCourseAssign(TestCase):
 
         self.assertEqual(self.VCA.viewCourseAssign(["viewcourseassign", "instructor"]), "instructor is assigned to: IntroSoftwareEngineering, English")
 
-    def test_viewCourseAssign_TA(self):
+    def test_viewCourseAssign_TA_CourseLab(self):
 
         self.assertEqual(self.VCA.viewCourseAssign(["viewcourseassign", "taman"]), "taman is assigned to: IntroSoftwareEngineering section 801")
+
+    def test_viewCourseAssign_Ta_2CourseLab(self):
+        self.lab2 = Lab.objects.create(sectionNumber='801', course=self.course2)
+        TaLab.objects.create(TA=self.account2, Lab=self.lab2)
+
+        self.assertEqual(self.VCA.viewCourseAssign(["viewcourseassign", "taman"]),
+                         "taman is assigned to: IntroSoftwareEngineering section 801, English section 801")
+
+    def test_viewCourseAssign_Ta_2CourseLab_1Course(self):
+        self.lab2 = Lab.objects.create(sectionNumber='801', course=self.course2)
+        TaLab.objects.create(TA=self.account2, Lab=self.lab2)
+        TACourse.objects.create(TA=self.account2, Course=self.course3)
+
+        self.assertEqual(self.VCA.viewCourseAssign(["viewcourseassign", "taman"]),
+                         "taman is assigned to: IntroSoftwareEngineering section 801, English section 801, History")
 
     def test_viewCourseAssign_TA_noLabs(self):
         TaLab.objects.get(TA=self.account2).delete()
 
         self.assertEqual(self.VCA.viewCourseAssign([" ", "taman"]), "taman is assigned to: IntroSoftwareEngineering")
 
-    def test_viewCourseAssign_Ta_Mix(self):
+    def test_viewCourseAssign_Ta_1CourseLab_1Course(self):
         TACourse.objects.create(TA=self.account2, Course=self.course2)
 
         self.assertEqual(self.VCA.viewCourseAssign([" ", "taman"]), "taman is assigned to: IntroSoftwareEngineering section 801, English")
