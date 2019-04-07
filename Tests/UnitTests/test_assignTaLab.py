@@ -47,20 +47,20 @@ class TestAssignTaLab(TestCase):
         lab = Lab.objects.get(sectionNumber=801)
         TaLab.objects.create(TA=ta, Lab=lab)
 
-        self.assertEqual(len(TaLab.objects.filter()), 1)
+        self.assertEqual(TaLab.objects.count(), 1)
 
         self.assertEqual(self.atl.assignTaLab(["assigntalab", "hsimpson", "351", "801"]), "Lab section already assigned")
 
         self.assertFalse(TaLab.objects.filter(TA=self.TA).exists())
 
-        self.assertEqual(len(TaLab.objects.filter()), 1)
+        self.assertEqual(TaLab.objects.count(), 1)
 
     def test_assignTaLab_success(self):
-        self.assertEqual(len(TaLab.objects.filter()), 0)
+        self.assertEqual(TaLab.objects.count(), 0)
 
         self.assertEqual(self.atl.assignTaLab(["assigntalab", 'hsimpson', "361", "804"]), "TA successfully assigned")
 
-        self.assertEqual(len(TaLab.objects.filter()), 1)
+        self.assertEqual(TaLab.objects.count(), 1)
 
         self.assertTrue(TaLab.objects.exists())
 
