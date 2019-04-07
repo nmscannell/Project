@@ -4,6 +4,9 @@ from Account.models import Account
 from Lab.models import Lab
 from Course.models import Course
 from LogIn import LoginHelper
+from TACourse.models import TACourse
+from InstructorCourse.models import InstructorCourse
+
 """
 TODO: 
 add permission denied tests - in progress
@@ -18,25 +21,25 @@ class TestProject(TestCase):
 
 
         # Set up for accounts testing
-        Account.objects.create(userName="janewayk123", firstName="Kathryn", lastName="Janeway", password="123456",
+        self.account1 = Account.objects.create(userName="janewayk123", firstName="Kathryn", lastName="Janeway", password="123456",
                                email="janewayk@uwm.edu", title=2,
                                address="14 Voyager Drive", city="Delta", state="Quadrant", zipCode="00000",
                                officeNumber="456", officePhone="555-555-5555", officeDays="TR",
                                officeHoursStart="1300", officeHoursEnd="1400", currentUser=False)
 
-        Account.objects.create(userName="picard304", firstName="Jean Luc", lastName="Picard", password="90456",
+        self.account2 = Account.objects.create(userName="picard304", firstName="Jean Luc", lastName="Picard", password="90456",
                                email="picardj@uwm.edu", title=1, address="87 Enterprise Avenue",
                                city="Alpha", state="Quadrant", zipCode="11111", officeNumber="54",
                                officePhone="777-777-7777", officeDays="W", officeHoursStart="0900",
                                officeHoursEnd="1000", currentUser=False)
 
-        Account.objects.create(userName="kirkj22", firstName="James", lastName="Kirk", password="678543",
+        self.account3 = Account.objects.create(userName="kirkj22", firstName="James", lastName="Kirk", password="678543",
                                email="kirkj22@uwm.edu", title=4, address="789 Enterprise Avenue",
                                city="Alpha", state="Quadrant", zipCode="89765", officeNumber="987",
                                officePhone="897-654-398", officeDays="MW", officeHoursStart="1500",
                                officeHoursEnd="1600", currentUser=False)
 
-        Account.objects.create(userName="taman", title=1)
+        self.account4 = Account.objects.create(userName="taman", title=1)
 
         #Set up for Course testing
         Course.objects.create(name="DataStructures", number=351, onCampus=True, classDays="TR",
@@ -72,12 +75,12 @@ class TestProject(TestCase):
         Lab.objects.create(course=self.c1, sectionNumber=203, meetingDays="T", startTime=1000, endTime=1200)
 
         #set up for InstructorCourses testing
-        Account.objects.create(userName="cheng41", title="2")
+        self.testAccount = Account.objects.create(userName="cheng41", title="2")
         Course.objects.create(number="535")
         Course.objects.create(number="317")
         self.course1 = Course.objects.get(number="535")
         self.course2 = Course.objects.get(number="317")
-
+        InstructorCourse.objects.create(Course=self.course1, Instructor=self.testAccount)
     """
         login command
         When the login command is entered, it takes two arguments
@@ -554,7 +557,7 @@ class TestProject(TestCase):
 
     def test_command_assignInstructorCourse_conflict(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assigninstructorcourse userName 101"),
+        self.assertEqual(self.UI.command("assigninstructorcourse cheng41 535"),
                          "This class was already assigned")
 
     def test_command_assignInstructorCourse_success(self):
@@ -594,14 +597,6 @@ class TestProject(TestCase):
     def test_command_assignTACourse_invalidCourse(self):
         self.assertEqual(self.UI.command("assignTACourse accountName courseNumber"), "Invalid course number.")
 
-    def test_command_assignTACourse_Maximum(self):
-        self.assertEqual(self.UI.command("assignTACourse userName courseNumber"),
-                         "TA has exceeded assignment limit, TA not assigned")
-
-    def test_command_assignTACourse_schedulingConflict(self):
-        self.assertEqual(self.UI.command("assignTACourse userName courseNumber"),
-                         "Scheduling conflict encountered, TA not assigned.")
-
     def test_command_assignTACourse_noArgs(self):
         self.assertEqual(self.UI.command("assignTACourse"),
                          "Your command is missing arguments, please enter your command in the following format: "
@@ -620,6 +615,7 @@ class TestProject(TestCase):
 
     def test_command_assignTALab_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        TACourse.objects.create(TA=Account.objects.get(userName='taman'), Course=Course.objects.get(number='351'))
         self.assertEqual(self.UI.command("assignTALab taman 351 804"), "TA successfully assigned")
 
     def test_command_assignTALab_argumentsMissing(self):
