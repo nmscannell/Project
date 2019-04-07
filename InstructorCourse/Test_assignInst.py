@@ -15,6 +15,7 @@ class TestAssignInst(TestCase):
         self.course1 = Course.objects.get(number="535")
         self.course2 = Course.objects.get(number="317")
         self.AI = assignInst()
+        self.AC = Account.title()
 
     def test_assignInst_successfully_created(self):
 
@@ -27,23 +28,29 @@ class TestAssignInst(TestCase):
         self.assertEqual(a.instructor, Account.objects.get(userName="cheng41"))
 
     def test_assignInst_no_argument(self):
-        self.assertEqual((self.AI.assignInst(["assigninstructorcourse"])),
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
                          "Please, type the command in the following format assigninstructorcourse classNumber username")
 
     def test_assignInst_no_argument_courseNumber(self):
-        self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "bob824"])),
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824"]),
                          "Please, type the command in the following format assigninstructorcourse classNumber username")
 
     def test_assignInst_no_argument_username(self):
-        self.assertEqual((self.AI.assignInst(["assigninstructorcourse","250"])),
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse","250"]),
                          "Please, type the command in the following format assigninstructorcourse classNumber username")
 
     def test_assignInst_no_courseNumber_found(self):
-        self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "bob824" "250"])),
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824" "250"]),
                          "Invalid course number")
 
     def test_assignInst_no_username_found(self):
-        self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "magul" "595"])),
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "magul" "595"]),
                          "Invalid account name")
+
+    def test_assignInst_no_username_found(self):
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "magul" "595"]),
+                         "Invalid account name")
+
+
 
 
