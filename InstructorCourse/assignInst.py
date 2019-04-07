@@ -7,8 +7,8 @@ class assignInst():
 
     def assignInst(self, command):
         if len(command) != 3:
-            return "Your argument is missing commands, " \
-                   "please enter your command in the following format: assigninstructorcourse userName courseNumber"
+            return "There are arguments missing, Please enter your command in the following format: "\
+                    "assigninstructorcourse userName courseNumber"
         if not Course.objects.filter(number=command[2]).exists():
             return "Invalid course number"
         if not Account.objects.filter(userName=command[1]).exists():
