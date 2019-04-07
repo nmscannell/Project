@@ -6,6 +6,7 @@ from Course.CreateCourse import CreateCourse
 from CurrentUserHelper import CurrentUserHelper
 from TaLab.AssignTaLab import AssignTaLab
 from TACourse.AssignTACourse import AssignTACourse
+from ViewCourseAssign.models import viewCourseAssign
 # Create your models here.
 
 
@@ -78,6 +79,10 @@ class UI:
             return TAC.assignTACourse(command)
 
         elif command[0].lower == "viewcourseassign":
+            CUH = CurrentUserHelper()
+            if CUH.getCurrentUserTitle() < 1:
+                return "You must log in to View Course Assignment"
+
             return command[0]
 
         else:
