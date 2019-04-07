@@ -6,7 +6,11 @@ from TACourse.models import TACourse
 
 
 class viewCourseAssign():
-
+    """
+    ViewCourseAssign takes a list of strings as an arguments. Command[1] is the account userName. If the account
+    is a valid TA or Instructor account, viewCrouseAssign will return a string containing a comma separated list of all
+    of the Courses and Lab sections that the Account is assigned to.
+    """
     def viewCourseAssign(self, command):
 
         if not Account.objects.filter(userName=command[1]).exists():
@@ -49,7 +53,7 @@ class viewCourseAssign():
             first = True
             for a in courseAssignments:
                 if a.Course not in checkList:
-                    if first and len(labAssignments) != 0:
+                    if first and len(labAssignments) != 0:# all this does is puts a comma after lab sections if present
                         response += ", "
                         first = False
                     courseList.append(str(a.Course))

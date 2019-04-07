@@ -17,9 +17,9 @@ class TestIntegration(TestCase):
         self.CA = CreateAccount()
         self.CC = CreateCourse()
         self.CL = CreateLab()
-        Account.objects.create(firstName='Homer', userName='hsimpson', password='123456')
-        Account.objects.create(firstName='Stu', userName='spidface', password='654321')
-        Course.objects.create(name='Eng', number='101', onCampus='True', classDays='W')
+        self.account1 = Account.objects.create(firstName='Homer', userName='hsimpson', password='123456')
+        self.account2 = Account.objects.create(firstName='Stu', userName='spidface', password='654321')
+        self.course1 = Course.objects.create(name='Eng', number='101', onCampus='True', classDays='W')
 
     def test00(self):
         # test login
@@ -52,7 +52,7 @@ class TestIntegration(TestCase):
 
         self.assertEqual(Account.objects.count(), 3)
 
-        self.assertFalse(self.CUH.isCurrent())\
+        self.assertFalse(self.CUH.isCurrent())
 
         self.assertEqual(self.login.login(["login", "taman", "taman456"]), "Logged in as taman")
 
@@ -92,4 +92,30 @@ class TestIntegration(TestCase):
 
     def test05(self):
         # test creating Labs
-        pass
+        self.assertEqual(Lab.objects.count(), 0)
+
+        self.assertEqual(self.CL.createLab(["", "101", "801", "R", "1200", "1201"]), "Lab successfully created")
+
+        self.assertEqual(Lab.objects.count(), 1)
+
+        self.assertEqual(self.CL.createLab(["", "101", "801", "R", "1200", "1201"]), "Lab already exists, lab not added")
+
+        self.assertEqual(Lab.objects.count(), 1)
+
+    def test06(self):
+        # test creating Labs and Courses
+
+        self.assertEqual(Lab.objects.count(), 0)
+
+        self.assertEqual(self.CL.createLab(["", "351", "801", "R", "1200", "1201"]), "The Course you are trying to create a lab for does not exist")
+
+        self.assertEqual(Lab.objects.count(), 0)
+        self.assertEqual(Course.objects.count(), 1)
+
+        self.assertEqual(self.CC.createCourse(["createCourse", "DataStructures", "351", "Campus", "TR", "1000", "1050"]), "Course successfully created")
+
+        self.assertEqual(Course.objects.count(), 2)
+
+        self.assertEqual(self.CL.createLab(["", "351", "801", "R", "1200", "1201"]), "Lab successfully created")
+        self.assertEqual(Lab.objects.count(), 1)
+
