@@ -24,11 +24,11 @@ class AssignTaLab():
 
         ta = Account.objects.get(userName=command[1])
 
+        if ta.title > 1:
+            return str(ta) + " is not a TA"
+
         if not TACourse.objects.filter(TA=ta, Course=Course.objects.get(number=command[2])).exists():
             return "TA must be assigned to the Course first"
-
-        if ta.title > 1:
-            return "Account is not a ta"
 
         lab = Lab.objects.get(sectionNumber=command[3], course=course)
 

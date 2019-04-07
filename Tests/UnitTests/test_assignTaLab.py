@@ -11,6 +11,7 @@ class TestAssignTaLab(TestCase):
 
     def setUp(self):
         self.TA = Account.objects.create(userName='hsimpson', title='1')
+        self.Instructor = Account.objects.create(userName='BigE', title='2')
         self.Course1 = Course.objects.create(number='361')
         self.Course2 = Course.objects.create(number='351')
         Lab.objects.create(sectionNumber=804, course=self.Course1)
@@ -22,6 +23,9 @@ class TestAssignTaLab(TestCase):
         self.assertEqual(self.atl.assignTaLab(["assigntalab", "what", "361", "804"]), "Invalid account name")
 
         self.assertFalse(TaLab.objects.exists())
+
+    def test_assignTaLab_accountNotTA(self):
+        self.assertEqual(self.atl.assignTaLab(["assigntalab", "BigE", "361", "804"]), "BigE is not a TA")
 
     def test_assignTaLab_courseNotFound(self):
         self.assertEqual(self.atl.assignTaLab(["assigntalab", "hsimpson", "111", "804"]), "Invalid course number")

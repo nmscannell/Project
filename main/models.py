@@ -7,6 +7,7 @@ from CurrentUserHelper import CurrentUserHelper
 from TaLab.AssignTaLab import AssignTaLab
 from TACourse.AssignTACourse import AssignTACourse
 from ViewCourseAssign.models import viewCourseAssign
+from InstructorCourse.assignInst import assignInst
 # Create your models here.
 
 
@@ -58,7 +59,9 @@ class UI:
             if CUH.getCurrentUserTitle() < 3:
                 return "You do not have the credentials to assign an instructor to a course. Permission denied"
 
-            return command[0]
+            AIC = assignInst()
+
+            return AIC.assignInst(command)
 
         elif command[0].lower() == "assigntalab":
             CUH = CurrentUserHelper()
@@ -78,12 +81,14 @@ class UI:
 
             return TAC.assignTACourse(command)
 
-        elif command[0].lower == "viewcourseassign":
+        elif command[0].lower() == "viewcourseassign":
             CUH = CurrentUserHelper()
             if CUH.getCurrentUserTitle() < 1:
                 return "You must log in to View Course Assignment"
 
-            return command[0]
+            VCA = viewCourseAssign()
+
+            return VCA.viewCourseAssign(command)
 
         else:
             return command[0] + " is an unsupported command"
