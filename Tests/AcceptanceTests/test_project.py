@@ -596,7 +596,7 @@ class TestProject(TestCase):
 
     def test_command_assignTACourse_schedulingConflict(self):
         self.assertEqual(self.UI.command("assignTACourse userName courseNumber"),
-                         "Scheduling conflict encounterd, TA not assigned.")
+                         "Scheduling conflict encountered, TA not assigned.")
 
     def test_command_assignTACourse_noArgs(self):
         self.assertEqual(self.UI.command("assignTACourse"),
