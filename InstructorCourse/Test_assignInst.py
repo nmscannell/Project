@@ -39,15 +39,15 @@ class TestAssignInst(TestCase):
                          "Please, type the command in the following format assigninstructorcourse classNumber username")
 
     def test_assignInst_no_courseNumber_found(self):
-        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824" "250"]),
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824", "250"]),
                          "Invalid course number")
 
     def test_assignInst_no_username_found(self):
-        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "magul" "595"]),
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "magul", "595"]),
                          "Invalid account name")
 
     def test_assignInst_no_username_found(self):
-        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "magul" "595"]),
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "magul", "595"]),
                          "Invalid account name")
 
 
