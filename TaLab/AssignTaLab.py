@@ -11,6 +11,9 @@ class AssignTaLab():
             return "Your argument is missing commands, please enter your command in the following format: " \
                    "assignTALab username classNumber labSectionNumber"
 
+        if not Account.objects.filter(userName=command[1]).exists():
+            return "Invalid account name"
+
         if not Course.objects.filter(number=command[2]).exists():
             return "Invalid course number"
 
