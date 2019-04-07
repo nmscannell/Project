@@ -6,8 +6,8 @@ from Account.models import Account
 
 
 class InstructorCourse(models.Model):
-    instructor = models.ForeignKey(Account, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    Instructor = models.ForeignKey(Account, on_delete=models.CASCADE)
+    Course = models.ForeignKey(Course, on_delete=models.CASCADE)
 
     def __str__(self):
-        return str(self.instructor) + str(self.course)
+        return str(self.Instructor) + str(self.Course)

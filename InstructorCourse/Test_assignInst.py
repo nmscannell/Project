@@ -30,11 +30,11 @@ class TestAssignInst(TestCase):
         self.assertEqual((self.AI.assignInst(["assigninstructorcourse"])),
                          "Please, type the command in the following format assigninstructorcourse classNumber username")
 
-    def test_assignInst_no_courseNumber(self):
+    def test_assignInst_no_argument_courseNumber(self):
         self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "bob824"])),
                          "Please, type the command in the following format assigninstructorcourse classNumber username")
 
-    def test_assignInst_no_username(self):
+    def test_assignInst_no_argument_username(self):
         self.assertEqual((self.AI.assignInst(["assigninstructorcourse","250"])),
                          "Please, type the command in the following format assigninstructorcourse classNumber username")
 
