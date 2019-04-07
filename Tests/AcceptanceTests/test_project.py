@@ -4,6 +4,7 @@ from Account.models import Account
 from Lab.models import Lab
 from Course.models import Course
 from LogIn import LoginHelper
+#from InstructorCourse.model import InstructorCourse
 """
 TODO: 
 add permission denied tests - in progress
@@ -525,30 +526,30 @@ class TestProject(TestCase):
     """
 
     def test_command_assignInstructorCourse_missingArguments(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignInstructorCourse userName"),
                          "There are arguments missing, Please enter your command in the following format: "
                          "assignInstructorCourse classNumber userName")
 
     def test_command_assignInstructorCourse_missingArguments2(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignInstructorCourse classNumber"),
                          "There are arguments missing, Please enter your command in the following format: "
                          "assignInstructorCourse classNumber userName")
 
     def test_command_assignInstructorCourse_no_args(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignInstructorCourse"),
                          "There are arguments missing, Please enter your command in the following format: "
                          "assignInstructorCourse classNumber userName")
 
     def test_command_assignInstructorCourse_conflict(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignInstructorCourse userName classNumber"),
                          "This class was already assigned")
 
     def test_command_assignInstructorCourse_success(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignInstructorCourse userName classNumber"),
                          "Assignment was successful")
 
