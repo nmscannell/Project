@@ -32,14 +32,18 @@ class TestAssignInst(TestCase):
 
     def test_assignInst_no_argument(self):
         self.assertEqual((self.AI.assignInst(["assigninstructorcourse"])),
-                         "Please, type the course number and your username")
+                         "Please, type the command in the following format assigninstructorcourse classNumber username")
 
     def test_assignInst_argument_switched_error(self):
         self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "suzuki11", "417"])),
                          "Please, type the course number first before type the username")
 
-    ###def test_assignInst_no_courseNumber(self):
-       ### self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "bob824"])),
-          ###               "Please, type the course number")
+    def test_assignInst_no_courseNumber(self):
+        self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "bob824"])),
+                         "Please, type the course number")
+
+    def test_assignInst_no_username(self):
+        self.assertEqual((self.AI.assignInst(["assigninstructorcourse", "595"])),
+                         "Please, type your user name")
 
 
