@@ -18,7 +18,7 @@ class assignInst():
         if instructor.title != 2:
             return "Account is not an instructor"
 
-        course = Course.objects.get(userName=command[1])
+        course = Course.objects.get(number=command[2])
         a = InstructorCourse()
         a.Course = course
         a.save()
