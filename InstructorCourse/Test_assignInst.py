@@ -15,7 +15,6 @@ class TestAssignInst(TestCase):
         self.course1 = Course.objects.get(number="535")
         self.course2 = Course.objects.get(number="317")
         self.AI = assignInst()
-        self.AC = Account.title()
 
     def test_assignInst_successfully_created(self):
 
