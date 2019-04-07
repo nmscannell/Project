@@ -1,7 +1,6 @@
 from django.test import TestCase
 from InstructorCourse.assignInst import assignInst
 from InstructorCourse.models import InstructorCourse
-from main import models
 from Course.models import Course
 from Account.models import Account
 
@@ -12,7 +11,6 @@ class TestAssignInst(TestCase):
         Account.objects.create(userName="cheng41", title="2")
         Course.objects.create(number="535")
         Course.objects.create(number="317")
-        self.Instructor = Account.objects.get(userName="cheng41")
         self.course1 = Course.objects.get(number="535")
         self.course2 = Course.objects.get(number="317")
         self.AI = assignInst()
@@ -22,8 +20,11 @@ class TestAssignInst(TestCase):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "cheng41", "535"]),
                          "Instructor was successfully assigned to class")
         self.assertTrue(InstructorCourse.objects.exists())
-        a = InstructorCourse.objects.get()
-        self.assertEqual(a.Instructor, Account.objects.get(userName="cheng41"))
+        A = Account.objects.get(userName="cheng41")
+        B = Course.objects.get(number="535")
+
+        self.assertEqual(A.userName, "cheng41")
+        self.assertEqual(B.number, 535)
 
     def test_assignInst_no_argument(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
