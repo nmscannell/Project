@@ -28,15 +28,18 @@ class TestAssignInst(TestCase):
 
     def test_assignInst_no_argument(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
-                         "Please, type the command in the following format assigninstructorcourse classNumber username")
+                         "Your argument is missing commands, please enter your command in the following format: " \
+                         "assigninstructorcourse userName courseNumber")
 
     def test_assignInst_no_argument_courseNumber(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824"]),
-                         "Please, type the command in the following format assigninstructorcourse classNumber username")
+                         "Your argument is missing commands, please enter your command in the following format: " \
+                         "assigninstructorcourse userName courseNumber")
 
     def test_assignInst_no_argument_username(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "250"]),
-                         "Please, type the command in the following format assigninstructorcourse classNumber username")
+                         "Your argument is missing commands, please enter your command in the following format: " \
+                         "assigninstructorcourse userName courseNumber")
 
     def test_assignInst_no_courseNumber_found(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "cheng41", "250"]),
@@ -44,7 +47,7 @@ class TestAssignInst(TestCase):
 
     def test_assignInst_no_username_found(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824", "535"]),
-                         "Invalid account name")
+                         "Invalid user name")
 
 
 
