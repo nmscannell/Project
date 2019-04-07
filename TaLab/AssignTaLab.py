@@ -29,6 +29,9 @@ class AssignTaLab():
 
         lab = Lab.objects.get(sectionNumber=command[3], course=course)
 
+        if TaLab.objects.filter(Lab=lab).exists():
+            return "Lab section already assigned"
+
         p = TaLab()
         p.TA = ta
         p.Lab = lab

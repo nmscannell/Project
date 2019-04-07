@@ -34,11 +34,15 @@ class test_CreateAccount(TestCase):
         self.command_missing_two_args = ["createAccount", "paris64"]
         self.command_invalid_email = ["createAccount", "crusherw31", "TA", "crusher@hotmail.com"]
         self.command_invalid_email2 = ["createAccount", "crusher31", "TA", "crusher"]
+        self.command_invalid_title = ["createAccount", "crusher31", "student", "crusher31@uwm.edu"]
 
     def test_account_successfully_created(self):
-        CreateAccount.createAccount(self.CA, self.command_create_account)
-        CreateAccount.createAccount(self.CA, self.command1_create_account)
-        CreateAccount.createAccount(self.CA, self.command2_create_account)
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_create_account),
+                         "Account successfully created.  Temporary password is: data33456")
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command1_create_account),
+                         "Account successfully created.  Temporary password is: spock29456")
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command2_create_account),
+                         "Account successfully created.  Temporary password is: tuckert90456")
 
         A = Account.objects.get(userName="data33")
         self.assertEqual(A.userName, "data33")
@@ -76,3 +80,7 @@ class test_CreateAccount(TestCase):
         self.assertEqual(CreateAccount.createAccount(self.CA, self.command_invalid_email2),
                          "The email address you have entered in not valid.  Please make sure you are using a uwm "
                          "email address in the correct format.")
+
+    def test_invalid_title(self):
+        self.assertEqual(CreateAccount.createAccount(self.CA, self.command_invalid_title),
+                         "Invalid title, account not created")

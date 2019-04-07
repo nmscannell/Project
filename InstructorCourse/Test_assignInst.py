@@ -2,45 +2,49 @@ from django.test import TestCase
 from InstructorCourse.assignInst import assignInst
 from InstructorCourse.models import InstructorCourse
 from main import models
+from Course.models import Course
+from Account.models import Account
 
 
-class Test_assignInst(TestCase):
+class TestAssignInst(TestCase):
 
     def setUp(self):
+        Account.objects.create(userName="cheng41", title="2")
+        Course.objects.create(number="535")
+        Course.objects.create(number="317")
+        self.course1 = Course.objects.get(number="535")
+        self.course2 = Course.objects.get(number="317")
         self.AI = assignInst()
-        InstructorCourse.objects.create(coursesNumber=52312, userName="django123")
-        InstructorCourse.objects.create(courseNumber=52312, username="stack_over_flow")
-        InstructorCourse.objects.create(courseNumber=54911, userName="potato24")
-        self.command_assign_course = ["assignInst", "42133", "jack2131"]
-        self.command_section_was_already_existed = ["assignInst", "12451", "super999"]
-        self.command_assignment_no_args = ["assignInst"]
-        self.command_assignment_no_courseNumber = ["assignInst", "pycharm591"]
-        self.command_assignment_no_userName = ["assignInst", "58123"]
 
-    def test_assignment_was_successfully_created(self):
-        assignInst.assignInst(self.AI, self.command_assign_course)
-        a = InstructorCourse.objects.get(userName="system928down")
-        self.assertEqual(a.classNumber, 12425)
-        self.assertEqual(a.userName, "system928down")
-        b = InstructorCourse.objects.get(userName="default122")
-        self.assertEqual(b.classNumber, 51221)
-        self.assertEqual(b.userName, "default122")
-        c = InstructorCourse.objects.get(userName="bucks213")
-        self.assertEqual(b.classNumber, 12425)
-        self.assertEqual(b.userName, "bucks213")
+    def test_assignInst_successfully_created(self):
 
-    def test_assignment_was_already_existed(self):
-        self.assertEqual((assignInst.assignInst(self.AI, self.command_section_was_already_existed)),
-                         "Course already exists")
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "cheng41", "535"]),
+                         "Instructor was successfully assigned to class")
+        self.assertTrue(InstructorCourse.objects.exists())
+        a = InstructorCourse.objects.get()
+        self.assertEqual(a.instructor, Account.objects.get(userName="cheng41"))
+        self.assertEqual(a.course, Course.objects.get(number="535"))
+        self.assertEqual(a.course, Course.objects.get(number="317"))
 
-    def test_lab_no_argument(self):
-        self.assertEqual(assignInst.assignInst(self.AI, self.command_assignment_no_args))
+    def test_assignInst_no_argument(self):
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
+                         "Please, type the command in the following format assigninstructorcourse classNumber username")
 
-    def test_lab_no_courseNumber(self):
-        self.assertEqual(assignInst.assignInst(self.AI, self.command_assignment_no_courseNumber))
+    def test_assignInst_no_argument_courseNumber(self):
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824"]),
+                         "Please, type the command in the following format assigninstructorcourse classNumber username")
 
-    def test_lab_no_sectionNumber(self):
-        self.assertEqual(assignInst.assignInst(self.AI, self.command_assignment_no_userName))
+    def test_assignInst_no_argument_username(self):
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "250"]),
+                         "Please, type the command in the following format assigninstructorcourse classNumber username")
+
+    def test_assignInst_no_courseNumber_found(self):
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "cheng41", "250"]),
+                         "Invalid course number")
+
+    def test_assignInst_no_username_found(self):
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824", "535"]),
+                         "Invalid account name")
 
 
 

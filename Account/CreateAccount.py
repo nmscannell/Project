@@ -1,5 +1,5 @@
 from Account.models import Account
-from CurrentUserHelper import CurrentUserHelper
+from random import randint
 
 
 class CreateAccount():
@@ -24,7 +24,7 @@ class CreateAccount():
             return "The email address you have entered in not valid.  " \
                     "Please make sure you are using a uwm email address in the correct format."
         else:
-            A = Account.objects.create()
+            A = Account()
             A.userName = command[1]
             A.email = command[3]
             if command[2].lower() == "ta":
@@ -32,7 +32,10 @@ class CreateAccount():
             elif command[2].lower() == "instructor":
                 A.title = 2
             else:
-                return "Invalid Title"
+                return "Invalid title, account not created"
+
+            A.password=A.userName + "456"
             A.save()
-            return "Account successfully created"
+
+            return "Account successfully created.  Temporary password is: " + A.userName + "456"
 

@@ -4,6 +4,7 @@ from Account.models import Account
 from Lab.models import Lab
 from Course.models import Course
 from LogIn import LoginHelper
+from InstructorCourse.models import InstructorCourse
 """
 TODO: 
 add permission denied tests - in progress
@@ -54,11 +55,14 @@ class TestProject(TestCase):
         Course.objects.create(name="TemporalMechanics", number=784, onCampus=True, classDays="MW",
                               classHoursStart=1000, classHoursEnd=1100)
 
-        Course.objects.create(name="WarpTheory", number=633, onCampus=False, classDays="TR", classHoursStart=1200,
+        Course.objects.create(name="WarpTheory", number=633, onCampus=True, classDays="TR", classHoursStart=1200,
                               classHoursEnd=1250)
 
         Course.objects.create(name="QuantumMechanics", number=709, onCampus=True, classDays="MWF",
                               classHoursStart=1030, classHoursEnd=1145)
+
+        Course.objects.create(name="Linguistics", number=564, onCampus=False, classDays="TR",
+                              classHoursStart=1800, classHoursEnd=1930)
 
         self.c1 = Course.objects.get(name="TemporalMechanics")
         self.c2 = Course.objects.get(name="WarpTheory")
@@ -110,7 +114,8 @@ class TestProject(TestCase):
 
     def test_command_createAccount_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@uwm.edu"), "Account successfully created")
+        self.assertEqual(self.UI.command("createAccount neelix45 TA neelix45@uwm.edu"),
+                         "Account successfully created.  Temporary password is: neelix45456")
 
     def test_command_createAccount_missingArguments(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
@@ -126,7 +131,8 @@ class TestProject(TestCase):
 
     def test_command_createAccount_invalidTitle(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("createAccount laForge88 engineer laForge88@uwm.edu"), "Invalid Title")
+        self.assertEqual(self.UI.command("createAccount laForge88 engineer laForge88@uwm.edu"),
+                         "Invalid title, account not created")
 
     def test_command_createAccount_no_args(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
@@ -216,6 +222,28 @@ class TestProject(TestCase):
         self.assertEqual(self.UI.command("createCourse DataStructures 351 Campus TR 0900 0950"),
                          "Course already exists")
 
+    def test_command_createCourse_invalid_courseNum(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse StellarCartography t67 Campus TR 1650 1830"),
+                         "Course number must be numeric and three digits long")
+
+    def test_command_createCourse_invalid_location(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse StellarCartography 456 Enterprise TR 1650 1830"),
+                         "Location is invalid, please enter campus or online.")
+
+    def test_command_createCourse_invalid_days(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse StellarCartography 456 Campus Wg7 1650 1830"),
+                         "Invalid days of the week, please enter days in the format: MWTRF or NN for online")
+
+    def test_command_createCourse_invalid_times(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createCourse StellarCartography 456 Campus MW 9800 1830"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
+        self.assertEqual(self.UI.command("createCourse StellarCartography 456 Campus MW 1830 4444"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
+
 
     """
         When the createLab command is entered, it takes the following arguments:
@@ -286,6 +314,47 @@ class TestProject(TestCase):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("createLab 999 201 M 1400 1500"),
                          "The Course you are trying to create a lab for does not exist")
+
+    def test_command_createLab_invalid_courseNum(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 7aa 204 M 1600 1700"),
+                         "Course number must be numeric and three digits long")
+        self.assertEqual(self.UI.command("createLab 90872 204 M 1600 1700"),
+                         "Course number must be numeric and three digits long")
+        self.assertEqual(self.UI.command("createLab tro 204 M 1600 1700"),
+                         "Course number must be numeric and three digits long")
+
+    def test_command_createLab_invalid_sectNum(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 784 909089 M 1600 1700"),
+                         "Section number must be numeric and three digits long")
+        self.assertEqual(self.UI.command("createLab 784 rug M 1600 1700"),
+                         "Section number must be numeric and three digits long")
+        self.assertEqual(self.UI.command("createLab 784 kku23k M 1600 1700"),
+                         "Section number must be numeric and three digits long")
+
+    def test_command_createLab_invalid_days(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 784 204 qrs 1600 1700"),
+                         "Invalid days of the week, please enter days in the format: MWTRF")
+        self.assertEqual(self.UI.command("createLab 784 204 89TR 1600 1700"),
+                         "Invalid days of the week, please enter days in the format: MWTRF")
+        self.assertEqual(self.UI.command("createLab 784 204 JHG 1600 1700"),
+                         "Invalid days of the week, please enter days in the format: MWTRF")
+
+    def test_command_createLab_invalid_times(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 784 204 M kalj 1700"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
+        self.assertEqual(self.UI.command("createLab 784 204 M 8909 1700"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
+        self.assertEqual(self.UI.command("createLab 784 204 M 1400 17"),
+                         "Invalid start or end time, please use a 4 digit military time representation")
+
+    def test_command_createLab_online(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("createLab 564 203 W 1300 1400"),
+                         "You cannot create a lab for an online course")
 
     """
         When the edit command is entered, it takes 4 arguments.
@@ -452,36 +521,42 @@ class TestProject(TestCase):
 
     """
         When the assignInstructorCourse command is entered it takes 2 arguments: 
-        - class Number
         - Instructor user Name
+        - class Number
     """
 
-    def test_command_assignInstructorCourse_missingArguments(self):
+    def test_command_assignInstructorCourse_permission_denied(self):
         LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
-        self.assertEqual(self.UI.command("assignInstructorCourse classNumber"),
-                         "There are arguments missing, Please enter your command in the following format: "
-                         "assignInstructorCourse classNumber userName")
+        self.assertEqual(self.UI.command("assigninstructorcourse userName courseNumber"),
+                         "You do not have the credentials to assign instructor to course. Permission denied")
+        LoginHelper.logout(self.LH)
 
-    def test_command_assignInstructorCourse_missingArguments2(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+    def test_command_assignInstructorCourse_missingArguments(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignInstructorCourse userName"),
                          "There are arguments missing, Please enter your command in the following format: "
                          "assignInstructorCourse classNumber userName")
 
+    def test_command_assignInstructorCourse_missingArguments2(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("assignInstructorCourse courseNumber"),
+                         "There are arguments missing, Please enter your command in the following format: "
+                         "assignInstructorCourse classNumber userName")
+
     def test_command_assignInstructorCourse_no_args(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignInstructorCourse"),
                          "There are arguments missing, Please enter your command in the following format: "
                          "assignInstructorCourse classNumber userName")
 
     def test_command_assignInstructorCourse_conflict(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
-        self.assertEqual(self.UI.command("assignInstructorCourse classNumber userName"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("assignInstructorCourse userName courseNumber"),
                          "This class was already assigned")
 
     def test_command_assignInstructorCourse_success(self):
-        LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
-        self.assertEqual(self.UI.command("assignInstructorCourse classNumber userName"),
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("assignInstructorCourse userName courseNumber"),
                          "Assignment was successful")
 
     """
