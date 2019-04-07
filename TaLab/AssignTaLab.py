@@ -4,8 +4,14 @@ from Lab.models import Lab
 from Course.models import Course
 from TACourse.models import TACourse
 
+
 class AssignTaLab():
 
+    """
+    assignTaLab takes a list of strings as an argument. Command[1] is the Account username, Command[2] is the Course
+    number and Command[3] is the Lab number. AssignTALAb creates  new TALab assignment if the account, lab, and course
+    are all valid and the assignment doesn't already exist.
+    """
     def assignTaLab(self, command):
         if len(command) < 4:
             return "Your argument is missing commands, please enter your command in the following format: " \
