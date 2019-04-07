@@ -11,15 +11,15 @@ class AssignTACourse:
                    "assignTACourse userName classNumber"
 
         if not Account.objects.filter(userName=command[1]).exists():
-            return "Invalid account name"
+            return "Invalid TA username."
 
         if not Course.objects.filter(number=command[2]).exists():
-            return "Invalid course number"
+            return "Invalid course number."
 
         ta = Account.objects.get(userName=command[1])
 
         if ta.title > 1:
-            return "Account is not a ta"
+            return "Account is not a TA."
 
         course = Course.objects.get(number=command[2])
         l = TACourse()
@@ -27,4 +27,4 @@ class AssignTACourse:
         l.Course = course
         l.save()
 
-        return "Assignment successful"
+        return "Assignment successful."

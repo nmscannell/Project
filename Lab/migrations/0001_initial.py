@@ -10,16 +10,18 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('Course', '0001_initial'),
-        ('Account', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='TACourse',
+            name='Lab',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('Course', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Course.Course')),
-                ('TA', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Account.Account')),
+                ('sectionNumber', models.IntegerField(default=0)),
+                ('meetingDays', models.CharField(default=' ', max_length=10)),
+                ('startTime', models.IntegerField(default=0)),
+                ('endTime', models.IntegerField(default=0)),
+                ('course', models.ForeignKey(default=None, on_delete=django.db.models.deletion.CASCADE, to='Course.Course')),
             ],
         ),
     ]

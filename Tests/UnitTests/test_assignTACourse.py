@@ -16,24 +16,24 @@ class TestAssignTACourse(TestCase):
         self.assign = AssignTACourse()
 
     def test_assignTACourse_accountNotFound(self):
-        self.assertEqual(self.assign.assignTACourse(["assigntacourse", "Neelix", "351"]), "Invalid TA username.")
+        self.assertEqual(self.assign.assignTACourse(["assigntacourse", "Neelix", "535"]), "Invalid TA username.")
 
         self.assertFalse(TACourse.objects.exists())
 
     def test_assignTACourse_courseNotFound(self):
-        self.assertEqual(self.assign.assignTACourse(["assigntacourse", "tuvix", "874"]), "Invalid course number")
+        self.assertEqual(self.assign.assignTACourse(["assigntacourse", "Tuvix", "874"]), "Invalid course number.")
 
         self.assertFalse(TACourse.objects.exists())
 
     def test_assignTACourse_success(self):
-        self.assertEqual(self.assign.assignTACourse(["assigntacourse", "tuvix", "361"]), "Assignment successful")
+        self.assertEqual(self.assign.assignTACourse(["assigntacourse", "Tuvix", "535"]), "Assignment successful.")
 
-        self.assertTrue(TaLab.objects.exists())
+        self.assertTrue(TACourse.objects.exists())
 
-        a = TaLab.objects.get()
+        a = TACourse.objects.get()
 
-        self.assertEqual(a.Lab, Lab.objects.get(sectionNumber=804, course=Course.objects.get(number=361)))
+        self.assertEqual(a.Course, Course.objects.get(number=535))
 
-        self.assertEqual(a.TA, Account.objects.get(userName='hsimpson'))
+        self.assertEqual(a.TA, Account.objects.get(userName="Tuvix"))
 
 
