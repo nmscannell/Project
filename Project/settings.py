@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'Lab',
     'InstructorCourse',
     'ViewCourseAssign',
-    'TaLab'
+    'TaLab',
+    'TACourse'
 ]
 
 MIDDLEWARE = [
