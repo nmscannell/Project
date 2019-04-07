@@ -8,11 +8,9 @@ from Account.models import Account
 class TestAssignInst(TestCase):
 
     def setUp(self):
-        Account.objects.create(userName="cheng41", title="2")
-        Course.objects.create(number="535")
-        Course.objects.create(number="317")
-        self.course1 = Course.objects.get(number="535")
-        self.course2 = Course.objects.get(number="317")
+        self.account1 = Account.objects.create(userName="cheng41", title="2")
+        self.course1 = Course.objects.create(number="535", name="AlgorithmDesignAndAnalysis")
+        self.course2 = Course.objects.create(number="317")
         self.AI = assignInst()
 
     def test_assignInst_successfully_created(self):
@@ -25,6 +23,11 @@ class TestAssignInst(TestCase):
 
         self.assertEqual(A.userName, "cheng41")
         self.assertEqual(B.number, 535)
+
+    def test_assignInt_already_exists(self):
+        InstructorCourse.objects.create(Instructor=self.account1, Course=self.course1)
+
+        self.assertEqual(self.AI.assignInst(["", "cheng41", "535"]), "cheng41 is already assigned to AlgorithmDesignAndAnalysis")
 
     def test_assignInst_no_argument(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
