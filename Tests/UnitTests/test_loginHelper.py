@@ -55,7 +55,8 @@ class TestLoginHelper(TestCase):
         #User tries to login when an Account is already logged in
         self.assertEqual(self.login.login(self.Command1), "A user is already logged in")
 
-        self.assertEqual(Account.objects.filter(currentUser='True').count(), 1)
+        self.assertEqual(len(Account.objects.filter(currentUser='True')), 1)
+
 
     def test_logout_success(self):
         Account.objects.create(userName='Bob', password='wrongPassword', firstName='Bob', currentUser='True')

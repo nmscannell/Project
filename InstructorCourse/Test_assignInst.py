@@ -1,6 +1,8 @@
 from django.test import TestCase
 from InstructorCourse.assignInst import assignInst
 from InstructorCourse.models import InstructorCourse
+from main import models
+
 from Course.models import Course
 from Account.models import Account
 
@@ -22,8 +24,9 @@ class TestAssignInst(TestCase):
                          "Instructor was successfully assigned to class")
         self.assertTrue(InstructorCourse.objects.exists())
         a = InstructorCourse.objects.get()
-        self.assertEqual(a.Instructor, Account.objects.get(userName="cheng41"))
+        self.assertEqual(a.instructor, Account.objects.get(userName="cheng41"))
         self.assertEqual(a.course, Course.objects.get(number="535"))
+
 
     def test_assignInst_no_argument(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),

@@ -47,7 +47,9 @@ class TestAssignTaLab(TestCase):
         lab = Lab.objects.get(sectionNumber=801)
         TaLab.objects.create(TA=ta, Lab=lab)
 
+
         self.assertEqual(TaLab.objects.count(), 1)
+
 
         self.assertEqual(self.atl.assignTaLab(["assigntalab", "hsimpson", "351", "801"]), "Lab section already assigned")
 
