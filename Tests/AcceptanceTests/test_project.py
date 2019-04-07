@@ -562,6 +562,14 @@ class TestProject(TestCase):
         self.assertEqual(self.UI.command("assigninstructorcourse cheng41 537"),
                          "Instructor was successfully assigned to class")
 
+    def test_command_assignInstructorCourse_notInstructor(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("assigninstructorcourse kirkj22 535"), "Account is not an instructor")
+
+    def test_command_assignInstructorCourse_bad_username(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("assigninstructorcourse userName 535"), "Invalid user name")
+
     """
         When assignTACourse command is entered, it takes two arguments:
         --TA username

@@ -7,7 +7,7 @@ class CreateAccount():
     def createAccount(self, command):
 
         # Check that the command has the correct number of arguments
-        if len(command) > 4 or len(command) < 4:
+        if len(command) != 4:
             return "Your command is missing arguments, please enter your command in the following format: " \
                    "createAccount username title email"
 
@@ -34,7 +34,7 @@ class CreateAccount():
             else:
                 return "Invalid title, account not created"
 
-            A.password=A.userName + "456"
+            A.password = A.userName + "456"
             A.save()
 
             return "Account successfully created.  Temporary password is: " + A.userName + "456"
