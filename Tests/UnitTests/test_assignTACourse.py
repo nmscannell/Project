@@ -8,11 +8,9 @@ from TACourse.models import TACourse
 class TestAssignTACourse(TestCase):
 
     def setUp(self):
-        Account.objects.create(userName="Tuvix", title="1")
-        Course.objects.create(number="535")
-        Course.objects.create(number="351")
-        self.Course1 = Course.objects.get(number="535")
-        self.Course2 = Course.objects.get(number="351")
+        self.account1 = Account.objects.create(userName="Tuvix", title="1")
+        self.Course1 = Course.objects.create(number="535", name="AlgorithmDesignAndAnalysis")
+        self.Course2 = Course.objects.create(number="351")
         self.assign = AssignTACourse()
 
     def test_assignTACourse_accountNotFound(self):
@@ -24,6 +22,11 @@ class TestAssignTACourse(TestCase):
         self.assertEqual(self.assign.assignTACourse(["assigntacourse", "Tuvix", "874"]), "Invalid course number.")
 
         self.assertFalse(TACourse.objects.exists())
+
+    def test_assignTACourse_already_exists(self):
+        TACourse.objects.create(TA=self.account1, Course=self.Course1)
+
+        self.assertEqual(self.assign.assignTACourse(["", "Tuvix", "535"]), "Tuvix is already assign to AlgorithmDesignAndAnalysis")
 
     def test_assignTACourse_success(self):
         self.assertEqual(self.assign.assignTACourse(["assigntacourse", "Tuvix", "535"]), "Assignment successful.")

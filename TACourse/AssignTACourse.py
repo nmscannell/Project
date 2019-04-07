@@ -22,6 +22,10 @@ class AssignTACourse:
             return "Account is not a TA."
 
         course = Course.objects.get(number=command[2])
+
+        if TACourse.objects.filter(TA=ta, Course=course).exists():
+            return str(ta) + " is already assign to " + str(course)
+
         l = TACourse()
         l.TA = ta
         l.Course = course
