@@ -13,6 +13,9 @@ class viewCourseAssign():
     """
     def viewCourseAssign(self, command):
 
+        if len(command) < 2:
+            return "Please enter the userName of the Account"
+
         if not Account.objects.filter(userName=command[1]).exists():
             return "Account not found"
 
