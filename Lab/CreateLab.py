@@ -45,7 +45,7 @@ class CreateLab():
         # Time checks
         if len(startTime) != 4 or len(endTime) != 4:
             return "Invalid start or end time, please use a 4 digit military time representation"
-        if not re.match('^[0-2]*$', startTime[0]) or not re.match('^[0-1]*$', endTime[0]):
+        if not re.match('^[0-2]*$', startTime[0]) or not re.match('^[0-2]*$', endTime[0]):
             return "Invalid start or end time, please use a 4 digit military time representation"
         for i in range(1, 3):
             if not (re.match('^[0-9]*$', startTime[i])) or not (re.match('^[0-9]*$', endTime[i])):
