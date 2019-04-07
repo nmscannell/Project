@@ -12,6 +12,7 @@ class TestAssignInst(TestCase):
         Account.objects.create(userName="cheng41", title="2")
         Course.objects.create(number="535")
         Course.objects.create(number="317")
+        self.Instructor = Account.objects.get(userName="cheng41")
         self.course1 = Course.objects.get(number="535")
         self.course2 = Course.objects.get(number="317")
         self.AI = assignInst()
@@ -22,9 +23,7 @@ class TestAssignInst(TestCase):
                          "Instructor was successfully assigned to class")
         self.assertTrue(InstructorCourse.objects.exists())
         a = InstructorCourse.objects.get()
-        self.assertEqual(a.instructor, Account.objects.get(userName="cheng41"))
-        self.assertEqual(a.course, Course.objects.get(number="535"))
-        self.assertEqual(a.course, Course.objects.get(number="317"))
+        self.assertEqual(a.Instructor, Account.objects.get(userName="cheng41"))
 
     def test_assignInst_no_argument(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
