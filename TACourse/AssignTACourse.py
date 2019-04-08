@@ -10,7 +10,7 @@ class AssignTACourse:
         --username must be a valid username for a TA account that exists in the database
         --class number must be a valid class number for a course that exists in the database
 
-
+    If the username and course number are valid, the TA will be assigned to the course.
     """
 
     def assignTACourse(self, command):
