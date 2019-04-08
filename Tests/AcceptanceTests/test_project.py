@@ -653,16 +653,16 @@ class TestProject(TestCase):
         TACourse.objects.create(TA=self.tamanAccount, Course=self.datastructures)
         self.assertEqual(self.UI.command("assignTALab taman 351 804"), "TA successfully assigned")
 
-    def test_command_assignTALab_argumentsMissing(self):
+    def test_command_assignTALab_tooFew(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTALab username classNumber"),
-                         "Your argument is missing commands, please enter your command in the following format: "
+                         "Your command has an invalid number of arguments. Please enter your command in the following format: "
                          "assignTALab username classNumber labSectionNumber")
 
-    def test_command_assignTALab_argumentsMissing1(self):
+    def test_command_assignTALab_tooMany(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assignTALab userName"),
-                         "Your argument is missing commands, please enter your command in the following format: "
+        self.assertEqual(self.UI.command("assignTALab userName classNumber labsection classNum"),
+                         "Your command has an invalid number of arguments. Please enter your command in the following format: "
                          "assignTALab username classNumber labSectionNumber")
 
     def test_command_assignTALab_invalidCourse(self):
@@ -746,8 +746,25 @@ class TestProject(TestCase):
 
     """
 
-    def test_command_viewCourseAssignments(self):
-        self.assertEqual(self.UI.command("viewCourseAssignments"), "")
+    def test_command_viewCourseAssignments_inst(self):
+        self.assertEqual(self.UI.command("viewCourseAssignments janewayk123"), "")
+
+    def test_command_viewCourseAssignments_TA(self):
+        self.assertEqual(self.UI.command("viewCourseAssignments picard304"), "")
+
+    def test_command_viewCourseAssignments_invalidTitle(self):
+        self.assertEqual(self.UI.command("viewCourseAssignments kirkj22"), "Only Ta and Instructor accounts can have Assignments")
+
+    def test_command_viewCourseAssignments_invalidName(self):
+        self.assertEqual(self.UI.command("viewCourseAssignments kirkj2"), "Account not found")
+
+    def test_command_viewCourseAssignments_tooFew(self):
+        self.assertEqual(self.UI.command("viewCourseAssignments"), "Your command has an invalid number of arguments. Please enter your command" \
+                                                                   "in the following format: viewCourseAssignments userName")
+
+    def test_command_viewCourseAssignments_tooMany(self):
+        self.assertEqual(self.UI.command("viewCourseAssignments jane kirk"), "Your command has an invalid number of arguments. Please enter your command" \
+                                                                   "in the following format: viewCourseAssignments userName")
 
     """
        When the viewTAAssignments command is entered, it takes one argument
