@@ -573,6 +573,10 @@ class TestProject(TestCase):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assigninstructorcourse userName 535"), "Invalid user name")
 
+    def test_command_assingInstructorCourse_course_doesNotExist(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("assigninstructorcourse bob15 999"), "Invalid course number")
+
     """
         When assignTACourse command is entered, it takes two arguments:
         --TA username
