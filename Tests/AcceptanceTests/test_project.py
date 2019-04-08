@@ -4,6 +4,7 @@ from Account.models import Account
 from Lab.models import Lab
 from Course.models import Course
 from LogIn import LoginHelper
+from InstructorCourse.models import InstructorCourse
 
 """
 TODO: 
@@ -71,12 +72,14 @@ class TestProject(TestCase):
         Lab.objects.create(course=self.c1, sectionNumber=203, meetingDays="T", startTime=1000, endTime=1200)
 
         # set up for InstructorCourses testing
-        Account.objects.create(userName="cheng41", title="2")
+        self.cheng = Account.objects.create(userName="cheng41", title="2")
+        Account.objects.create(userName="bob15", title="2")
         Course.objects.create(number="535")
         Course.objects.create(number="537")
         Course.objects.create(number="317")
         self.course1 = Course.objects.get(number="535")
         self.course2 = Course.objects.get(number="317")
+        InstructorCourse.objects.create(Course=self.course1, Instructor=self.cheng)
 
     """
         login command

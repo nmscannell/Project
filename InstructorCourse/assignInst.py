@@ -21,7 +21,7 @@ class assignInst():
             return "Account is not an instructor"
 
         if InstructorCourse.objects.filter(Course=course).exists():
-            return "This class was already assigned"
+            return "This class is already assigned"
         else:
             a = InstructorCourse()
             a.Instructor = instructor
