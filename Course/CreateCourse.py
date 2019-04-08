@@ -5,14 +5,14 @@ class CreateCourse():
 
     def createCourse(self, command):
 
-        if len(command) > 7 or len(command) < 7:
+        if len(command) != 7:
             return "Your command is missing arguments, please enter your command in the following form: " \
                    "createCourse courseName courseNumber onCampus daysOfWeek start end"
 
         # Course number checks
         if not re.match('^[0-9]*$', command[2]):
             return "Course number must be numeric and three digits long"
-        if len(command[2]) > 3 or len(command[2]) < 3:
+        if len(command[2]) != 3:
             return "Course number must be numeric and three digits long"
         # Check that the course does not already exist
         if Course.objects.filter(number=command[2]).exists():
@@ -27,14 +27,13 @@ class CreateCourse():
         # Check times
         startTime = command[5]
         endTime = command[6]
-        if (len(startTime) < 4 or len(endTime) < 4) or (len(startTime) > 4 or len(endTime) > 4):
+        if len(startTime) != 4 or len(endTime) != 4:
             return "Invalid start or end time, please use a 4 digit military time representation"
         if not re.match('^[0-2]*$', startTime[0]) or not re.match('^[0-1]*$', endTime[0]):
             return "Invalid start or end time, please use a 4 digit military time representation"
         for i in range (1,3):
             if not (re.match('^[0-9]*$', startTime[i])) or not (re.match('^[0-9]*$', endTime[i])):
                 return "Invalid start or end time, please use a 4 digit military time representation"
-
 
         else:
             c = Course(name=command[1], number=command[2])
