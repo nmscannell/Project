@@ -586,37 +586,41 @@ class TestProject(TestCase):
         --Scheduling conflict for TA
         --Max TAs assigned to course
         --TA username is invalid or missing
-        --Course number is invalid or missing
+        --Course number is invalid or missingmissingCourse
         --No arguments    
     """
 
     def test_command_assignTACourse_success_whiteSpace(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assignTACourse userName courseNumber  "), "Assignment successful")
+        self.assertEqual(self.UI.command("assignTACourse picard304 351  "), "Assignment successful.")
 
     def test_command_assignTACourse_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse picard304 351"), "Assignment successful.")
 
-    def test_command_assignTACourse_missingTA(self):
+    def test_command_assignTACourse_tooFew(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse 351"),
-                         "Your command is missing arguments, please enter your command in the following format: "
+                         "Your command has an incorrect number of arguments, please enter your command in the following format: "
                          "assignTACourse userName classNumber")
 
     def test_command_assignTACourse_invalidTA(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse picard305 351"), "Invalid TA username.")
 
-    def test_command_assignTACourse_missingCourse(self):
+    def test_command_assignTACourse_tooMany(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("assignTACourse picard304"),
-                         "Your command is missing arguments, please enter your command in the following format: "
+        self.assertEqual(self.UI.command("assignTACourse picard304 351 535"),
+                         "Your command has an incorrect number of arguments, please enter your command in the following format: "
                          "assignTACourse userName classNumber")
 
     def test_command_assignTACourse_invalidCourse(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse picard304 387"), "Invalid course number.")
+
+    def test_command_assignTACourse_invalidTitle(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("assignTACourse janewayk123 351"), "Account is not a TA.")
 
     # def test_command_assignTACourse_Maximum(self):
     #     self.assertEqual(self.UI.command("assignTACourse userName courseNumber"),
@@ -629,7 +633,7 @@ class TestProject(TestCase):
     def test_command_assignTACourse_noArgs(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse"),
-                         "Your command is missing arguments, please enter your command in the following format: "
+                         "Your command has an incorrect number of arguments, please enter your command in the following format: "
                          "assignTACourse userName classNumber")
 
     """
