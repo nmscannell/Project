@@ -22,19 +22,20 @@ class TestAssignInst(TestCase):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "suzuki15", "317"]),
                          "Instructor was successfully assigned to class")
         self.assertTrue(InstructorCourse.objects.exists())
-        A = Account.objects.get(userName="cheng41")
-        B = Course.objects.get(number="535")
-        C = Account.objects.get(userName="suzuki15")
-        D = Course.objects.get(number="317")
-        self.assertEqual(A.userName, "cheng41")
-        self.assertEqual(B.number, 535)
-        self.assertEqual(C.userName, "suzuki15")
-        self.assertEqual(D.number, 317)
+        a = Account.objects.get(userName="cheng41")
+        b = Course.objects.get(number="535")
+        c = Account.objects.get(userName="suzuki15")
+        d = Course.objects.get(number="317")
+        self.assertEqual(a.userName, "cheng41")
+        self.assertEqual(b.number, 535)
+        self.assertEqual(c.userName, "suzuki15")
+        self.assertEqual(d.number, 317)
 
     def test_assignInt_already_exists(self):
         InstructorCourse.objects.create(Instructor=self.account1, Course=self.course1)
-
         self.assertEqual(self.AI.assignInst(["", "cheng41", "535"]), "This class is already assigned")
+        InstructorCourse.objects.create(Instructor=self.account2, Course=self.course2)
+        self.assertEqual(self.AI.assignInst(["", "suzuki15", "317"]), "This class is already assigned")
 
     def test_assignInst_no_argument(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
