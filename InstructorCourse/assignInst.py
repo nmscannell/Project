@@ -4,8 +4,17 @@ from InstructorCourse.models import InstructorCourse
 
 # This class is for assigning instructor to course command
 class assignInst():
-    # this function takes one argument "command"
-    # It will return the message "Instructor was successfully assigned to class, if it is successful pass and there are no error
+
+    """
+    assignInst will take in a list of strings, "command"
+        command[0] = "assigninstructorcourse"
+        command[1] = userName of an instructor with an existing account
+        command[2] = courseNumber of an existing course
+
+    If the arguments are valid, the assignment will be successful and the database will be updated. A confirmation
+    message will be returned. If any arguments are invalid, an error message will be returned.
+    """
+
     def assignInst(self, command):
         # The command will be the format: assigninstructorcourse userName courseNumber
         # If the arguments are more than 3 or less than 3. It will give you an error message

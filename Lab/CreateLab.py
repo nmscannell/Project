@@ -2,10 +2,22 @@ from Lab.models import Lab
 from Course.models import Course
 import re
 
-# This class is for creating lab command
+
 class CreateLab():
-    # this function takes one argument "command"
-    # It will return the message "Lab successfully created, if it is successful pass and there are no error
+
+    """
+    CreateLab will create a lab given a list of strings, "command"
+        command[0] = "createLab"
+        command[1] = courseNumber of a course that exists in the database
+        command[2] = sectionNumber for the lab
+        command[3] = meeting days of lab
+        command[4] = start time
+        command[5] = end time
+
+    If given valid input, the lab will be created and linked to the course it is for and the database
+    will be updated. A confirmation message will be returned. If any arguments are invalid, an error message will be returned.
+    """
+
     def createLab(self, command):
         if len(command) != 6:
             return "Your command is missing arguments, please enter your command in the following format: " \
