@@ -5,6 +5,7 @@ from Lab.models import Lab
 from Course.models import Course
 from LogIn import LoginHelper
 from InstructorCourse.models import InstructorCourse
+from TACourse.models import TACourse
 
 
 class TestProject(TestCase):
@@ -75,6 +76,11 @@ class TestProject(TestCase):
         self.course1 = Course.objects.get(number="535")
         self.course2 = Course.objects.get(number="317")
         InstructorCourse.objects.create(Course=self.course1, Instructor=self.cheng)
+
+        # set up for assign TA to Lab
+        self.datastructures = Course.objects.get(name="DataStructures")
+        self.tamanAccount = Account.objects.get(userName="taman")
+
 
     """
         login command
@@ -258,9 +264,6 @@ class TestProject(TestCase):
         If the lab already exists, a new lab is not created. If arguments are missing, return error. If the 
         associated course is online, a lab cannot be created for it.
     """
-
-    # Need a test for trying to create a lab for a course that doesn't exist
-    # msg: "The Course you are trying to create a lab for does not exist"
 
     def test_command_createLab_permission_denied(self):
         LoginHelper.login(self.LH, ["login", "janewayk123", "123456"])
@@ -636,6 +639,7 @@ class TestProject(TestCase):
 
     def test_command_assignTALab_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        TACourse.objects.create(TA=self.tamanAccount, Course=self.datastructures)
         self.assertEqual(self.UI.command("assignTALab taman 351 804"), "TA successfully assigned")
 
     def test_command_assignTALab_argumentsMissing(self):
