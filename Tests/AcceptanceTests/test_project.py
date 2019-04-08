@@ -6,11 +6,6 @@ from Course.models import Course
 from LogIn import LoginHelper
 from InstructorCourse.models import InstructorCourse
 
-"""
-TODO: 
-add permission denied tests - in progress
-"""
-
 
 class TestProject(TestCase):
 
