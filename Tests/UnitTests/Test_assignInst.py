@@ -27,22 +27,21 @@ class TestAssignInst(TestCase):
     def test_assignInt_already_exists(self):
         InstructorCourse.objects.create(Instructor=self.account1, Course=self.course1)
 
-        self.assertEqual(self.AI.assignInst(["", "cheng41", "535"]), "cheng41 is already"
-                                                                     " assigned to AlgorithmDesignAndAnalysis")
+        self.assertEqual(self.AI.assignInst(["", "cheng41", "535"]), "This class was already assigned")
 
     def test_assignInst_no_argument(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse"]),
-                         "Your argument is missing commands, please enter your command in the following format: " \
+                         "There are arguments missing, Please enter your command in the following format: " \
                          "assigninstructorcourse userName courseNumber")
 
     def test_assignInst_no_argument_courseNumber(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824"]),
-                         "Your argument is missing commands, please enter your command in the following format: " \
+                         "There are arguments missing, Please enter your command in the following format: " \
                          "assigninstructorcourse userName courseNumber")
 
     def test_assignInst_no_argument_username(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "250"]),
-                         "Your argument is missing commands, please enter your command in the following format: " \
+                         "There are arguments missing, Please enter your command in the following format: " \
                          "assigninstructorcourse userName courseNumber")
 
     def test_assignInst_no_courseNumber_found(self):

@@ -6,7 +6,7 @@ import re
 class CreateLab():
 
     def createLab(self, command):
-        if len(command) > 6 or len(command) < 6:
+        if len(command) != 6:
             return "Your command is missing arguments, please enter your command in the following format: " \
                    "createLab courseNumber labSectionNumber daysOfWeek beginTime endTime"
 
@@ -43,9 +43,9 @@ class CreateLab():
                 return "Invalid days of the week, please enter days in the format: MWTRF"
 
         # Time checks
-        if (len(startTime) < 4 or len(endTime) < 4) or (len(startTime) > 4 or len(endTime) > 4):
+        if len(startTime) != 4 or len(endTime) != 4:
             return "Invalid start or end time, please use a 4 digit military time representation"
-        if not re.match('^[0-2]*$', startTime[0]) or not re.match('^[0-1]*$', endTime[0]):
+        if not re.match('^[0-2]*$', startTime[0]) or not re.match('^[0-2]*$', endTime[0]):
             return "Invalid start or end time, please use a 4 digit military time representation"
         for i in range(1, 3):
             if not (re.match('^[0-9]*$', startTime[i])) or not (re.match('^[0-9]*$', endTime[i])):
