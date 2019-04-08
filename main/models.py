@@ -20,7 +20,12 @@ class UI:
     """
 
     def command(self, inStr):
+        inStr = inStr.strip()
         command = inStr.split(' ')
+
+        for word in command:
+            if not word:
+                command.remove(word)
 
         if command[0].lower() == "login":
             login = LoginHelper()
