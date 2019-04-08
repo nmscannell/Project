@@ -1,17 +1,22 @@
 from Course.models import Course
 import re
 
-class CreateCourse():
+class CreateCourse:
 
+    """
+    This method will create a course given a list of strings, "command"
+        command[0] = createCourse
+        command[1] = courseName
+        command[2] = courseNumber
+        command[3] = campus/online
+        command[4] = daysOfWeek
+        command[5] = start time
+        command[6] = endTime
 
-    # This method will create a course given a list of strings, "command"
-    # command[0] = createCourse
-    # command[1] = courseName
-    # command[2] = courseNumber
-    # command[3] = campus/online
-    # command[4] = daysOfWeek
-    # command[5] = start time
-    # command[6] = endTime
+    If given valid values, the course will be created and added to the database. A confirmation
+    message will be returned. If any arguments are invalid, an error message will be returned.
+    """
+
     def createCourse(self, command):
 
         # Check that the command has the appropriate number of arguments

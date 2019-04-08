@@ -1,12 +1,19 @@
 from Account.models import Account
 
-class CreateAccount():
 
-    # This method will create an account given a list of strings "command"
-    # command[0] = createAccount
-    # command[1] = username
-    # command[2] = title
-    # command{3] = email
+class CreateAccount:
+
+    """
+    This method will create an account given a list of strings, "command"
+        command[0] = createAccount
+        command[1] = username
+        command[2] = title
+        command{3] = email
+
+    If given valid values, the account will be created, fill the other fields to default values, and add it to the
+    database. A confirmation message will be returned. If any arguments are invalid, an error message will be returned.
+    """
+
     def createAccount(self, command):
 
         # Check that the command has the correct number of arguments
