@@ -590,6 +590,10 @@ class TestProject(TestCase):
         --No arguments    
     """
 
+    def test_command_assignTACourse_success_whiteSpace(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("assignTACourse userName courseNumber  "), "Assignment successful")
+
     def test_command_assignTACourse_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse picard304 351"), "Assignment successful.")
