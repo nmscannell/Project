@@ -2,10 +2,11 @@ from Account.models import Account
 from Course.models import Course
 from InstructorCourse.models import InstructorCourse
 
-# This class is for assigning instructor to course command
+
 class assignInst:
 
     """
+    This class is for command of assign instructor to course
     assignInst will take in a list of strings, "command"
         command[0] = "assigninstructorcourse"
         command[1] = userName of an instructor with an existing account
@@ -16,15 +17,14 @@ class assignInst:
     """
 
     def assignInst(self, command):
-        # The command will be the format: assigninstructorcourse userName courseNumber
-        # If the arguments are more than 3 or less than 3. It will give you an error message
+        # Check the arguments are 3
         if len(command) != 3:
             return "There are arguments missing, Please enter your command in the following format: "\
                     "assigninstructorcourse userName courseNumber"
-        # If the course is not existed. It will give you an error message "Invalid course number"
+        # Check the course is valid
         if not Course.objects.filter(number=command[2]).exists():
             return "Invalid course number"
-        # If the username isn't existed. It will give you an error message "Invalid user name"
+        # Check the user name is valid
         if not Account.objects.filter(userName=command[1]).exists():
             return "Invalid user name"
 
@@ -32,14 +32,13 @@ class assignInst:
         course = Course.objects.get(number=command[2])
         # title represented as an integer where 4=supervisor 3=administrator
         # 2=Instructor 1=TA. 0=No current User
-        # If the instructor's title is not "2", It will give you an error message "Account is not an instructor"
+        # Check the account is an instructor
         if instructor.title != 2:
             return "Account is not an instructor"
-        # If the course is already assigned, it will give you an error message "This class is already assigned"
+        # Check the course is already assigned
         if InstructorCourse.objects.filter(Course=course).exists():
             return "This class is already assigned"
-        # Otherwise(if there are no errors found), it will show you an message""Instructor was
-        # successfully assigned to class and save it on the database.
+        # Otherwise(if there are no errors found), an instructor can be assigned
         else:
             a = InstructorCourse()
             a.Instructor = instructor
