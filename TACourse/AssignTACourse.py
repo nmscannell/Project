@@ -7,7 +7,7 @@ class AssignTACourse:
 
     def assignTACourse(self, command):
         if len(command) != 3:
-            return "Your command is missing arguments, please enter your command in the following format: " \
+            return "Your command has an incorrect number of arguments, please enter your command in the following format: " \
                    "assignTACourse userName classNumber"
 
         if not Account.objects.filter(userName=command[1]).exists():

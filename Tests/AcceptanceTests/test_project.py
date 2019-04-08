@@ -601,7 +601,7 @@ class TestProject(TestCase):
     def test_command_assignTACourse_missingTA(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse 351"),
-                         "Your command is missing arguments, please enter your command in the following format: "
+                         "Your command has an incorrect number of arguments, please enter your command in the following format: "
                          "assignTACourse userName classNumber")
 
     def test_command_assignTACourse_invalidTA(self):
@@ -611,7 +611,7 @@ class TestProject(TestCase):
     def test_command_assignTACourse_missingCourse(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse picard304"),
-                         "Your command is missing arguments, please enter your command in the following format: "
+                         "Your command has an incorrect number of arguments, please enter your command in the following format: "
                          "assignTACourse userName classNumber")
 
     def test_command_assignTACourse_invalidCourse(self):
@@ -629,7 +629,7 @@ class TestProject(TestCase):
     def test_command_assignTACourse_noArgs(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
         self.assertEqual(self.UI.command("assignTACourse"),
-                         "Your command is missing arguments, please enter your command in the following format: "
+                         "Your command has an incorrect number of arguments, please enter your command in the following format: "
                          "assignTACourse userName classNumber")
 
     """
