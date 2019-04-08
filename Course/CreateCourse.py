@@ -3,8 +3,18 @@ import re
 
 class CreateCourse():
 
+
+    # This method will create a course given a list of strings, "command"
+    # command[0] = createCourse
+    # command[1] = courseName
+    # command[2] = courseNumber
+    # command[3] = campus/online
+    # command[4] = daysOfWeek
+    # command[5] = start time
+    # command[6] = endTime
     def createCourse(self, command):
 
+        # Check that the command has the appropriate number of arguments
         if len(command) != 7:
             return "Your command is missing arguments, please enter your command in the following form: " \
                    "createCourse courseName courseNumber onCampus daysOfWeek start end"
@@ -35,6 +45,7 @@ class CreateCourse():
             if not (re.match('^[0-9]*$', startTime[i])) or not (re.match('^[0-9]*$', endTime[i])):
                 return "Invalid start or end time, please use a 4 digit military time representation"
 
+        # Else the course is ok to be created
         else:
             c = Course(name=command[1], number=command[2])
             if command[3].lower() == "online":
