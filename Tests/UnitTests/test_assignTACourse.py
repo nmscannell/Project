@@ -14,6 +14,22 @@ class TestAssignTACourse(TestCase):
         self.Course2 = Course.objects.create(number="351", name="DataStructuresAndAlgorithms")
         self.assign = AssignTACourse()
 
+    def test_assignTACourse_tooFewArgs(self):
+        self.assertEqual(self.assign.assignTACourse(["assigntacourse", "Neelix"]),
+                         "Your command has an incorrect "
+                         "number of arguments, please enter your command in the following format: "
+                         "assignTACourse userName classNumber")
+
+        self.assertFalse(TACourse.objects.exists())
+
+    def test_assignTACourse_tooManyArgs(self):
+        self.assertEqual(self.assign.assignTACourse(["assigntacourse", "Neelix", "351", "344"]),
+                         "Your command has an incorrect "
+                         "number of arguments, please enter your command in the following format: "
+                         "assignTACourse userName classNumber")
+
+        self.assertFalse(TACourse.objects.exists())
+
     def test_assignTACourse_accountNotFound(self):
         self.assertEqual(self.assign.assignTACourse(["assigntacourse", "Neelix", "535"]), "Invalid TA username.")
 
