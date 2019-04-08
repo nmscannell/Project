@@ -77,6 +77,8 @@ class TestProject(TestCase):
         self.course2 = Course.objects.get(number="317")
         InstructorCourse.objects.create(Course=self.course1, Instructor=self.cheng)
 
+        TACourse.objects.create(TA=Account.objects.get(userName="taman"), Course=Course.objects.get(number="317"))
+
         # set up for assign TA to Lab
         self.datastructures = Course.objects.get(name="DataStructures")
         self.tamanAccount = Account.objects.get(userName="taman")
@@ -746,25 +748,39 @@ class TestProject(TestCase):
 
     """
 
-    def test_command_viewCourseAssignments_inst(self):
-        self.assertEqual(self.UI.command("viewCourseAssignments janewayk123"), "")
+    def test_command_viewCourseAssignments_instnoAssign(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("viewcourseassign janewayk123"), "janewayk123 does not have any assignments")
 
-    def test_command_viewCourseAssignments_TA(self):
-        self.assertEqual(self.UI.command("viewCourseAssignments picard304"), "")
+    def test_command_viewCourseAssignments_TAnoAssign(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("viewcourseassign picard304"), "picard304 does not have any assignments")
+
+    def test_command_viewCourseAssignments_instoneAssign(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("viewcourseassign cheng41"), "cheng41 is assigned to:  535")
+
+    def test_command_viewCourseAssignments_TAoneAssign(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("viewcourseassign taman"), "taman is assigned to:  317")
 
     def test_command_viewCourseAssignments_invalidTitle(self):
-        self.assertEqual(self.UI.command("viewCourseAssignments kirkj22"), "Only Ta and Instructor accounts can have Assignments")
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("viewcourseassign kirkj22"), "Only Ta and Instructor accounts can have Assignments")
 
     def test_command_viewCourseAssignments_invalidName(self):
-        self.assertEqual(self.UI.command("viewCourseAssignments kirkj2"), "Account not found")
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("viewcourseassign kirkj2"), "Account not found")
 
     def test_command_viewCourseAssignments_tooFew(self):
-        self.assertEqual(self.UI.command("viewCourseAssignments"), "Your command has an invalid number of arguments. Please enter your command" \
-                                                                   "in the following format: viewCourseAssignments userName")
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("viewcourseassign"), "Your command has an invalid number of arguments. Please enter your command" \
+                                                                   " in the following format: viewCourseAssignments userName")
 
     def test_command_viewCourseAssignments_tooMany(self):
-        self.assertEqual(self.UI.command("viewCourseAssignments jane kirk"), "Your command has an invalid number of arguments. Please enter your command" \
-                                                                   "in the following format: viewCourseAssignments userName")
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("viewcourseassign jane kirk"), "Your command has an invalid number of arguments. Please enter your command" \
+                                                                   " in the following format: viewCourseAssignments userName")
 
     """
        When the viewTAAssignments command is entered, it takes one argument
