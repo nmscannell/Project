@@ -13,6 +13,7 @@ class TestAssignInst(TestCase):
         self.account2 = Account.objects.create(userName="suzuki15", title="2")
         self.course2 = Course.objects.create(number="317", name="DiscreteInformationStructures")
         self.account3 = Account.objects.create(userName="ImNotInstructor", title="1")
+        self.account4 = Account.objects.create(userName="ImNotInstructor2", title="3")
         self.AI = assignInst()
 
     def test_assignInst_successfully_created(self):
@@ -53,12 +54,22 @@ class TestAssignInst(TestCase):
                          "assigninstructorcourse userName courseNumber")
 
     def test_assignInst_no_courseNumber_found(self):
-        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "cheng41", "250"]),
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "cheng41", "316"]),
+                         "Invalid course number")
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "suzuki15", "119"]),
                          "Invalid course number")
 
     def test_assignInst_no_username_found(self):
         self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "bob824", "535"]),
                          "Invalid user name")
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "imTa", "317"]),
+                         "Invalid user name")
+
+    def test_assignInt_is_not_instructor(self):
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "ImNotInstructor", "535"]),
+                         "Account is not an instructor")
+        self.assertEqual(self.AI.assignInst(["assigninstructorcourse", "ImNotInstructor2", "317"]),
+                         "Account is not an instructor")
 
 
 
