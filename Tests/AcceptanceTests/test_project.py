@@ -97,6 +97,9 @@ class TestProject(TestCase):
     def test_command_login_success(self):
         self.assertEqual(self.UI.command("login janewayk123 123456"), "Logged in as janewayk123")
 
+    def test_command_login_success_whitespace(self):
+        self.assertEqual(self.UI.command("  login janewayk123 123456     "), "Logged in as janewayk123")
+
     def test_command_login_incorrect_password(self):
         self.assertEqual(self.UI.command("login janewayk123 aaaaaaa"), "Incorrect password")
 
@@ -586,6 +589,10 @@ class TestProject(TestCase):
         --Course number is invalid or missing
         --No arguments    
     """
+
+    def test_command_assignTACourse_success_whiteSpace(self):
+        LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
+        self.assertEqual(self.UI.command("assignTACourse userName courseNumber  "), "Assignment successful")
 
     def test_command_assignTACourse_success(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
