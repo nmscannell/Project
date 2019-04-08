@@ -2,7 +2,9 @@
     height: 100px;
     width: 300px;
     font-size: large;
+    border-color: red;
 }
 #label{
     font-size: larger;
+    color: red;
 }
