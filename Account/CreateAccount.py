@@ -1,7 +1,7 @@
 from Account.models import Account
 
 
-class CreateAccount():
+class CreateAccount:
 
     """
     This method will create an account given a list of strings, "command"
