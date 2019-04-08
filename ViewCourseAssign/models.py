@@ -18,7 +18,7 @@ class viewCourseAssign:
     def viewCourseAssign(self, command):
 
         if len(command) != 2:
-            return "Your command has an invalid number of arguments, please enter your command in the following format: " \
+            return "Your command has an invalid number of arguments. Please enter your command in the following format: " \
                    "viewCourseAssignments userName"
 
         if not Account.objects.filter(userName=command[1]).exists():
