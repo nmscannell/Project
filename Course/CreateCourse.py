@@ -1,7 +1,7 @@
 from Course.models import Course
 import re
 
-class CreateCourse():
+class CreateCourse:
 
     """
     This method will create a course given a list of strings, "command"

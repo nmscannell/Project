@@ -3,7 +3,7 @@ from Course.models import Course
 from InstructorCourse.models import InstructorCourse
 
 # This class is for assigning instructor to course command
-class assignInst():
+class assignInst:
 
     """
     assignInst will take in a list of strings, "command"

@@ -3,7 +3,7 @@ from Course.models import Course
 import re
 
 
-class CreateLab():
+class CreateLab:
 
     """
     CreateLab will create a lab given a list of strings, "command"

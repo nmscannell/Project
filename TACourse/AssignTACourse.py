@@ -10,10 +10,13 @@ class AssignTACourse:
         command[1] = userName of a TA that exists in the database
         command[2] = courseNumber of a course that exists in the database
 
-    If the username and course number are valid, the TA will be assigned to the course and the database will be updated.
+    If the username and course number are valid, the TA will be assigned to the course and the database
+    will be updated. A confirmation message will be returned. If any arguments are invalid, an error message will be returned.
     """
 
     def assignTACourse(self, command):
+
+        # the number of arguments must be 3
         if len(command) != 3:
             return "Your command has an incorrect number of arguments, please enter your command in the following format: " \
                    "assignTACourse userName classNumber"
