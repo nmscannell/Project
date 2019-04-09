@@ -70,9 +70,9 @@ class TestProject(TestCase):
         # set up for InstructorCourses testing
         self.cheng = Account.objects.create(userName="cheng41", title="2")
         Account.objects.create(userName="bob15", title="2")
-        Course.objects.create(number="535")
+        Course.objects.create(number="535", name="Algorithms")
         Course.objects.create(number="537")
-        Course.objects.create(number="317")
+        Course.objects.create(number="317", name="DiscreteMath")
         self.course1 = Course.objects.get(number="535")
         self.course2 = Course.objects.get(number="317")
         InstructorCourse.objects.create(Course=self.course1, Instructor=self.cheng)
@@ -100,7 +100,7 @@ class TestProject(TestCase):
         self.assertEqual(self.UI.command("login janewayk123 123456"), "Logged in as janewayk123")
 
     def test_command_login_success_whitespace(self):
-        self.assertEqual(self.UI.command("  login janewayk123 123456     "), "Logged in as janewayk123")
+        self.assertEqual(self.UI.command("  login     janewayk123   123456     "), "Logged in as janewayk123")
 
     def test_command_login_incorrect_password(self):
         self.assertEqual(self.UI.command("login janewayk123 aaaaaaa"), "Incorrect password")
@@ -758,11 +758,11 @@ class TestProject(TestCase):
 
     def test_command_viewCourseAssignments_instoneAssign(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("viewcourseassign cheng41"), "cheng41 is assigned to:  535")
+        self.assertEqual(self.UI.command("viewcourseassign cheng41"), "cheng41 is assigned to: Algorithms")
 
     def test_command_viewCourseAssignments_TAoneAssign(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
-        self.assertEqual(self.UI.command("viewcourseassign taman"), "taman is assigned to:  317")
+        self.assertEqual(self.UI.command("viewcourseassign taman"), "taman is assigned to: DiscreteMath")
 
     def test_command_viewCourseAssignments_invalidTitle(self):
         LoginHelper.login(self.LH, ["login", "kirkj22", "678543"])
