@@ -1,4 +1,3 @@
-
 #command{
     height: 40px;
     width: 500px;
@@ -15,16 +14,14 @@
     letter-spacing: 0.15em;
     text-shadow:
     0 0 5px #7bacff,
-        0 0 10px #7bacff,
-        0 0 20px #7bacff,
-        0 0 40px #7bacff,
-        0 0 80px #7bacff,
-        0 0 90px #7bacff,
-        0 0 100px #7bacff,
-        0 0 150px #7bacff;
-
+    0 0 10px #7bacff,
+    0 0 20px #7bacff,
+    0 0 40px #7bacff,
+    0 0 80px #7bacff,
+    0 0 90px #7bacff,
+    0 0 100px #7bacff,
+    0 0 150px #7bacff;
 }
-
 .submit
 {
     height: 40px;
