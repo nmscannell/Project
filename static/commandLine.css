@@ -1,5 +1,5 @@
 #command{
-    height: 300px;
+    height: 100px;
     width: 300px;
     font-size: large;
     border-color: red;
@@ -7,4 +7,9 @@
 #label{
     font-size: larger;
     color: red;
+}
+
+.submit
+{
+    background-color: pink;
 }
