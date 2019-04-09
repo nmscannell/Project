@@ -25,7 +25,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'templates/static'),
 ]
 
 # Application definition
