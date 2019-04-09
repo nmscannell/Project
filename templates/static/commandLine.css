@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css?family=Londrina+Outline');
 
 #command{
     height: 40px;
@@ -9,7 +8,6 @@
 #label{
     font-size: larger;
     color: red;
-    font-family: 'Londrina Outline', cursive;
     text-align: center;
     text-transform: uppercase;
     font-size: 8em;
