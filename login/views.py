@@ -17,7 +17,7 @@ class loginPage(View):
         LH.logout()
         username = str(request.POST["username"])
         password = str(request.POST["password"])
-
+        username = username.strip()
         command = ["", username, password]
 
         try:
