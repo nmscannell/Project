@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.views import View
 from login.models import LoginHelper
 # Create your views here.
@@ -7,30 +8,29 @@ from login.models import LoginHelper
 class loginPage(View):
 
     def get(self, request):
+        LH = LoginHelper()
+        LH.logout()
         return render(request, 'loginscreen.html')
 
     def post(self, request):
         LH = LoginHelper()
+        LH.logout()
         username = str(request.POST["username"])
         password = str(request.POST["password"])
 
-        commandlist = ["", username, password]
+        command = ["", username, password]
 
         try:
-            check = LH.login(commandlist)
+            check = LH.login(command)
 
             if check == 1:
-                LH.logout()
-                return render(request, 'loginscreen.html', {"message": "Ta login"})
+                return redirect('/ta/')
             if check == 2:
-                LH.logout()
-                return render(request, 'loginscreen.html', {"message": "Instructor login"})
+                return redirect('/instructor/')
             if check == 3:
-                LH.logout()
-                return render(request, 'loginscreen.html', {"message": "Admin login"})
+                return redirect('/administrator/')
             if check == 4:
-                LH.logout()
-                return render(request, 'loginscreen.html', {"message": "Supervisor login"})
+                return redirect('/supervisor/')
 
         except Exception as e:
 
