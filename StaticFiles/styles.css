@@ -1,5 +1,12 @@
 body{
-    background: blue;
+
+    background-image: url(logo.png);
+    background-repeat-y: no-repeat;
+    color: black;
+
+}
+body*{
+    font-family:Ubuntu;
 }
 #command{
     height: 40px;
