@@ -1,0 +1,15 @@
+#password
+{
+    border-color: red;
+}
+#username
+{
+    border-color: blue;
+}
+#submit
+{
+    background-color: grey;
+  border: none;
+  color: white;
+}
+
