@@ -29,4 +29,4 @@ class taPage(View):
     def get(self, request):
         CUH = CurrentUserHelper()
         Account = CUH.getCurrentUser()
-        return render(request, 'Accounts/InstructorHome.html', {"Account": Account})
+        return render(request, 'Accounts/TaHome.html', {"Account": Account})
