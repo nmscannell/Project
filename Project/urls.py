@@ -19,7 +19,7 @@ from django.contrib import admin
 from main import views as main
 from login import views as login
 from Account import views as account
-
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", main.Home.as_view()),
@@ -29,3 +29,5 @@ urlpatterns = [
     path("instructor/", account.instructorPage.as_view()),
     path("ta/", account.taPage.as_view())
 ]
+
+urlpatterns += staticfiles_urlpatterns()
