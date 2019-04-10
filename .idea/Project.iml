@@ -31,6 +31,8 @@
       <list>
         <option value="$MODULE_DIR$/templates" />
         <option value="$MODULE_DIR$/templates/static" />
+        <option value="$MODULE_DIR$/templates/Accounts" />
+        <option value="$MODULE_DIR$/templates/main" />
       </list>
     </option>
   </component>
