@@ -1,7 +1,9 @@
 body{
 
     background-image: url(logo.png);
-    background-repeat-y: no-repeat;
+    background-repeat: no-repeat;
+    background-position-x: 950px;
+    background-position-y: 100px;
     color: black;
 
 }
