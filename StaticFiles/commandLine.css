@@ -1,15 +1,13 @@
 body{
+        background-image: url(logo.png);
+        background-repeat: no-repeat;
+        background-position-x: 950px;
+        background-position-y: 100px;
+        color: black;
+    }
 
-    background-image: url(logo.png);
-    background-repeat: no-repeat;
-    background-position-x: 950px;
-    background-position-y: 100px;
-    color: black;
 
-}
-body*{
-    font-family:Ubuntu;
-}
+
 #command{
     height: 40px;
     width: 500px;
