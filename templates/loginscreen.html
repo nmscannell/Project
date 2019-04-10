@@ -7,7 +7,7 @@
     <link rel="stylesheet" type = "text/css" href="{% static 'login.css' %}">
 </head>
 <body>
- <form method="post" action="/login/">
+ <form method="post" action="/login/"> <!--Its super important that action matches the url of the page-->
   {%csrf_token%}
       User name:
   <input type="text" name="username" id="username" required/><br>

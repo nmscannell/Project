@@ -1,6 +1,5 @@
 from django.shortcuts import render
 from django.views import View
-from Account.models import Account
 from CurrentUserHelper import CurrentUserHelper
 # Create your views here.
 
