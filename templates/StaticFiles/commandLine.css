@@ -1,12 +1,9 @@
 body{
-        background-image: url(logo.png);
-        background-repeat: no-repeat;
-        background-position-x: 950px;
-        background-position-y: 100px;
+        background-image: url(logo.png),url(background.png);
+        background-repeat: no-repeat, no-repeat;
+    background-position: right, center;
         color: black;
     }
-
-
 
 #command{
     height: 40px;
@@ -38,7 +35,6 @@ body{
     color: red;
       display: inline-block;
     padding: 0.3em 1em;
-    text-decoration: n;
     border: solid 3px red;
     border-radius: 4px;
     transition: .5s;
