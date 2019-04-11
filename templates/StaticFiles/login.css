@@ -9,10 +9,15 @@ body{
 #password
 {
     border-color: red;
+  height : 20px;
+    width: 200px;
 }
 #username
 {
     border-color: blue;
+    text-align: center;
+     height : 20px;
+    width: 200px;
 }
 #submit
 {
