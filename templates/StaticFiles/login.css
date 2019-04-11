@@ -1,8 +1,8 @@
 body{
         background-image: url(logo2.png);
         background-repeat: no-repeat;
-        background-position-x: 950px;
-        background-position-y: 100px;
+        background-position-x: 500px;
+        background-position-y: 30px;
         color: black;
     }
 
@@ -11,6 +11,7 @@ body{
     border-color: red;
   height : 20px;
     width: 200px;
+
 }
 #username
 {
