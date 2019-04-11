@@ -9,9 +9,9 @@
 <body>
  <form method="post" action="/login/"> <!--Its super important that action matches the url of the page-->
   {%csrf_token%}
-      User name:
+     <font size="20">User name:</font>
   <input type="text" name="username" id="username" required/><br>
-     Password:
+     <font size="20">Password:</font>
   <input type="password" name="password" id="password" required/><br>
   <input type="submit" value="Login" id="submit"/><br>
   </form>
