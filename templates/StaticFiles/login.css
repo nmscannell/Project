@@ -4,11 +4,20 @@ body{
         background-position: center,left;
         color: black;
     }
-
+/*body{                                   These body and html styles make the background image fit my browser. Take out the block comments and this message and see if you like it.
+        background-image: url(logo2.png);
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+    }
+html{
+    background: url(background.png) no-repeat center fixed;
+    background-size: cover;
+}*/
 #password
 {
     border-color: red;
-  height : 20px;
+    height : 20px;
     width: 200px;
 
 }
